@@ -16,8 +16,6 @@
 		<typeAlias type="com.project.getdrive.team.common.TeamCreator" alias="TeamCreator" />
 		<!-- 팀 유저 -->
 		<typeAlias type="com.project.getdrive.teamuser.model.vo.TeamUser" alias="TeamUser" />
-		<!-- 채팅 유저 -->
-		<typeAlias type="com.project.getdrive.chatuser.model.vo.ChatUser" alias="ChatUser" />
 		<!-- 종합 검색 -->
 		<typeAlias type="com.project.getdrive.search.model.vo.Search" alias="Search" />	
 		<typeAlias type="com.project.getdrive.common.CommonSch" alias="CommonSch" />	
@@ -33,8 +31,6 @@
 		<mapper resource="mappers/team-mapper.xml"/>
 		<!-- 팀 유저 -->
 		<mapper resource="mappers/teamuser-mapper.xml"/>
-		<!-- 채팅 유저 -->
-		<mapper resource="mappers/chatuser-mapper.xml"/>
 		<!-- 종합 검색 -->
 		<mapper resource="mappers/search-mapper.xml" />
 		<!-- 드라이브 -->
