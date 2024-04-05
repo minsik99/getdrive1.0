@@ -143,7 +143,7 @@ function createTeam(){
 						
 						<!-- 팀 가입이 되어 있다면 -->
 						<c:if test="${ tlist.tuInvited eq 'Y' }">
-							<c:url var="enter" value="teneter.do">
+							<c:url var="enter" value="teammain.do">
 								<c:param name="tNo" value="${ tlist.tNo }"/>
 							</c:url>
 							<button id="tmain" onclick="javascript:location.href='${ enter }';">팀 입장</button>

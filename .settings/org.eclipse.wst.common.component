@@ -1,42 +1,86 @@
 <?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+<<<<<<< HEAD
                 	
     
     
     
     <wb-module deploy-name="getdrive-1.0.0-BUILD-SNAPSHOT">
                                         
+=======
+                    	
+    
+    
+    
+    
+    <wb-module deploy-name="getdrive-1.0.0-BUILD-SNAPSHOT">
+                                                
+        
+>>>>>>> 82fedeee6567ae3be25f4a9edc0a788616a55872
         
         
         
         <wb-resource deploy-path="/" source-path="/target/m2e-wtp/web-resources"/>
+<<<<<<< HEAD
                                 		
+=======
+                                        		
+        
+>>>>>>> 82fedeee6567ae3be25f4a9edc0a788616a55872
         
         
         
         <wb-resource deploy-path="/" source-path="/src/main/webapp" tag="defaultRootSource"/>
+<<<<<<< HEAD
                                 		
+=======
+                                        		
+        
+>>>>>>> 82fedeee6567ae3be25f4a9edc0a788616a55872
         
         
         
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
+<<<<<<< HEAD
                                 		
+=======
+                                        		
+        
+>>>>>>> 82fedeee6567ae3be25f4a9edc0a788616a55872
         
         
         
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
+<<<<<<< HEAD
                                 		
+=======
+                                        		
+        
+>>>>>>> 82fedeee6567ae3be25f4a9edc0a788616a55872
         
         
         
         <property name="java-output-path" value="target/classes"/>
+<<<<<<< HEAD
                 
         <property name="context-root" value="getdrive"/>
                                 	
+=======
+                        
+        
+        <property name="context-root" value="getdrive"/>
+                                        	
+    
+>>>>>>> 82fedeee6567ae3be25f4a9edc0a788616a55872
     
     
     
     </wb-module>
+<<<<<<< HEAD
                 
+=======
+                    
+
+>>>>>>> 82fedeee6567ae3be25f4a9edc0a788616a55872
 
 
 
