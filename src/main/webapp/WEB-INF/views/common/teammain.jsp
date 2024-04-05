@@ -12,16 +12,16 @@
 <div id="container">
 
   <div id="jb-header">      
-	<c:import url="/WEB-INF/views/common/top.jsp" />        
+	<c:import url="/WEB-INF/views/common/teamtop.jsp" />        
   </div>
   
   <div id="sidebar">
-	<c:import url="/WEB-INF/views/common/left.jsp" />
+	<c:import url="/WEB-INF/views/common/teamleft.jsp" />
   </div>
   
   <div id="content">
   
-    <h2>Content</h2>
+    <h2>팀 메인 화면입니다. </h2>
     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean nec mollis nulla. Phasellus lacinia tempus mauris eu laoreet. Proin gravida velit dictum dui consequat malesuada. Aenean et nibh eu purus scelerisque aliquet nec non justo. Aliquam vitae aliquet ipsum. Etiam condimentum varius purus ut ultricies. Mauris id odio pretium, sollicitudin sapien eget, adipiscing risus.</p>
     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean nec mollis nulla. Phasellus lacinia tempus mauris eu laoreet. Proin gravida velit dictum dui consequat malesuada. Aenean et nibh eu purus scelerisque aliquet nec non justo. Aliquam vitae aliquet ipsum. Etiam condimentum varius purus ut ultricies. Mauris id odio pretium, sollicitudin sapien eget, adipiscing risus.</p>
     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean nec mollis nulla. Phasellus lacinia tempus mauris eu laoreet. Proin gravida velit dictum dui consequat malesuada. Aenean et nibh eu purus scelerisque aliquet nec non justo. Aliquam vitae aliquet ipsum. Etiam condimentum varius purus ut ultricies. Mauris id odio pretium, sollicitudin sapien eget, adipiscing risus.</p>
@@ -36,7 +36,7 @@
   </div>
 
   <div id="footer">
-    <c:import url="/WEB-INF/views/common/footer.jsp" />
+    <c:import url="/WEB-INF/views/common/teamfooter.jsp" />
   </div>
 
 </div>

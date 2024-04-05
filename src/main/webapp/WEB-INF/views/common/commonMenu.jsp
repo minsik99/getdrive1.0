@@ -63,6 +63,7 @@
 
 .commonButton {
 	background: #6DBFF2;
+
 	border-radius: 5px;
 	color: white;
 	cursor: pointer;
@@ -84,7 +85,7 @@
 </style>
 <script type="text/javascript">
 function moveContractPage(){
-	location.href = "contractPage.do";
+	location.href = "contract.do";
 }
 </script>
 </head>
