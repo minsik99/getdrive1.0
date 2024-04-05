@@ -58,8 +58,13 @@
 	
 	<%--2024.04.05 kimyh 로그아웃 처리 삭제대상 --%>	
 	<div id="Temporaryspace">
-		[ <a href="tmain.do"> 팀목록 </a> |		
-		 <a href="logout.do"> 로그아웃 </a> ]	
+		
+		<!-- 2024.04.05 kimyh : 로그인된 상태시 노출 -->
+		<c:if test="${!empty loginMember}">
+			[ <a href="logout.do"> 로그아웃 </a> ]	
+		</c:if> 
+
+		
 	</div>	
 		
 </body>

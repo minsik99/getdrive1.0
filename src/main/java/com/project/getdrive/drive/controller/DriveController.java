@@ -34,9 +34,11 @@ public class DriveController {
 		drive.setdTID(tNo);
 		drive.setdCRUID(tUID);
 		
+		/* 2024.04.05 kimyh - 조장님 주석 요청
 		// 드라이브 먼저 입장한다면 휴지통(고유번호: 1번) 먼저 생성한다
 		if(driveService.insertTrashCan(drive) > 0) {
 		}
+		*/
 		
 		return "drive/driveMain";			
 	}
