@@ -1,9 +1,15 @@
 package com.project.getdrive;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.util.ArrayList;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,9 +18,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.project.getdrive.search.model.vo.Search;
 import com.project.getdrive.team.model.service.TeamService;
+import com.project.getdrive.team.model.vo.Team;
+
 
 @Controller
 public class HomeController {
@@ -72,22 +82,20 @@ public class HomeController {
 		
 		session.setAttribute("tNo", teamcode);
 		
-		mv.addObject("teamcode", teamcode);
+		mv.addObject("tNo", teamcode);
 		mv.setViewName("common/teammain");		
 		return mv;		
 
 	}	
 	
-	/*	
-	// 팀공통 - 왼쪽 메뉴 팀이동 기능 - 객체변경할 것.
+
+	// 2024.04.05 kimyh - 팀공통 왼쪽 메뉴 팀이동 기능
 	@SuppressWarnings("unchecked")	
 	@RequestMapping(value="teamSelect.do", method=RequestMethod.POST)
 	@ResponseBody	
-	public String teamSelect(
-		@RequestParam(name = "tno", required = true) int teamcode) throws UnsupportedEncodingException {
-		
-		
-		ArrayList<Team> list = teamService.teamSelect(teamcode);
+	public String teamSelect() throws UnsupportedEncodingException {
+				
+		ArrayList<Team> list = teamService.selectList();
 		
 		JSONArray jarr = new JSONArray();		
 		
@@ -108,7 +116,7 @@ public class HomeController {
 		return sendJson.toJSONString();
 	}	
 	
-
+	/*	
 	// 팀공통 - 왼쪽 메뉴 팀이동 기능 - 객체변경할 것.
 	@SuppressWarnings("unchecked")	
 	@RequestMapping(value="boardList.do", method=RequestMethod.POST)

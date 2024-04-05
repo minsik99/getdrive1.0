@@ -152,7 +152,7 @@ $(function(){
 				console.log(json.list[i].tno + ", ${ teamCode }, ${ tno }");
 				
 				if (json.list[i].no == '${ teamCode }' ) {
-					values += "<option value='teammain.do?tno="+ json.list[i].tno
+					values += "<option value='teammain.do?tNo="+ json.list[i].tno
 					+"' selected>"
 					+ decodeURIComponent(json.list[i].teamname).replace(/\+/gi, " ") 
 					+ "</option>";					
@@ -275,7 +275,7 @@ $(function(){
 					+ "</a></li>";	
 			}
 			
-			$('#driveList').html(values + "<li><a href='#' class='item'>드라이브 생성 + </a></li>");
+			$('#driveList').html(values + "<li><a href='dname.do' class='item'>드라이브 생성 + </a></li>");
 		}, 
 		error: function(jqXHR, textStatus, errorThrown){
 			console.log("error : " + jqXHR + ", " + textStatus + ", " + errorThrown);
@@ -306,7 +306,7 @@ $(function(){
 		<ul id="chatList"></ul>
 	</div>	
 	<hr>
-	<b>드라이브</b>
+	<a href='dmain.do'><b>드라이브</b></a>
 	<div width=100% align=left>
 		<ul id="driveList"></ul>
 	</div>
