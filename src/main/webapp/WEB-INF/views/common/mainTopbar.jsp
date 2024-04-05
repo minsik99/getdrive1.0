@@ -38,16 +38,19 @@
 	</div>	
 	
 	<div id="logospace">
+	
 		<%--로그인 하지 않았을 때 --%>
 		<c:if test="${ empty sessionScope.loginMember }">
-			<a href="${ pageContext.servletContext.contextPath }/teamMain.do">
+			<%-- <a href="${ pageContext.servletContext.contextPath }/teamMain.do"> --%>
+			<a href="${ pageContext.servletContext.contextPath }/main.do">
 			<img id="logo" alt="getdrive"src="/getdrive/resources/images/logo.png">
 			</a>
 		</c:if>
 	
 		<%-- 로그인 했을 때 --%>
 		<c:if test="${ !empty sessionScope.loginMember }">
-			<a href="${ pageContext.servletContext.contextPath }/mainPage.do">
+			<%-- <a href="${ pageContext.servletContext.contextPath }/mainPage.do"> --%>
+			<a href="${ pageContext.servletContext.contextPath }/tmain.do">
 			<img id="logo" alt="getdrive"src="/getdrive/resources/images/logo.png">
 			</a>
 		</c:if>
@@ -55,7 +58,8 @@
 	
 	<%--2024.04.05 kimyh 로그아웃 처리 삭제대상 --%>	
 	<div id="Temporaryspace">
-		[ <a href="logout.do"> 로그아웃 </a> ]	
+		[ <a href="tmain.do"> 팀목록 </a> |		
+		 <a href="logout.do"> 로그아웃 </a> ]	
 	</div>	
 		
 </body>
