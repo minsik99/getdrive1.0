@@ -17,6 +17,8 @@ MANIFEST.MF
 .project
 *.properties
 *.class
+.class
+.componenet
 
 # External tool builders
 .externalToolBuilders/
