@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC
+"-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="searchMapper">
+	
+	<resultMap type="Search" id="resultList">
+		<result property="s_no" column="S_NO" />
+		<result property="s_menu" column="S_MENU" />
+		<result property="s_title" column="S_TITLE" />
+		<result property="s_content" column="S_CONTENT" />
+		<result property="s_date" column="S_DATE" />
+		<result property="s_cruid" column="S_CRUID" />
+		<result property="s_id" column="S_ID" />
+		<result property="s_ctid" column="S_CTID" />
+		<result property="s_tid" column="S_TID" />
+	</resultMap>
+		
+	<!-- 검색갯수 : selectSearchCount -->	
+	<select id="selectSearchCount" parameterType="string"  resultType="_int">
+		select count(*) from TB_SEARCH 
+			where ( S_TITLE like '%' || #{ keyword } || '%' ) 
+				or ( S_CONTENT like '%' || #{ keyword } || '%' )				   
+	</select>
+	
+	<select id="selectSearch" parameterType="CommonSch" resultMap="resultList">
+		select *
+		from (select rownum rnum, S_NO, S_MENU, S_TITLE, S_CONTENT, 
+		          S_DATE, S_CRUID, S_ID, S_CTID, S_TID
+		     from (select * from TB_SEARCH
+		           where ( S_TITLE like '%' || #{ keyword } || '%' ) 
+					or ( S_CONTENT like '%' || #{ keyword } || '%' )
+		           order by s_no desc))
+		where rnum between #{ startRow } and #{ endRow }    
+	</select>
+		
+</mapper>
+
+
+
+
+
+
+

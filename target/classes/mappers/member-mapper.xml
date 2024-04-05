@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC
+"-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="memberMapper">
+
+	<resultMap id="resultMember" type="Member">
+		<id property="accountNo" column="M_NO" />
+		<result property="name" column="M_NAME" />
+		<result property="email" column="M_EMAIL" />
+		<result property="pwd" column="M_PASSWD" />
+		<result property="cdate" column="M_EDATE" />
+		<result property="ddate" column="M_ODATE" />
+	</resultMap>
+	
+	<resultMap id="resultList" type="Member">
+		<result property="accountNo" column="M_NO" />
+		<result property="name" column="M_NAME" />
+		<result property="email" column="M_EMAIL" />
+		<result property="pwd" column="M_PASSWD" />
+		<result property="cdate" column="M_EDATE" />
+		<result property="ddate" column="M_ODATE" />
+	</resultMap>
+	
+	
+	<!-- 로그인 쿼리 -->
+	<select id="login" parameterType="Member" resultMap="resultMember">
+		select * from TB_MEMBER 
+		where M_EMAIL = #{ email } and M_PASSWD = #{ pwd }
+	</select>
+	
+	<select id="selectMember" parameterType="string" resultMap="resultMember">
+		select * from TB_MEMBER 
+		where M_EMAIL = #{ email }
+	</select>
+	
+	<!-- 회원 가입 쿼리 -->
+	<insert id="register" parameterType="Member">
+		INSERT INTO TB_MEMBER
+		VALUES(M_SEQ.NEXTVAL, #{ name }, #{ email }, #{ pwd }, SYSDATE, NULL)
+	</insert>
+
+</mapper>
+
+
+
+
+
+
+
+
+
