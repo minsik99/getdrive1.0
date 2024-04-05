@@ -7,45 +7,19 @@
 <head>
 <meta charset="UTF-8">
 <title>getdrive 초기화면</title>
-<style type="text/css">
-#full {
-	width: 100%;
-	height: 100%;
-}
 
-#header {
-	width: 100%;
-	height: 20%;
-}
+<!-- 2024.04.05 kimyh : 공통 css 처리 -->
+<link rel="stylesheet" href="/getdrive/resources/css/common.css">
 
-#main {
-	width: 100%;
-	height: 650px;
-}
-
-#left {
-	width: 50%;
-	height: 650px;
-	float: left;
-}
-
-#right {
-	width: 49.9%;
-	height: 650px;
-	float: right;
-	border-left: 1px solid #999999;
-	text-align: center;
-}
-
-#footer {
-	margin: 10px 0px 0px;
-	width: 100%;
-	height: 90px;
-	text-align: center;
-}
-</style>
+<!-- 2024.04.05 kimyh : 로그인된 상태시 팀 목록으로 이동 처리 -->
+<c:if test="${!empty loginMember}">
+	<script type="text/javascript">
+	window.location.replace('tmain.do');
+	</script>
+</c:if> 
 </head>
 <body>
+
 
 <div id="full">
 	<div id="header">
