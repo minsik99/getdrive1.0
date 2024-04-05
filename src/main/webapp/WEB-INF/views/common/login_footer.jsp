@@ -17,9 +17,10 @@
 </style>
 </head>
 <body>
-	<footer>
+
+<footer>
     <div id="footer-content">
-            <p>SingleThread 주식회사 | 대표이사 : 김영활 | 사업자등록번호 : 123-45-678910 | 사업자 정보확인 통신판매업 | 신고 : 2000-서울강남-0515 | 
+            SingleThread 주식회사 | 대표이사 : 빛나보자 | 사업자등록번호 : 123-45-678910 | 사업자 정보확인 통신판매업 | 신고 : 2000-서울강남-0515 | 
 
 사업장주소 : 서울특별시 강남구 강남대로 1234번길 56, 10층) | 호스팅서비스사업자 : SingleThread | 대표번호 : 02-1234-5678 | 제품/서비스/멤버십: 1588-1234 <br>
 
@@ -27,8 +28,9 @@
 
 소비자분쟁해결기준
 본 사이트의 컨텐츠는 저작권법의 보호를 받는 바 무단 전재, 복사, 배포 등을 금합니다.<br>
-Copyright © 1995-2024 SingleThread. All Rights Reserved..
-        </div>
+Copyright © 2024 SingleThread. All Rights Reserved..
+       </div>
 </footer>
+
 </body>
 </html>

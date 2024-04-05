@@ -1,11 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" errorPage="error.jsp"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<title></title>
+<title>getdrive 초기화면</title>
 <style type="text/css">
 #full {
 	width: 100%;
@@ -45,22 +46,27 @@
 </style>
 </head>
 <body>
-	<div id="full">
-		<div id="header">
-			<c:import url="/WEB-INF/views/common/mainTopbar.jsp"></c:import>
+
+<div id="full">
+	<div id="header">
+		<c:import url="/WEB-INF/views/common/mainTopbar.jsp"></c:import>
+	</div>
+	<hr>
+	
+	<div id="main">
+		<div id="left">
+			<c:import url="/WEB-INF/views/common/commonMenu.jsp"></c:import>
 		</div>
-		<hr>
-		<div id="main">
-			<div id="left">
-				<c:import url="/WEB-INF/views/common/commonMenu.jsp"></c:import>
-			</div>
-			<div id="right">
-				<c:import url="/WEB-INF/views/member/login.jsp"></c:import>
-			</div>
-		</div>
-		<div id="footer">
-			<c:import url="/WEB-INF/views/common/footer.jsp"></c:import>
+		<div id="right">
+			<c:import url="/WEB-INF/views/member/login.jsp"></c:import>
 		</div>
 	</div>
+	
+	<div id="footer">
+		<c:import url="/WEB-INF/views/common/login_footer.jsp"></c:import>
+	</div>
+	
+</div>
+
 </body>
 </html>
