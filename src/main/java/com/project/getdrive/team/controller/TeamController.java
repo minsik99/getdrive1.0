@@ -23,7 +23,6 @@ import com.project.getdrive.team.common.TeamCreator;
 import com.project.getdrive.team.model.service.TeamService;
 import com.project.getdrive.team.model.vo.Team;
 import com.project.getdrive.teamuser.model.service.TeamUserService;
-import com.project.getdrive.teamuser.model.vo.TeamUser;
 
 @Controller
 public class TeamController {

@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.project.getdrive.search.model.vo.Search;
 import com.project.getdrive.team.model.service.TeamService;
 import com.project.getdrive.team.model.vo.Team;
 

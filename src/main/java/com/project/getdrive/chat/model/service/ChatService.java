@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.project.getdrive.chat.model.vo.Chat;
-import com.project.getdrive.chatcontent.model.vo.ChatContent;
-import com.project.getdrive.chatuser.model.vo.ChatUser;
 
 public interface ChatService {
 

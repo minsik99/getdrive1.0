@@ -7,7 +7,6 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.project.getdrive.common.CommonSch;
 import com.project.getdrive.member.model.vo.Member;
 import com.project.getdrive.team.common.TeamCreator;
 import com.project.getdrive.team.model.vo.Team;
