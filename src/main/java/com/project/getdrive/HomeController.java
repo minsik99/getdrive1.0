@@ -62,12 +62,15 @@ public class HomeController {
 	// 팀 메인으로 이동
 	@RequestMapping(value="teammain.do", method= {RequestMethod.GET, RequestMethod.POST})
 	public ModelAndView templateView(
-		@RequestParam(name = "tno", required = true) int teamcode,	
+		@RequestParam(name = "tNo", required = true) int teamcode,	
 		HttpServletRequest request,
 		HttpServletResponse Response,
+		HttpSession session,
 		ModelAndView mv) {
 		
 		logger.info("### teammain.do "+ teamcode);
+		
+		session.setAttribute("tNo", teamcode);
 		
 		mv.addObject("teamcode", teamcode);
 		mv.setViewName("common/teammain");		
