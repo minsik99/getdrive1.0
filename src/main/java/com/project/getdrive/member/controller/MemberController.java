@@ -26,7 +26,7 @@ public class MemberController {
 	@Autowired
 	private BCryptPasswordEncoder bcryptPasswordEncoder;
 	
-	//약관페이지 이동
+	//약관페이지
 	@RequestMapping(value="mainPage.do", method= {RequestMethod.GET, RequestMethod.POST})
 	public String moveMainPage() {
 		return "common/main";
