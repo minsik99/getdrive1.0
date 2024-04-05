@@ -46,15 +46,9 @@ public class DriveController {
 		
 		/* 2024.04.05 kimyh - 조장님 주석 요청
 		// 드라이브 먼저 입장한다면 휴지통(고유번호: 1번) 먼저 생성한다
-<<<<<<< HEAD
 		/*
 		 * if(driveService.insertTrashCan(drive) > 0) { }
 		 */
-=======
-		if(driveService.insertTrashCan(drive) > 0) {
-		}
-		*/
->>>>>>> 82fedeee6567ae3be25f4a9edc0a788616a55872
 		
 		return "drive/driveMain";			
 	}
