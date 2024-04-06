@@ -115,23 +115,23 @@ public class HomeController {
 		return sendJson.toJSONString();
 	}	
 	
-	/*	
+
 	// 팀공통 - 왼쪽 메뉴 팀이동 기능 - 객체변경할 것.
 	@SuppressWarnings("unchecked")	
 	@RequestMapping(value="boardList.do", method=RequestMethod.POST)
 	@ResponseBody	
 	public String boardList() throws UnsupportedEncodingException {
-		ArrayList<Search> list = searchService.teamSelect();
+		ArrayList<Team> list = teamService.selectList();
 		
 		JSONArray jarr = new JSONArray();		
 		
-		for(Search search : list) {
+		for(Team team : list) {
 			JSONObject job = new JSONObject();
 			
-			job.put("no", search.getS_no());
+			job.put("tno", team.gettNo());
 			
 			//한글 데이터는 반드시 인코딩 처리함			
-			job.put("title", URLEncoder.encode(search.getS_title(), "utf-8"));
+			job.put("teamname", URLEncoder.encode(team.gettName(), "utf-8"));
 			
 			jarr.add(job);
 		}		
@@ -148,17 +148,17 @@ public class HomeController {
 	@RequestMapping(value="chatList.do", method=RequestMethod.POST)
 	@ResponseBody	
 	public String chatList() throws UnsupportedEncodingException {
-		ArrayList<Search> list = searchService.teamSelect();
+		ArrayList<Team> list = teamService.selectList();
 		
 		JSONArray jarr = new JSONArray();		
 		
-		for(Search search : list) {
+		for(Team team : list) {
 			JSONObject job = new JSONObject();
 			
-			job.put("no", search.getS_no());
+			job.put("tno", team.gettNo());
 			
 			//한글 데이터는 반드시 인코딩 처리함			
-			job.put("title", URLEncoder.encode(search.getS_title(), "utf-8"));
+			job.put("teamname", URLEncoder.encode(team.gettName(), "utf-8"));
 			
 			jarr.add(job);
 		}		
@@ -174,17 +174,17 @@ public class HomeController {
 	@RequestMapping(value="driveList.do", method=RequestMethod.POST)
 	@ResponseBody	
 	public String driveList() throws UnsupportedEncodingException {
-		ArrayList<Search> list = searchService.teamSelect();
+		ArrayList<Team> list = teamService.selectList();
 		
 		JSONArray jarr = new JSONArray();		
 		
-		for(Search search : list) {
+		for(Team team : list) {
 			JSONObject job = new JSONObject();
 			
-			job.put("no", search.getS_no());
+			job.put("tno", team.gettNo());
 			
 			//한글 데이터는 반드시 인코딩 처리함			
-			job.put("title", URLEncoder.encode(search.getS_title(), "utf-8"));
+			job.put("teamname", URLEncoder.encode(team.gettName(), "utf-8"));
 			
 			jarr.add(job);
 		}		
@@ -194,5 +194,5 @@ public class HomeController {
 		
 		return sendJson.toJSONString();
 	}	
-	*/
+
 }

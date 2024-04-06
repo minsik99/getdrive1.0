@@ -37,23 +37,13 @@
 		고유번호 : ${ loginMember.getAccountNo() } | 아이디 : ${ loginMember.getName() }, 이름 : ${ loginMember.getEmail() }, 가입일 : ${ loginMember.getCdate() }
 	</div>	
 	
-	<div id="logospace">
+	<div id="logospace">	
 	
-		<%--로그인 하지 않았을 때 --%>
-		<c:if test="${ empty sessionScope.loginMember }">
-			<%-- <a href="${ pageContext.servletContext.contextPath }/teamMain.do"> --%>
-			<a href="${ pageContext.servletContext.contextPath }/main.do">
-			<img id="logo" alt="getdrive"src="/getdrive/resources/images/logo.png">
-			</a>
-		</c:if>
-	
-		<%-- 로그인 했을 때 --%>
-		<c:if test="${ !empty sessionScope.loginMember }">
-			<%-- <a href="${ pageContext.servletContext.contextPath }/mainPage.do"> --%>
-			<a href="${ pageContext.servletContext.contextPath }/tmain.do">
-			<img id="logo" alt="getdrive"src="/getdrive/resources/images/logo.png">
-			</a>
-		</c:if>
+		<%-- 2024.04.06 kimyh : 로그인 여부와 상관없이 초기화면으로 이동 처리 --%>
+		<a href="${ pageContext.servletContext.contextPath }/main.do">
+		<img id="logo" alt="getdrive"src="/getdrive/resources/images/logo.png">
+		</a>		
+		
 	</div>
 	
 	<%--2024.04.05 kimyh 로그아웃 처리 삭제대상 --%>	
