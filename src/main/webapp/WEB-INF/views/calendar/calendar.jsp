@@ -72,46 +72,51 @@
         }
     </style>
 		
-		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet">
-      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
-		<script type="text/javascript" src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.7.1.min.js"></script>	
-		<script type="text/javascript">
-		
-		
-		//조회 출력 처리 테스트
-		$.ajax({
-			url: "cllist.do",
-			type: "post",
-			data: { year: <%=year%>, month: <%=month+1%>},
-			dataType: "json",
-			success: function(data){
-				console.log("success : " + data);
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
+<script type="text/javascript" src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.7.0.min.js"></script>	
+
+<script type="text/javascript">		
+
+$(function(){
+	
+	//조회 출력 처리 테스트
+	$.ajax({
+		url: "cllist.do",
+		type: "post",
+		data: { year: <%=year%>, month: <%=month+1%>},
+		dataType: "json",
+		success: function(data){
+			console.log("success : " + data);
+			
+			//object --> string
+			var str = JSON.stringify(data);
+			
+			//string --> json
+			var json = JSON.parse(str);
+			
+			values = "";			
+			for(var i in json.list){
+															//상세보기
+				values = "&middot; <a href='cldetail.do?clnum=" + json.list[i].clnum 
+						+ "''>" + decodeURIComponent(json.list[i].cltitle).replace(/\+/gi, " ") 
+						+ "</a><br>";
+	
+				$('#clnum'+ json.list[i].clday).append(values)	;
 				
-				//object --> string
-				var str = JSON.stringify(data);
+				values = "";
 				
-				//string --> json
-				var json = JSON.parse(str);
-				
-				values = "";			
-				for(var i in json.list){
-																//상세보기
-					values = "&middot; <a href='cldetail.do?clnum=" + json.list[i].clnum 
-							+ "''>" + decodeURIComponent(json.list[i].cltitle).replace(/\+/gi, " ") 
-							+ "</a><br>";
-		
-					$('#clnum'+ json.list[i].clday).append(values)	;
-					
-					values = "";
-					
-				}
-				
-			},
-			error: function(jqXHR, textStatus, errorThrown){
-				console.log("error : " + jqXHR + ", " + textStatus + ", " + errorThrown);
 			}
-		});  //ajax	
-		</script>
+			
+		},
+		error: function(jqXHR, textStatus, errorThrown){
+			console.log("error : " + jqXHR + ", " + textStatus + ", " + errorThrown);
+		}
+	});  //ajax	
+
+});  //document ready		
+	
+</script>
 		<style>
 			 html, body{ 
 			 	height:100%;
@@ -156,7 +161,7 @@
 			
 			<div>			
 		  				
-			    <button onclick="javascript:location.href='clinsertform.do';" 
+			    <button onclick="javascript:location.href='clinsertform.do?tNo=${tNo}';" 
 			    class="btn-open-modal">등록</button>	
 			    
 				<table class="table text-left table-bordered">

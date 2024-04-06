@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.project.getdrive.calendar.dao.CalendarDao;
 import com.project.getdrive.calendar.vo.Calendar;
+import com.project.getdrive.common.CommonCL;
 
 @Service("CalendarService")
 public class CalendarServiceImpl implements CalendarService {
@@ -20,6 +21,11 @@ public class CalendarServiceImpl implements CalendarService {
 		return calendarDao.scheduleInsert(calendar);
 	}
 
+
+	@Override //달력 리스트
+	public ArrayList<Calendar> scheduleList(CommonCL commonCL) {
+		return calendarDao.scheduleList(commonCL);
+	}
 
 	@Override //일정 리스트 출력
 	public ArrayList<Calendar> CalendarList() {

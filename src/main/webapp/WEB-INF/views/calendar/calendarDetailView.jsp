@@ -32,47 +32,67 @@ function requestDelete(){
 
 </head>
 <body>
-<h1 align="center">일정보기</h1>
 
-<table align="center" width="500" border="1" cellspacing="0" cellpadding="5">
+<div id="container">
 
+  <div id="jb-header">      
+	<c:import url="/WEB-INF/views/common/teamtop.jsp" />        
+  </div>
+  
+  <div id="sidebar">
+	<c:import url="/WEB-INF/views/common/teamleft.jsp" />
+  </div>
+  
+  <div id="content">
+	<h1 align="center">일정보기</h1>
+
+	<table align="center" width="500" border="1" cellspacing="0" cellpadding="5">
 	
-	<tr> 
-		<th>날짜</th>
-		<td>${ calendar.calendarDate }</td>
-	</tr>
-	<tr><!-- 숫자는 num -->
-		<th>시작시간</th>
-		<td>${ calendar.calendarStart }</td>
-	</tr>
-	<tr>
-		<th>종료시간</th>
-		<td>${ calendar.calendarEnd } </td>
-	</tr>
-	<tr>
-		<th>제 목</th>
-		<td>${ calendar.calendarTitle }</td>
-	</tr>
-	<tr>
-	<tr>
-		<th>내 용</th>
-		<td>${ calendar.calendarContent }</td>
-	</tr>
+		
+		<tr> 
+			<th>날짜</th>
+			<td>${ calendar.calendarDate }</td>
+		</tr>
+		<tr><!-- 숫자는 num -->
+			<th>시작시간</th>
+			<td>${ calendar.calendarStart }</td>
+		</tr>
+		<tr>
+			<th>종료시간</th>
+			<td>${ calendar.calendarEnd } </td>
+		</tr>
+		<tr>
+			<th>제 목</th>
+			<td>${ calendar.calendarTitle }</td>
+		</tr>
+		<tr>
+		<tr>
+			<th>내 용</th>
+			<td>${ calendar.calendarContent }</td>
+		</tr>
+	
+		<tr>
+			<th>공개여부</th>
+			<td>${ calendar.calendarCheck }</td>
+		</tr>
+	
+		<tr>
+			<th colspan="2">
+				<input type="submit" value="수정" onclick="moveUpdatePage();"> &nbsp; 
+				<input type="reset" value="삭제" onclick="requestDelete(); return false;"> &nbsp;
+				<input type="button" value="달력" 
+				onclick="javascript:location.href='calendar.do'; return false;">
+			</th>		
+		</tr>
+	</table>
+	
+  </div>
 
-	<tr>
-		<th>공개여부</th>
-		<td>${ calendar.calendarCheck }</td>
-	</tr>
+  <div id="footer">
+    <c:import url="/WEB-INF/views/common/teamfooter.jsp" />
+  </div>
 
-	<tr>
-		<th colspan="2">
-			<input type="submit" value="수정" onclick="moveUpdatePage();"> &nbsp; 
-			<input type="reset" value="삭제" onclick="requestDelete(); return false;"> &nbsp;
-			<input type="button" value="달력" 
-			onclick="javascript:location.href='calendar.do'; return false;">
-		</th>		
-	</tr>
-</table>
+</div>	
 	
 </body>
 </html>	
