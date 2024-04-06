@@ -3,6 +3,7 @@ package com.project.getdrive.calendar.service;
 import java.util.ArrayList;
 
 import com.project.getdrive.calendar.vo.Calendar;
+import com.project.getdrive.common.CommonCL;
 
 
 public interface CalendarService {
@@ -11,8 +12,10 @@ public interface CalendarService {
 	public ArrayList<Calendar> CalendarList();
 	
 	//일정 입력
-	public int scheduleInsert(Calendar calendar);
-
+	public int scheduleInsert(Calendar calendar);	
+	
+	//일정 리스트 출력
+	public ArrayList<Calendar> scheduleList(CommonCL commonCL);
 	
 	//상세보기 조회
 	public Calendar scheduleView(int calendarNo);

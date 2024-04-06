@@ -1,5 +1,6 @@
 package com.project.getdrive.calendar.controller;
 
+
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
@@ -21,7 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.project.getdrive.calendar.service.CalendarService;
 import com.project.getdrive.calendar.vo.Calendar;
-
+import com.project.getdrive.common.CommonCL;
 
 
 //캘린더 전체 출력
@@ -34,8 +35,10 @@ public class CalendarController {
 	private CalendarService calendarService;
 
 	@RequestMapping(value = "calendar.do", method = RequestMethod.GET)
-	public String calendarMain() {			
-		return "calendar/calendar";		
+	public String calendarMain() {
+			
+			return "calendar/calendar";
+		
 	}
 	
 	//스케줄 표시
@@ -53,9 +56,12 @@ public class CalendarController {
 		//		=> servlet-context.xml 에 설정된 JSONView 클래스가 받아서 내보냄 : 등록 설정 필요함
 		
 		//두개 이상의 객체를 사용하기 위해 CommonCL 클래스에 합침
-	
+		CommonCL commonCL = new CommonCL();
+		commonCL.setMonth(month);
+		commonCL.setYear(year);
+		
 			
-		ArrayList<Calendar> list = calendarService.CalendarList();
+		ArrayList<Calendar> list = calendarService.scheduleList(commonCL);
 		
 		//list 를 json 배열에 옮기기
 		JSONArray jarr = new JSONArray();

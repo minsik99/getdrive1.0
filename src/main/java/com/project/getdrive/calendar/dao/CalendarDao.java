@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.project.getdrive.calendar.vo.Calendar;
+import com.project.getdrive.common.CommonCL;
 
 @Repository("calendarDao")
 public class CalendarDao {
@@ -26,6 +27,11 @@ public class CalendarDao {
 			return sqlSessionTemplate.insert("calendarMapper.scheduleInsert", calendar);
 		}
 		
+		//일정 리스트
+		public ArrayList<Calendar> scheduleList(CommonCL commonCL) {
+			List<Calendar> list = sqlSessionTemplate.selectList("calendarMapper.scheduleList", commonCL);
+			return (ArrayList<Calendar>)list;
+		}
 		
 		//상세보기 조회처리
 		public Calendar scheduleView(int calendarNo) {

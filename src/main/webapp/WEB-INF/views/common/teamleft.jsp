@@ -312,7 +312,7 @@ $(function(){
 	</div>
 
 	<hr>
-	<b><a href="calendar.do">캘린더</a></b>
+	<b><a href="calendar.do?tNo=${tNo}">캘린더</a></b>
 	
 </body>
 </html>

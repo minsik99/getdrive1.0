@@ -77,13 +77,13 @@ body {
 
 <body>
 ## 수신받는 정보 ## <br>
-로그인세션정보 : ${ loginMember } <br>
-로그인세션정보 : 
+<!--  로그인세션정보(loginMember) : ${ loginMember } --> 
+로그인세션정보 (loginMember) : 
 	고유번호 ${ loginMember.accountNo } | 
-	아이디 : ${ loginMember.email } |
-	이름 : ${ loginMember.name } |
-	가입일 : ${ loginMember.cdate } <br>
-팀코드 : ${ teamcode }
+	이메일(email) : ${ loginMember.email } |
+	이름(name) : ${ loginMember.name } |
+	가입일(cdate) : ${ loginMember.cdate } <br>
+팀코드(tNo) : ${ tNo }
 		
 <table id="headerTable">
 <tr><th width=230 align=left>
