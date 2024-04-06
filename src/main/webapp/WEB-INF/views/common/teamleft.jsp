@@ -275,7 +275,7 @@ $(function(){
 					+ "</a></li>";	
 			}
 			
-			$('#driveList').html(values + "<li><a href='dname.do' class='item'>드라이브 생성 + </a></li>");
+			$('#driveList').html(values + "<li><a href='dmain.do' class='item'>드라이브 생성 + </a></li>");
 		}, 
 		error: function(jqXHR, textStatus, errorThrown){
 			console.log("error : " + jqXHR + ", " + textStatus + ", " + errorThrown);
@@ -306,10 +306,13 @@ $(function(){
 		<ul id="chatList"></ul>
 	</div>	
 	<hr>
-	<a href='dmain.do'><b>드라이브</b></a>
+	<b>드라이브</b>
 	<div width=100% align=left>
 		<ul id="driveList"></ul>
 	</div>
+
+	<hr>
+	<b><a href="calendar.do">캘린더</a></b>
 	
 </body>
 </html>

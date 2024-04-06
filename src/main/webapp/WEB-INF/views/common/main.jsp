@@ -14,7 +14,8 @@
 <!-- 2024.04.05 kimyh : 로그인된 상태시 팀 목록으로 이동 처리 -->
 <c:if test="${!empty loginMember}">
 	<script type="text/javascript">
-	window.location.replace('tmain.do');
+		alert("로그인 상태입니다. 팀 목록으로 이동합니다. ");
+		window.location.replace('tmain.do');
 	</script>
 </c:if> 
 </head>

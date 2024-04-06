@@ -24,6 +24,9 @@
 		<typeAlias type="com.project.getdrive.drive.model.vo.Drive" alias="Drive" />
 		<!-- 회의 -->
 		<typeAlias type="com.project.getdrive.meeting.model.vo.Meeting" alias="Meeting" />	
+		<!-- 2024.04.06 kimyh 캘린더 추가 -->
+		<typeAlias type="com.project.getdrive.calendar.vo.Calendar" alias="Calendar" />		
+		<typeAlias type="com.project.getdrive.common.CommonCL" alias="CommonCL" />
 	</typeAliases>
 	
 	<mappers>
@@ -39,5 +42,7 @@
 		<mapper resource="mappers/drive-mapper.xml" />
 		<!-- 회의 -->		
 		<mapper resource="mappers/meeting-mapper.xml" />
+		<!-- 2024.04.06 kimyh 캘린더 추가 -->		
+		<mapper resource="mappers/calendar-mapper.xml" />		
 	</mappers>
 </configuration>
