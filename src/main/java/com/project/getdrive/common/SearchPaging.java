@@ -1,4 +1,4 @@
-package com.project.getdrive.team.common;
+package com.project.getdrive.common;
 
 import java.sql.Date;
 

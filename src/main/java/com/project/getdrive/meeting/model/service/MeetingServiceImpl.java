@@ -6,9 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.project.getdrive.common.Paging;
+import com.project.getdrive.common.SearchPaging;
 import com.project.getdrive.meeting.model.dao.MeetingDao;
 import com.project.getdrive.meeting.model.vo.Meeting;
-import com.project.getdrive.team.common.SearchPaging;
 
 @Service("meetingService")
 public class MeetingServiceImpl implements MeetingService {
