@@ -16,4 +16,9 @@ public class DriveServiceImpl implements DriveService{
 	public int insertTrashCan(Drive drive) {
 		return driveDao.insertTrashCan(drive);
 	}
+
+	@Override
+	public int checkTrash(Drive drive) {
+		return driveDao.checkTrash(drive);
+	}
 }
