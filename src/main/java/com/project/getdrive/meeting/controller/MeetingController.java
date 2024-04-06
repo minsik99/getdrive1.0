@@ -17,11 +17,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.project.getdrive.common.FileNameChange;
 import com.project.getdrive.common.Paging;
+import com.project.getdrive.common.SearchPaging;
 import com.project.getdrive.meeting.model.service.MeetingService;
 import com.project.getdrive.meeting.model.vo.Meeting;
-import com.project.getdrive.team.common.FileNameChange;
-import com.project.getdrive.team.common.SearchPaging;
 
 @Controller
 public class MeetingController {

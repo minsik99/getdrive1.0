@@ -136,7 +136,7 @@ function changeLimit(limit){
 </fieldset>
 </form>
 
-<%-- 조회된 공지사항 목록 출력 --%>
+<%-- 조회된 회의록 목록 출력 --%>
 <table align="center" width="700" border="1" cellspacing="0" >
 <tr>
 	<th>번호</th>

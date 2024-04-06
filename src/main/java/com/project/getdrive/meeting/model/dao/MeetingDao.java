@@ -8,8 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.project.getdrive.common.Paging;
+import com.project.getdrive.common.SearchPaging;
 import com.project.getdrive.meeting.model.vo.Meeting;
-import com.project.getdrive.team.common.SearchPaging;
 
 @Repository("meetingDao")
 public class MeetingDao {
