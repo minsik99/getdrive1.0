@@ -1,5 +1,8 @@
 package com.project.getdrive.drive.model.dao;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -18,5 +21,10 @@ public class DriveDao {
 
 	public int checkTrash(Drive drive) {
 		return sqlSessionTemplate.selectOne("driveMapper.checkTrash", drive);
+	}
+
+	public ArrayList<Drive> selectDriveList(Drive drive) {
+		List list = sqlSessionTemplate.selectList("driveMapper.selectDriveList", drive);
+		return (ArrayList<Drive>) list;
 	}
 }

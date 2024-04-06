@@ -1,5 +1,7 @@
 package com.project.getdrive.drive.model.service;
 
+import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,5 +22,10 @@ public class DriveServiceImpl implements DriveService{
 	@Override
 	public int checkTrash(Drive drive) {
 		return driveDao.checkTrash(drive);
+	}
+
+	@Override
+	public ArrayList<Drive> selectDriveList(Drive drive) {
+		return driveDao.selectDriveList(drive);
 	}
 }

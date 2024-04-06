@@ -1,5 +1,7 @@
 package com.project.getdrive.drive.controller;
 
+import java.util.ArrayList;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
@@ -43,6 +45,10 @@ public class DriveController {
 		if(driveService.checkTrash(drive) <= 0) {
 			driveService.insertTrashCan(drive);			
 		}
+		
+		// 존재하는 드라이브 리스트 조회
+		ArrayList<Drive> list = driveService.selectDriveList(drive);
+		model.addAttribute("list", list);
 		 
 		return "drive/driveMain";			
 	}

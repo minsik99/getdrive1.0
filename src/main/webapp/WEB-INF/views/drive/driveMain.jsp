@@ -101,14 +101,23 @@
 	$(function(){
 		// 이전 버튼을 누르면 대시보드로 이동
 		$('#arrow').click(function(){
-			location.href="teammain.do";
+			location.href="teammain.do?tNo=${ tNo }";
+		});
+		
+		// + 버튼을 누르면 새 드라이브(버킷) 생성
+		$('#add').click(function(){
+			$.ajax(function(){
+				url: "idrive.do",
+				type: "post",
+				data: ""
+			});
 		});
 		
 		// select option의 선택값을 받아서 a 태그
 		$(".custom-select").change(function() {
-            var selectedText = $(this).find("option:selected").text();
-            $("#link").text(selectedText);
-        });
+	        var selectedText = $(this).find("option:selected").text();
+	        $("#link").text(selectedText);
+	    });
 	});
 </script>
 </head>
@@ -134,30 +143,32 @@
 		<!-- select 태그 -->
 		<p>전체 공개</p>
 		<select class="custom-select">
-		    <!-- option 태그 -->
-		    <option value="b1">드라이브 1</option>
-		    <option value="b2">드라이브 2</option>
-		    <option value="b3">드라이브 3</option>
+		    <c:forEach items="${ list }" var="dlist">
+		    	<c:if test="${ dlist.dPub eq 'Y' }">
+			    	<option value="${ dlist.dNo }">${ dlist.dName }</option>
+			    </c:if>
+		    </c:forEach>
 		</select>
 		<br>
 		<!-- select 태그 -->
 		<p>비공개</p>
 		<select class="custom-select">
-    		<!-- option 태그 -->
-		    <option value="1">1드라이브</option>
-		    <option value="2">2드라이브</option>
-		    <option value="3">3드라이브</option>
+    		<c:forEach items="${ list }" var="dlist">
+		    	<c:if test="${ dlist.dPub eq 'N' }">
+			    	<option value="${ dlist.dNo }">${ dlist.dName }</option>
+			    </c:if>
+		    </c:forEach>
 		</select>
 		<br>
 		<img id="trash" src="/getdrive/resources/images/trash.png">
 	</aside>
 	<div class="wrapper">
 		<div class="wrapper_header">
-			<a id="link">(옵션)</a><br>
+			<span id="link">드라이브</span><br>
 			<div class="functions">
 				<div>
 					<input type="checkbox"><span>전체선택</span> &nbsp;
-					<button>새폴더</button> &nbsp;
+					<button id="newFolder">새 폴더</button> &nbsp;
 					<button>업로드</button>
 				</div>
 				<div style="display: flex; align-items: center;">
