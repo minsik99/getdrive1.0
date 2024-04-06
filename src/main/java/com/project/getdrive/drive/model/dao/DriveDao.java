@@ -15,4 +15,8 @@ public class DriveDao {
 	public int insertTrashCan(Drive drive) {
 		return sqlSessionTemplate.insert("driveMapper.insertTrashCan", drive);
 	}
+
+	public int checkTrash(Drive drive) {
+		return sqlSessionTemplate.selectOne("driveMapper.checkTrash", drive);
+	}
 }

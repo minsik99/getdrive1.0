@@ -6,4 +6,6 @@ public interface DriveService {
 
 	int insertTrashCan(Drive drive);
 
+	int checkTrash(Drive drive);
+
 }

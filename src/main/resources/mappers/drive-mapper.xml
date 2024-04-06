@@ -15,10 +15,16 @@
 		<result property="dTID" column="D_TID" />
 	</resultMap>
 	
+	<!-- 휴지통이 생성되어 있는지 확인 -->
+	<select id="checkTrash" parameterType="Drive" resultType="_int">
+		select count(*) from tb_drive
+		where d_trcan = 'Y'
+	</select>
+	
 	<!-- 1번째 드라이브로 휴지통 생성 -->
 	<insert id="insertTrashCan" parameterType="Drive">
 		insert into tb_drive
-		values(1, '휴지통', sysdate, null, 'N', 'Y', #{ dCRUID }, #{ dTID })
+		values(1, '휴지통', sysdate, null, 'Y', 'Y', #{ dCRUID }, #{ dTID })
 	</insert>
 	
 </mapper>

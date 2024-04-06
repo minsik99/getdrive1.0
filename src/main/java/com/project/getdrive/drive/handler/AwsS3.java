@@ -17,8 +17,12 @@ import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.AbortMultipartUploadRequest;
 import com.amazonaws.services.s3.model.AmazonS3Exception;
 import com.amazonaws.services.s3.model.Bucket;
+import com.amazonaws.services.s3.model.CopyObjectRequest;
+import com.amazonaws.services.s3.model.DeleteObjectRequest;
 import com.amazonaws.services.s3.model.ListMultipartUploadsRequest;
 import com.amazonaws.services.s3.model.ListObjectsRequest;
+import com.amazonaws.services.s3.model.ListObjectsV2Request;
+import com.amazonaws.services.s3.model.ListObjectsV2Result;
 import com.amazonaws.services.s3.model.MultipartUpload;
 import com.amazonaws.services.s3.model.MultipartUploadListing;
 import com.amazonaws.services.s3.model.ObjectListing;
@@ -67,7 +71,7 @@ public class AwsS3 {
             List<Bucket> buckets = s3.listBuckets();
             System.out.println("Bucket List: ");
             for (Bucket bucket : buckets) {
-                System.out.println("    name=" + bucket.getName() + ", creation_date=" + bucket.getCreationDate() + ", owner=" + bucket.getOwner().getId());
+                System.out.println("name=" + bucket.getName() + ", creation_date=" + bucket.getCreationDate() + ", owner=" + bucket.getOwner().getId());
             }
         } catch (AmazonS3Exception e) {
             e.printStackTrace();
@@ -142,9 +146,9 @@ public class AwsS3 {
     }
 
     // 파일 업로드
-    public void uploadFile(String bucketName, String objectName, String filePath) {
+    public void uploadFile(String bucketName, String folderName, String objectName, String filePath) {
         try {
-            s3.putObject(bucketName, objectName, new File(filePath));
+            s3.putObject(bucketName, folderName + "/" + objectName, new File(filePath));
             System.out.format("Object %s has been created.\n", objectName);
         } catch (AmazonS3Exception e) {
             e.printStackTrace();
@@ -165,7 +169,7 @@ public class AwsS3 {
             System.out.println("Object List:");
             while (true) {
                 for (S3ObjectSummary objectSummary : objectListing.getObjectSummaries()) {
-                    System.out.println("    name=" + objectSummary.getKey() + ", size=" + objectSummary.getSize() + ", owner=" + objectSummary.getOwner().getId());
+                    System.out.println("name=" + objectSummary.getKey() + ", size=" + objectSummary.getSize() + ", owner=" + objectSummary.getOwner().getId());
                 }
 
                 if (objectListing.isTruncated()) {
@@ -192,12 +196,12 @@ public class AwsS3 {
 
             System.out.println("Folder List:");
             for (String commonPrefixes : objectListing.getCommonPrefixes()) {
-                System.out.println("    name=" + commonPrefixes);
+                System.out.println("name=" + commonPrefixes);
             }
 
             System.out.println("File List:");
             for (S3ObjectSummary objectSummary : objectListing.getObjectSummaries()) {
-                System.out.println("    name=" + objectSummary.getKey() + ", size=" + objectSummary.getSize() + ", owner=" + objectSummary.getOwner().getId());
+                System.out.println("name=" + objectSummary.getKey() + ", size=" + objectSummary.getSize() + ", owner=" + objectSummary.getOwner().getId());
             }
         } catch (AmazonS3Exception e) {
             e.printStackTrace();
@@ -236,6 +240,109 @@ public class AwsS3 {
         try {
             s3.deleteObject(bucketName, objectName);
             System.out.format("Object %s has been deleted.\n", objectName);
+        } catch (AmazonS3Exception e) {
+            e.printStackTrace();
+        } catch(SdkClientException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    // 버킷 비우기
+    public void emptyBucket(String bucketName) {
+        try {
+            // 버킷 내의 객체 목록 가져오기
+            ObjectListing objectListing = s3.listObjects(bucketName);
+            for (S3ObjectSummary objectSummary : objectListing.getObjectSummaries()) {
+                // 객체 삭제
+                s3.deleteObject(new DeleteObjectRequest(bucketName, objectSummary.getKey()));
+            }
+
+            System.out.format("Bucket %s emptied.\n", bucketName);
+        } catch (AmazonS3Exception e) {
+            e.printStackTrace();
+        } catch(SdkClientException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    // 버킷 이동
+    public void moveBucket(String sourceBucketName, String destinationBucketName) {
+        try {
+            // 새로운 위치에 새로운 버킷 생성
+            if (!s3.doesBucketExistV2(destinationBucketName)) {
+                s3.createBucket(destinationBucketName);
+            }
+
+            // 이전 버킷의 객체 목록 가져오기
+            ListObjectsV2Result objectListing = s3.listObjectsV2(new ListObjectsV2Request().withBucketName(sourceBucketName));
+            objectListing.getObjectSummaries().forEach(objectSummary -> {
+                String sourceKey = objectSummary.getKey();
+                String destinationKey = sourceKey;
+
+                // 객체 복사
+                CopyObjectRequest copyRequest = new CopyObjectRequest(sourceBucketName, sourceKey, destinationBucketName, destinationKey);
+                s3.copyObject(copyRequest);
+
+                // 복사가 완료되면 이전 버킷의 객체 삭제
+                s3.deleteObject(new DeleteObjectRequest(sourceBucketName, sourceKey));
+            });
+
+            // 이전 버킷 삭제
+            s3.deleteBucket(sourceBucketName);
+
+            System.out.format("Bucket %s moved to %s.\n", sourceBucketName, destinationBucketName);
+        } catch (AmazonS3Exception e) {
+            e.printStackTrace();
+        } catch(SdkClientException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    // 폴더(오브젝트) 이동
+    public void moveFolder(String sourceBucketName, String sourcePrefix, String destinationBucketName, String destinationPrefix) {
+        try {
+            // 폴더(오브젝트) 내의 모든 파일과 하위 폴더(오브젝트)를 복사
+            s3.listObjectsV2(sourceBucketName, sourcePrefix).getObjectSummaries().forEach(objectSummary -> {
+                String destinationKey = destinationPrefix + objectSummary.getKey().substring(sourcePrefix.length());
+                CopyObjectRequest copyRequest = new CopyObjectRequest(sourceBucketName, objectSummary.getKey(), destinationBucketName, destinationKey);
+                s3.copyObject(copyRequest);
+            });
+
+            // 복사가 완료되면 원본 폴더(오브젝트) 삭제
+            s3.deleteObject(new DeleteObjectRequest(sourceBucketName, sourcePrefix));
+            System.out.format("Folder %s moved to %s.\n", sourcePrefix, destinationPrefix);
+        } catch (AmazonS3Exception e) {
+            e.printStackTrace();
+        } catch(SdkClientException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    // 파일 이동
+    public void moveFile(String sourceBucketName, String sourceKey, String destinationBucketName, String destinationKey) {
+        try {
+            // 파일 복사
+            CopyObjectRequest copyRequest = new CopyObjectRequest(sourceBucketName, sourceKey, destinationBucketName, destinationKey);
+            s3.copyObject(copyRequest);
+
+            // 복사가 완료되면 원본 파일 삭제
+            s3.deleteObject(new DeleteObjectRequest(sourceBucketName, sourceKey));
+            System.out.format("File %s moved to %s.\n", sourceKey, destinationKey);
+        } catch (AmazonS3Exception e) {
+            e.printStackTrace();
+        } catch(SdkClientException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    // 객체(파일) 메타데이터 확인
+    public void getObjectMetadata(String bucketName, String objectName) {
+        try {
+            ObjectMetadata metadata = s3.getObjectMetadata(bucketName, objectName);
+            System.out.println("Object Metadata:");
+            System.out.println("    Content-Length: " + metadata.getContentLength());
+            System.out.println("    Content-Type: " + metadata.getContentType());
+            // 필요한 경우 더 많은 메타데이터 정보를 확인할 수 있습니다.
         } catch (AmazonS3Exception e) {
             e.printStackTrace();
         } catch(SdkClientException e) {
