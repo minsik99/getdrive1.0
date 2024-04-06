@@ -16,10 +16,17 @@ public class TeamDao {
 	@Autowired
 	private SqlSessionTemplate sqlSessionTemplate;
 
-	public ArrayList<Team> selectList() {
-		List<Team> list = sqlSessionTemplate.selectList("teamMapper.selectList");
+	/* 2024.04.06 팀목록/팀초대 수정 */		
+	public ArrayList<Team> selectList(int mNo) {
+		List<Team> list = sqlSessionTemplate.selectList("teamMapper.selectList", mNo);
 		return (ArrayList<Team>) list;
 	}
+	
+	/* 2024.04.06 나의 팀목록 조회 */	
+	public ArrayList<Team> myTeamList(int mNo) {
+		List<Team> list = sqlSessionTemplate.selectList("teamMapper.myTeamList", mNo);
+		return (ArrayList<Team>) list;
+	}	
 
 	public int insertTeam(TeamCreator teamCreator) {
 		return sqlSessionTemplate.insert("teamMapper.insertTeam", teamCreator);

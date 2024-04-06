@@ -112,7 +112,7 @@ function createTeam(){
 	
 	<table width=100% align="center">
 		<tr>
-			<th>${ loginMember.name }님의 초대/가입된 목록입니다.</th>
+			<th>${ loginMember.name }님의 초대/가입된 목록입니다. </th>
 		</tr>
 		<c:forEach items="${ list }" var="tlist">
 			<c:if test="${ tlist.tuEmail eq loginMember.email }">

@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.websocket.Session;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,11 +38,20 @@ public class TeamController {
 
 	// 메인 화면 입장, 팀 정보 tNo(팀 고유번호)
 	@RequestMapping("tmain.do")
-	public String moveTeamMain(Model model,
-			HttpServletRequest request) {
+	public String moveTeamMain(
+			HttpServletRequest request,
+			Model model)  {
 		
+		/* 2024.04.06 kimyh 팀목록/팀초대 추가 */
+		HttpSession session = request.getSession();
+		Member loginMember = (Member) session.getAttribute("loginMember");
+
+		// System.out.println("#### Account No: " + loginMember + "########################################");
+
 		// 로그인 후 Session을 통해 회원이 맞다면 소속된 팀 조회, 팀이 없다면 팀 생성 페이지 이동을 돕는 안내 페이지로 이동
-		ArrayList<Team> list = teamService.selectList();
+		/* 2024.04.06 kimyh 팀목록/팀초대 수정 */
+		ArrayList<Team> list = teamService.selectList(loginMember.getAccountNo());
+
 		
 		if(list != null && list.size() > 0) {
 			model.addAttribute("list", list);
