@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.project.getdrive.member.model.vo.Member;
 import com.project.getdrive.team.model.service.TeamService;
 import com.project.getdrive.team.model.vo.Team;
 
@@ -92,16 +93,21 @@ public class HomeController {
 	@SuppressWarnings("unchecked")	
 	@RequestMapping(value="teamSelect.do", method=RequestMethod.POST)
 	@ResponseBody	
-	public String teamSelect() throws UnsupportedEncodingException {
+	public String teamSelect(
+		HttpServletRequest request) throws UnsupportedEncodingException {
 				
-		ArrayList<Team> list = teamService.selectList();
+		// 2024.04.06 kimyh 팀 목록 쿼리 수정
+		HttpSession session = request.getSession();
+		Member loginMember = (Member) session.getAttribute("loginMember");
+		
+		ArrayList<Team> list = teamService.myTeamList(loginMember.getAccountNo());
 		
 		JSONArray jarr = new JSONArray();		
 		
 		for(Team team : list) {
 			JSONObject job = new JSONObject();
 			
-			job.put("tno", team.gettNo());
+			job.put("teamno", team.gettNo());
 			
 			//한글 데이터는 반드시 인코딩 처리함			
 			job.put("teamname", URLEncoder.encode(team.gettName(), "utf-8"));

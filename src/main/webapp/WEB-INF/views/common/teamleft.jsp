@@ -132,7 +132,7 @@ $(function(){
 		dataType: "json",
 		success: function(data){
 			// 확인
-			console.log("success : " + data);
+			console.log("팀선택 success : " + data);
 			
 			// object --> string
 			var str = JSON.stringify(data);
@@ -149,17 +149,17 @@ $(function(){
 			for(var i in json.list){
 			
 				// 확인
-				console.log(json.list[i].tno + ", ${ teamCode }, ${ tno }");
+				// console.log(json.list[i].tno + ", ${ tNo }, ${ tno }");
 				
-				if (json.list[i].no == '${ teamCode }' ) {
-					values += "<option value='teammain.do?tNo="+ json.list[i].tno
+				if (json.list[i].teamno == '${ tNo }' ) {
+					values += "<option value='teammain.do?tNo="+ json.list[i].teamno
 					+"' selected>"
 					+ decodeURIComponent(json.list[i].teamname).replace(/\+/gi, " ") 
 					+ "</option>";					
 				} else {
-					values += "<option value='teammain.do?tno="+ json.list[i].tno
+					values += "<option value='teammain.do?tNo="+ json.list[i].teamno
 					+"'>"
-					+ decodeURIComponent(json.list[i].title).replace(/\+/gi, " ") 
+					+ decodeURIComponent(json.list[i].teamname).replace(/\+/gi, " ") 
 					+ "</option>";					
 				}
 			}
@@ -172,6 +172,7 @@ $(function(){
 		
 	});  //ajax
 	
+	/*
 	// 게시판 목록
 	$.ajax({
 		url: "boardList.do?",
@@ -282,6 +283,7 @@ $(function(){
 		}
 		
 	});  //ajax	
+	*/
 	
 });  //document ready	
 
@@ -291,9 +293,10 @@ $(function(){
 </head>
 <body>
 	<!-- 팀 목록  -->
-	<div width=100% align=center>
+	<b>My Team List</b>
+	<div width=100% align=center>		
 		<select id="teamSelect" onchange="window.open(value,'_self');">
-		</select>		
+		</select>	
 	</div>		
 	<hr>
 	<b>Board</b>	

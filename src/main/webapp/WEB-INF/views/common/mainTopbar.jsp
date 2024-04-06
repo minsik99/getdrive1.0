@@ -32,9 +32,13 @@
 <body>
 	<%--2024.04.05 kimyh 세션확인용 삭제대상 --%>
 	<div align="left">
-		파일명 : view > common > mainTopbar.jsp <br>
-		세션 : ${ loginMember } <br>
-		고유번호 : ${ loginMember.getAccountNo() } | 아이디 : ${ loginMember.getName() }, 이름 : ${ loginMember.getEmail() }, 가입일 : ${ loginMember.getCdate() }
+		## 수신받는 정보 ## <br>
+		<!--  로그인세션정보(loginMember) : ${ loginMember } --> 
+		로그인세션정보 (loginMember) : 
+			고유번호(accountNo) ${ loginMember.accountNo } | 
+			이메일(email) : ${ loginMember.email } |
+			이름(name) : ${ loginMember.name } |
+			가입일(cdate) : ${ loginMember.cdate }
 	</div>	
 	
 	<div id="logospace">	

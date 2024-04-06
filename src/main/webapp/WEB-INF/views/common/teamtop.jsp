@@ -76,14 +76,17 @@ body {
 
 
 <body>
-## 수신받는 정보 ## <br>
-<!--  로그인세션정보(loginMember) : ${ loginMember } --> 
-로그인세션정보 (loginMember) : 
-	고유번호 ${ loginMember.accountNo } | 
-	이메일(email) : ${ loginMember.email } |
-	이름(name) : ${ loginMember.name } |
-	가입일(cdate) : ${ loginMember.cdate } <br>
-팀코드(tNo) : ${ tNo }
+	<%--2024.04.05 kimyh 세션확인용 삭제대상 --%>
+	<div align="left">
+		## 수신받는 정보 ## <br>
+		<!--  로그인세션정보(loginMember) : ${ loginMember } --> 
+		로그인세션정보 (loginMember) : 
+			고유번호(accountNo) ${ loginMember.accountNo } | 
+			이메일(email) : ${ loginMember.email } |
+			이름(name) : ${ loginMember.name } |
+			가입일(cdate) : ${ loginMember.cdate } <br>
+		팀코드(tNo) : ${ tNo }
+	</div>	
 		
 <table id="headerTable">
 <tr><th width=230 align=left>
