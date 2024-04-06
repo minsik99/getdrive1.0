@@ -21,7 +21,7 @@ public class DriveController {
 	@Autowired
 	private DriveService driveService;
 	
-	// 드라이브 메인으로 이동
+	// 드라이브 메인으로 이동하자마자 휴지통 생성
 	@RequestMapping("dmain.do")
 	public String moveDriveMainPage(HttpServletRequest request, Model model) {
 		
@@ -39,6 +39,7 @@ public class DriveController {
 		aws.createBucket("trash");
 		aws.listBuckets();
 		
+		// 휴지통이 생성되지 않았다면 생성
 		if(driveService.checkTrash(drive) <= 0) {
 			driveService.insertTrashCan(drive);			
 		}

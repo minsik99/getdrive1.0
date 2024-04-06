@@ -99,6 +99,12 @@
 <script type="text/javascript" src="/getdrive/resources/js/jquery-3.7.0.min.js"></script>
 <script type="text/javascript">
 	$(function(){
+		// 이전 버튼을 누르면 대시보드로 이동
+		$('#arrow').click(function(){
+			location.href="teammain.do";
+		});
+		
+		// select option의 선택값을 받아서 a 태그
 		$(".custom-select").change(function() {
             var selectedText = $(this).find("option:selected").text();
             $("#link").text(selectedText);
