@@ -4,7 +4,8 @@
 -- 변경시 변경버전 추가하고 수정내용 아래와 작성할 것.
 
 /*
-	(수정시 작성 예시)s
+	ver 0.51 / 김영활 / 2024.04.06
+		: 통합검색 칼럼 추가
 	
 	ver 0.5 / 홍은비 / 2024.03.27
 		: 4-1. 카테고리 테이블 CT_NAME 컬럼 추가
@@ -443,6 +444,7 @@ CREATE TABLE TB_SEARCH
 	S_DATE DATE NOT NULL, 
 	S_CRUID NUMBER NOT NULL, 
 	S_ID NUMBER NOT NULL, 
+    S_CTID NUMBER NOT NULL, 
 	S_TID NUMBER NOT NULL
 );
 
@@ -453,6 +455,7 @@ COMMENT ON COLUMN TB_SEARCH.S_CONTENT IS '내용';
 COMMENT ON COLUMN TB_SEARCH.S_DATE IS '등록일 or 수정일';
 COMMENT ON COLUMN TB_SEARCH.S_CRUID IS '등록자 고유번호';
 COMMENT ON COLUMN TB_SEARCH.S_ID IS '원 게시물의 고유번호';
+COMMENT ON COLUMN TB_SEARCH.S_CTID IS '원 게시물의 카테고리번호';
 COMMENT ON COLUMN TB_SEARCH.S_TID IS '팀 고유번호';
 
 -- 10. INSERT문 (샘플 데이터)

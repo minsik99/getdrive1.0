@@ -126,8 +126,13 @@ public class HomeController {
 	@SuppressWarnings("unchecked")	
 	@RequestMapping(value="boardList.do", method=RequestMethod.POST)
 	@ResponseBody	
-	public String boardList() throws UnsupportedEncodingException {
-		ArrayList<Team> list = teamService.selectList();
+	public String boardList(
+			HttpServletRequest request) throws UnsupportedEncodingException {
+		// 2024.04.06 kimyh 팀 목록 쿼리 수정
+		HttpSession session = request.getSession();
+		Member loginMember = (Member) session.getAttribute("loginMember");
+		
+		ArrayList<Team> list = teamService.myTeamList(loginMember.getAccountNo());
 		
 		JSONArray jarr = new JSONArray();		
 		
@@ -153,8 +158,13 @@ public class HomeController {
 	@SuppressWarnings("unchecked")	
 	@RequestMapping(value="chatList.do", method=RequestMethod.POST)
 	@ResponseBody	
-	public String chatList() throws UnsupportedEncodingException {
-		ArrayList<Team> list = teamService.selectList();
+	public String chatList(
+			HttpServletRequest request) throws UnsupportedEncodingException {
+		// 2024.04.06 kimyh 팀 목록 쿼리 수정
+		HttpSession session = request.getSession();
+		Member loginMember = (Member) session.getAttribute("loginMember");
+		
+		ArrayList<Team> list = teamService.myTeamList(loginMember.getAccountNo());
 		
 		JSONArray jarr = new JSONArray();		
 		
@@ -179,8 +189,13 @@ public class HomeController {
 	@SuppressWarnings("unchecked")	
 	@RequestMapping(value="driveList.do", method=RequestMethod.POST)
 	@ResponseBody	
-	public String driveList() throws UnsupportedEncodingException {
-		ArrayList<Team> list = teamService.selectList();
+	public String driveList(
+			HttpServletRequest request) throws UnsupportedEncodingException {
+		// 2024.04.06 kimyh 팀 목록 쿼리 수정
+		HttpSession session = request.getSession();
+		Member loginMember = (Member) session.getAttribute("loginMember");
+		
+		ArrayList<Team> list = teamService.myTeamList(loginMember.getAccountNo());
 		
 		JSONArray jarr = new JSONArray();		
 		

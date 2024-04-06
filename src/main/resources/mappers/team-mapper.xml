@@ -34,8 +34,8 @@
 	</select>
 	
 	<!-- 2024.04.06 나의 팀목록 조회 -->
-	<select id="myTeamList" parameterType="_int" resultMap="resultJoinList">
-		SELECT t.*, tu.*
+	<select id="myTeamList" parameterType="_int" resultMap="resultList">
+		SELECT t.*
 		FROM tb_team t
 		JOIN tb_team_user tu ON t.t_no = tu.tu_tid
 			where tu.tu_odate is null and tu_mid = #{ mNo } and TU_INVITED = 'Y'
