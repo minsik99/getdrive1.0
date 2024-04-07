@@ -7,7 +7,57 @@
 <head>
 <meta charset="UTF-8">
 <title>main</title>
+<script type="text/javascript" src="/getdrive/resources/js/jquery-3.7.0.min.js"></script>
+<script type="text/javascript">
+$(function(){
+	
+	// 팀 메인 > 상단 > 알림 갯수 - HomeController 
+	$.ajax({
+		url: "alarmCountList.do?",
+		type: "post",
+		dataType: "json",
+		success: function(data){
+			// 확인
+			console.log("알람 success : " + data.list.length);
+			
+			// object --> string
+			var str = JSON.stringify(data);
+			
+			// string --> json
+			var json = JSON.parse(str);
+			
+			// 확인
+			console.log("json : " + str);
+			
+			var num = 1;			
+			
+			if (data.list.length > 0) {			
+				values = "<a href='#'><img src='/getdrive/resources/images/alarmon.png'></a>";
+				values += "<div>";
+				for(var i in json.list){		
+				
+					values += "<li><a href='#"+ json.list[i].sno
+					+"'>"
+					+ decodeURIComponent(json.list[i].stitle).replace(/\+/gi, " ") 
+					+ "</a></li>";					
+				}
+				values += "</div>";
+			} else {
+				values = "<img src='/getdrive/resources/images/alarmoff.png'>";
+			}
+			
+			$('#alarmCount').html(values);
+		}, 
+		error: function(jqXHR, textStatus, errorThrown){
+			console.log("error : " + jqXHR + ", " + textStatus + ", " + errorThrown);
+		}
+		
+	});  //ajax
+	
+});  //document ready	
 
+</script>
+	
 <style type="text/css">
 
 body {
@@ -72,9 +122,6 @@ body {
 	</script>
 </c:if> 
 
-<script type="text/javascript" src="/getdrive/resources/js/jquery-3.7.0.min.js"></script>
-
-
 <body>
 	<%--2024.04.05 kimyh 세션확인용 삭제대상 --%>
 	<div align="left">
@@ -99,8 +146,7 @@ body {
 		</form>
 		</th>	
 	<th align="right">
-		<a href="#">알람</a>
-		<a href="#">아이콘+이름</a>
+		<div id="alarmCount"></div>
 		</th>
 </tr>	
 </table>

@@ -10,7 +10,7 @@
 </c:if>
  
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
 <meta charset="UTF-8">
 <title>first</title>
@@ -83,11 +83,11 @@ function showWriteForm(){
 <div id="container">
 
   <div id="jb-header">      
-	<c:import url="/WEB-INF/views/common/top.jsp" />        
+	<c:import url="/WEB-INF/views/common/teamtop.jsp" />        
   </div>
   
   <div id="sidebar">
-	<c:import url="/WEB-INF/views/common/left.jsp" />
+	<c:import url="/WEB-INF/views/common/teamleft.jsp" />
   </div>
     
   <div id="content">
@@ -98,7 +98,7 @@ function showWriteForm(){
 	<!-- ngSwitchWhen: keywordSearch -->
 	<div class="display-box ng-scope" ng-switch-when="keywordSearch" style="">
 	<p class="display-txt" translate="">
-	<span class="searchQueryKeyword ng-binding ng-scope">검색</span>에 대한 검색 결과가 <span class="searchQueryKeyword ng-binding ng-scope">4</span>건 있습니다.</p></div>
+	<b>${ keyword }</b> 에 대한 검색 결과가 <b>${ listCount }</b>건 있습니다.</p></div>
 	<!-- end ngSwitchWhen: -->
 	<!-- ngSwitchWhen: search -->
 	</div>
@@ -106,15 +106,7 @@ function showWriteForm(){
 	
 	<%-- 조회된 게시글 목록 출력 --%>
 	<br>
-	<table align="center" border="1" cellspacing="0" width="100%">
-		<tr>
-			<th>번호</th>
-			<th>제목</th>
-			<th>작성자</th>
-			<th>날짜</th>
-			<th>첨부파일</th>
-			<th>조회수</th>
-		</tr>
+	<table align="center" border="0" cellspacing="0" width="100%">
 		<c:forEach items="${ requestScope.list }" var="b">
 			<tr align="center">
 				<td>${ b.s_no }</td>
@@ -129,15 +121,22 @@ function showWriteForm(){
 				<td>${ b.s_cruid }</td>
 				<td>${ b.s_date }</td>				
 			</tr>
-		</c:forEach>
+			<tr align="left" height=50 valing="top">
+				<td colspan=6><a href="${ bd }">${ b.s_content }</a></td>				
+			</tr>
+			<tr>
+				<td colspan=6><hr></td>				
+			</tr>							
+		</c:forEach>		
 	</table>
-	</div>
-
+	
 	<%-- 페이징 처리 뷰 포함 처리 --%>
 	<c:import url="/WEB-INF/views/common/pagingView.jsp" />
+	
+	</div>
 
   <div id="footer">
-    <c:import url="/WEB-INF/views/common/footer.jsp" />
+    <c:import url="/WEB-INF/views/common/teamfooter.jsp" />
   </div>
 
 </div>

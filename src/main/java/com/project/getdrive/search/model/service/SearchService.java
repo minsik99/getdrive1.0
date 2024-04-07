@@ -13,4 +13,7 @@ public interface SearchService {
 	// 검색결과
 	ArrayList<Search> selectSearch(CommonSch commonSch);
 
+	// 알람
+	ArrayList<Search> selectAlarmList(int accountNo);
+
 }
