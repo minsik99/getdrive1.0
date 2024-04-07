@@ -80,8 +80,8 @@ body {
 	<div align="left">
 		## 수신받는 정보 ## <br>
 		<!--  로그인세션정보(loginMember) : ${ loginMember } --> 
-		로그인세션정보 (loginMember) : 
-			고유번호(accountNo) ${ loginMember.accountNo } | 
+		세션정보 (loginMember) : 
+			번호(accountNo) ${ loginMember.accountNo } | 
 			이메일(email) : ${ loginMember.email } |
 			이름(name) : ${ loginMember.name } |
 			가입일(cdate) : ${ loginMember.cdate } <br>
@@ -92,7 +92,7 @@ body {
 <tr><th width=230 align=left>
 	<a href="/getdrive/"><img id="logo" alt="getdrive"src="/getdrive/resources/images/logo.png"></a></th>
 	<th width=300 >	
-		<form action="searchList.do" method="post">
+		<form id="searchForm" action="searchList.do" method="post">
 			<input type="hidden" name="limit" value="10">	
 			<input type="search" name="keyword" value="${ keyword }"> &nbsp;
 			<input type="submit" value="검색">
