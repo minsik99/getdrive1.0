@@ -32,8 +32,7 @@ public class SearchContoller {
 		@RequestParam(name = "limit", required=false) String slimit,		
 		ModelAndView mv ) {
 		
-		logger.info("#### searchList.do ");
-		
+		logger.info("#### searchList.do ");		
 		
 		// (페이징) 출력할 페이지 지정
 		int currentPage = 1;

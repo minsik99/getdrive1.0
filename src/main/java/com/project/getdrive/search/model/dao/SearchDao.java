@@ -25,4 +25,9 @@ public class SearchDao {
 		return (ArrayList<Search>)list;
 	}
 
+	public ArrayList<Search> selectAlarmList(int accountNo) {
+		List<Search> list = sqlSessionTemplate.selectList("searchMapper.selectAlarmList", accountNo);
+		return (ArrayList<Search>)list;
+	}
+
 }

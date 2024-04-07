@@ -25,4 +25,9 @@ public class SearchServiceImpl implements SearchService {
 		return searchDao.selectSearch(commonSch);
 	}
 
+	@Override
+	public ArrayList<Search> selectAlarmList(int accountNo) {
+		return searchDao.selectAlarmList(accountNo);
+	}
+
 }

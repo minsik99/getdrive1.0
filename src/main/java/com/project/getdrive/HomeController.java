@@ -22,6 +22,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.project.getdrive.member.model.vo.Member;
+import com.project.getdrive.search.model.service.SearchService;
+import com.project.getdrive.search.model.vo.Search;
 import com.project.getdrive.team.model.service.TeamService;
 import com.project.getdrive.team.model.vo.Team;
 
@@ -33,6 +35,9 @@ public class HomeController {
 	
 	@Autowired
 	private TeamService teamService;
+	
+	@Autowired
+	private SearchService searchService;
 	
 	// index.jsp 에서 main.do 호출
 	@RequestMapping("main.do")
@@ -82,12 +87,47 @@ public class HomeController {
 		
 		session.setAttribute("tNo", teamcode);
 		
+		// 2024.04.07 kimyh - 각테이블별 갯수 구하기
+		
 		mv.addObject("tNo", teamcode);
 		mv.setViewName("common/teammain");		
 		return mv;		
 
 	}	
 	
+	// 2024.04.07 kimyh - 팀상단 알람 갯수 및 목록 출력 기능
+	@SuppressWarnings("unchecked")	
+	@RequestMapping(value="alarmCountList.do", method=RequestMethod.POST)
+	@ResponseBody	
+	public String alarmCount(
+		HttpServletRequest request) throws UnsupportedEncodingException {
+				
+		// 세션
+		HttpSession session = request.getSession();
+		Member loginMember = (Member) session.getAttribute("loginMember");
+		
+		// 신규게시물
+		ArrayList<Search> list = searchService.selectAlarmList(loginMember.getAccountNo());
+		
+		JSONArray jarr = new JSONArray();		
+		
+		for(Search search : list) {
+			JSONObject job = new JSONObject();
+			
+			job.put("sno", search.getS_id());
+			
+			//한글 데이터는 반드시 인코딩 처리함			
+			job.put("stitle", URLEncoder.encode(search.getS_title(), "utf-8"));
+			
+			jarr.add(job);
+		}		
+		
+		JSONObject sendJson = new JSONObject();
+		sendJson.put("list", jarr);
+		
+		return sendJson.toJSONString();
+	}
+		
 
 	// 2024.04.05 kimyh - 팀공통 왼쪽 메뉴 팀이동 기능
 	@SuppressWarnings("unchecked")	

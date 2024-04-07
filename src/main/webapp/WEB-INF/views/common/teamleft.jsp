@@ -7,7 +7,6 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<script type="text/javascript" src="/getdrive/resources/js/jquery-3.7.0.min.js"></script>
 <style type="text/css">
 /* 버튼 */
 .button_red {
@@ -304,12 +303,12 @@ $(function(){
 		<ul id="boardList"></ul>
 	</div>	
 	<hr>
-	<b><a href="mlist.do">Meeting</a></b>
+	<b><a href="mlist.do?tNo=${ tNo }">Meeting</a></b>
 	<div style="width:100%; align:left">
 		<ul id="chatList"></ul>
 	</div>	
 	<hr>
-	<b>드라이브</b>
+	<b><a href='dmain.do?tNo=${ tNo }'>드라이브</a></b>
 	<div style="width:100%; align:left">
 		<ul id="driveList"></ul>
 	</div>
