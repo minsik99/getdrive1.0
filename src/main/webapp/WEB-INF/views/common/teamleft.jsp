@@ -294,23 +294,23 @@ $(function(){
 <body>
 	<!-- 팀 목록  -->
 	<b>My Team List</b>
-	<div width=100% align=center>		
+	<div style="width:100%; align:center">		
 		<select id="teamSelect" onchange="window.open(value,'_self');">
 		</select>	
 	</div>		
 	<hr>
 	<b>Board</b>	
-	<div width=100% align=left>
+	<div style="width:100%; align:left">
 		<ul id="boardList"></ul>
 	</div>	
 	<hr>
-	<b>Chat</b>
-	<div width=100% align=left>
+	<b><a href="mlist.do">Meeting</a></b>
+	<div style="width:100%; align:left">
 		<ul id="chatList"></ul>
 	</div>	
 	<hr>
 	<b>드라이브</b>
-	<div width=100% align=left>
+	<div style="width:100%; align:left">
 		<ul id="driveList"></ul>
 	</div>
 

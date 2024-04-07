@@ -33,47 +33,68 @@ function requestDelete(){
 </head>
 
 <body>
-<c:import url="/WEB-INF/views/common/top.jsp" />
-<hr>
-<h2 align="center">${ meeting.meetingId } 번 회의글 상세보기</h2>
-<br>
-<table align="center" width="500" border="1" cellspacing="0" 
- cellpadding="5">
-<tr><th>제 목</th><td>${ meeting.meetingTitle }</td></tr>
-<tr><th>작성자</th><td>${ meeting.meetingWriter }</td></tr>
-<tr><th>등록날짜</th><td><fmt:formatDate value="${ meeting.meetingDate }" pattern="yyyy-MM-dd" /></td></tr>
-<tr><th>중요도</th><td>${ meeting.importance }</td></tr>
-<tr><th>첨부파일</th>
-   <td>
-   		<c:if test="${ !empty meeting.meetingOriginalFileName }">
-   			<c:url var="nfd" value="mfdown.do">
-   				<c:param name="ofile" value="${meeting.meetingOriginalFileName}" />
-   				<c:param name="rfile" value="${meeting.meetingRenameFileName}" />
-   			</c:url>
-   			<a href="${ nfd }">${meeting.meetingOriginalFileName}</a>
-   		</c:if>
-   			<c:if test="${ empty meeting.meetingOriginalFileName }">&nbsp;	</c:if>
-   </td>
-</tr>
-<tr><th>내 용</th>
-<td>${ meeting.meetingContent }</td></tr>
 
-<tr>
-	<th colspan="2">
-		<%-- 로그인한 경우 : 본인 글 상세보기 일때는 수정페이지로 이동과 삭제 버튼 표시함 --%>
-		<c:if test="${ !empty loginMember }">
-			<c:if test="${ loginMember.name eq meeting.meetingWriter }">
-				<button onclick="moveUpdatePage(); return false;">수정페이지로 이동</button> &nbsp;
-				<button onclick="requestDelete(); return false;">글삭제</button> &nbsp;
+<div id="container">
+
+  <div id="jb-header">      
+	<c:import url="/WEB-INF/views/common/teamtop.jsp" />        
+  </div>
+  
+  <div id="sidebar">
+	<c:import url="/WEB-INF/views/common/teamleft.jsp" />
+  </div>
+  
+	  <div id="content">
+	
+	<hr>
+	<h2 align="center">${ meeting.meetingId } 번 회의글 상세보기</h2>
+	<br>
+	<table align="center" width="500" border="1" cellspacing="0" 
+	 cellpadding="5">
+	<tr><th>제 목</th><td>${ meeting.meetingTitle }</td></tr>
+	<tr><th>작성자</th><td>${ meeting.meetingWriter }</td></tr>
+	<tr><th>등록날짜</th><td><fmt:formatDate value="${ meeting.meetingDate }" pattern="yyyy-MM-dd" /></td></tr>
+	<tr><th>중요도</th><td>${ meeting.importance }</td></tr>
+	<tr><th>첨부파일</th>
+	   <td>
+	   		<c:if test="${ !empty meeting.meetingOriginalFileName }">
+	   			<c:url var="nfd" value="mfdown.do">
+	   				<c:param name="ofile" value="${meeting.meetingOriginalFileName}" />
+	   				<c:param name="rfile" value="${meeting.meetingRenameFileName}" />
+	   			</c:url>
+	   			<a href="${ nfd }">${meeting.meetingOriginalFileName}</a>
+	   		</c:if>
+	   			<c:if test="${ empty meeting.meetingOriginalFileName }">&nbsp;	</c:if>
+	   </td>
+	</tr>
+	<tr><th>내 용</th>
+	<td>${ meeting.meetingContent }</td></tr>
+	
+	<tr>
+		<th colspan="2">
+			<%-- 로그인한 경우 : 본인 글 상세보기 일때는 수정페이지로 이동과 삭제 버튼 표시함 --%>
+			<c:if test="${ !empty loginMember }">
+				<c:if test="${ loginMember.name eq meeting.meetingWriter }">
+					<button onclick="moveUpdatePage(); return false;">수정페이지로 이동</button> &nbsp;
+					<button onclick="requestDelete(); return false;">글삭제</button> &nbsp;
+				</c:if>
 			</c:if>
-		</c:if>
-		     
-		 <button onclick="javascript:history.go(-1);">목록</button> 
-	</th>		
-</tr>
+			     
+			 <button onclick="javascript:history.go(-1);">목록</button> 
+		</th>		
+	</tr>
+	
+	
+	</table>
+
+  </div>
+
+  <div id="footer">
+    <c:import url="/WEB-INF/views/common/teamfooter.jsp" />
+  </div>
+
+</div>
 
 
-</table>
-<hr>
 </body>
 </html>
