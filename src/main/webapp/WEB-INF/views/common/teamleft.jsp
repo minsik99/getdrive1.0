@@ -7,7 +7,6 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<script type="text/javascript" src="/getdrive/resources/js/jquery-3.7.0.min.js"></script>
 <style type="text/css">
 /* 버튼 */
 .button_red {
@@ -132,7 +131,7 @@ $(function(){
 		dataType: "json",
 		success: function(data){
 			// 확인
-			console.log("success : " + data);
+			console.log("팀선택 success : " + data);
 			
 			// object --> string
 			var str = JSON.stringify(data);
@@ -149,17 +148,17 @@ $(function(){
 			for(var i in json.list){
 			
 				// 확인
-				console.log(json.list[i].tno + ", ${ teamCode }, ${ tno }");
+				// console.log(json.list[i].tno + ", ${ tNo }, ${ tno }");
 				
-				if (json.list[i].no == '${ teamCode }' ) {
-					values += "<option value='teammain.do?tno="+ json.list[i].tno
+				if (json.list[i].teamno == '${ tNo }' ) {
+					values += "<option value='teammain.do?tNo="+ json.list[i].teamno
 					+"' selected>"
 					+ decodeURIComponent(json.list[i].teamname).replace(/\+/gi, " ") 
 					+ "</option>";					
 				} else {
-					values += "<option value='teammain.do?tno="+ json.list[i].tno
+					values += "<option value='teammain.do?tNo="+ json.list[i].teamno
 					+"'>"
-					+ decodeURIComponent(json.list[i].title).replace(/\+/gi, " ") 
+					+ decodeURIComponent(json.list[i].teamname).replace(/\+/gi, " ") 
 					+ "</option>";					
 				}
 			}
@@ -172,6 +171,7 @@ $(function(){
 		
 	});  //ajax
 	
+	/*
 	// 게시판 목록
 	$.ajax({
 		url: "boardList.do?",
@@ -275,13 +275,14 @@ $(function(){
 					+ "</a></li>";	
 			}
 			
-			$('#driveList').html(values + "<li><a href='#' class='item'>드라이브 생성 + </a></li>");
+			$('#driveList').html(values + "<li><a href='dmain.do' class='item'>드라이브 생성 + </a></li>");
 		}, 
 		error: function(jqXHR, textStatus, errorThrown){
 			console.log("error : " + jqXHR + ", " + textStatus + ", " + errorThrown);
 		}
 		
 	});  //ajax	
+	*/
 	
 });  //document ready	
 
@@ -291,25 +292,29 @@ $(function(){
 </head>
 <body>
 	<!-- 팀 목록  -->
-	<div width=100% align=center>
+	<b>My Team List</b>
+	<div style="width:100%; align:center">		
 		<select id="teamSelect" onchange="window.open(value,'_self');">
-		</select>		
+		</select>	
 	</div>		
 	<hr>
 	<b>Board</b>	
-	<div width=100% align=left>
+	<div style="width:100%; align:left">
 		<ul id="boardList"></ul>
 	</div>	
 	<hr>
-	<b>Chat</b>
-	<div width=100% align=left>
+	<b><a href="mlist.do?tNo=${ tNo }">Meeting</a></b>
+	<div style="width:100%; align:left">
 		<ul id="chatList"></ul>
 	</div>	
 	<hr>
-	<b>드라이브</b>
-	<div width=100% align=left>
+	<b><a href='dmain.do?tNo=${ tNo }'>드라이브</a></b>
+	<div style="width:100%; align:left">
 		<ul id="driveList"></ul>
 	</div>
+
+	<hr>
+	<b><a href="calendar.do?tNo=${tNo}">캘린더</a></b>
 	
 </body>
 </html>

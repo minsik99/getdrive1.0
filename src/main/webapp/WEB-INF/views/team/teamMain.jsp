@@ -100,58 +100,68 @@ $(function(){
 </script>
 </head>
 <body>
-<c:import url="/WEB-INF/views/common/mainTopbar.jsp"></c:import>
-<hr>
-<center>
-<table>
-	<tr>
-		<th>${ loginMember.name }님의 초대/가입된 목록입니다.</th>
-	</tr>
-	<c:forEach items="${ list }" var="tlist">
-		<c:if test="${ tlist.tuEmail eq loginMember.email }">
-			<tr>
-				<td>
-					<p>${ tlist.tName }</p> &nbsp;
-					<!-- 팀장용 팀 관리 페이지 -->
-					<c:url var="tadmin" value="tadmin.do">
-						<c:param name="tNo" value="${ tlist.tNo }" />
-					</c:url>
-					<!-- 팀장용 팀 정보 페이지 -->
-					<c:url var="tinfo" value="tinfo.do">
-						<c:param name="tNo" value="${ tlist.tNo }" />
-					</c:url>
-					<!-- 팀원용 팀 정보 페이지 -->
-					<c:url var="tuinfo" value="tuinfo.do">
-						<c:param name="tNo" value="${ tlist.tNo }" />
-					</c:url>
-					<!-- 팀장이라면 팀 관리 버튼이 노출 -->
-					<c:if test="${ tlist.tuLeader eq 'Y' }">
-						<button id="tadmin" onclick="javascript:location.href='${ tadmin }';">팀 관리</button> &nbsp;			
-					</c:if>
-					
-					<!-- 팀원이라면 팀 정보 버튼이 노출 -->
-					<c:if test="${ tlist.tuLeader eq 'N' && tlist.tuInvited eq 'Y' }">
-						<button onclick="javascript:location.href='${ tuinfo }';">팀 정보</button> &nbsp;			
-					</c:if>	
-					
-					<!-- 팀 가입이 되어 있다면 -->
-					<c:if test="${ tlist.tuInvited eq 'Y' }">
-						<button id="tmain" onclick="moveMain();">팀 입장</button>
-					</c:if>
-					
-					<!-- 팀 가입이 안 되어 있다면 -->
-					<c:if test="${ tlist.tuInvited eq 'N' }">
-						<input type="hidden" id="tlist_email" value="${ tlist.tuEmail }">
-						<input type="hidden" id="tlist_tno" value="${ tlist.tNo }">
-						<button id="itmember">팀 가입</button>
-					</c:if>
-				</td>
-			</tr>
-		</c:if>
-	</c:forEach>
-</table>
-<button id="cteam" onclick="createTeam();">팀 생성</button>
-</center>
+<div id="full">
+	<div id="header">
+		<c:import url="/WEB-INF/views/common/mainTopbar.jsp"></c:import>
+	</div>
+	<hr>
+	
+	<table width=100% align="center">
+		<tr>
+			<th>${ loginMember.name }님의 초대/가입된 목록입니다. </th>
+		</tr>
+		<c:forEach items="${ list }" var="tlist">
+			<c:if test="${ tlist.tuEmail eq loginMember.email }">
+				<tr>
+					<td align="center">
+						<p>${ tlist.tName }</p> &nbsp;
+						<!-- 팀장용 팀 관리 페이지 -->
+						<c:url var="tadmin" value="tadmin.do">
+							<c:param name="tNo" value="${ tlist.tNo }" />
+						</c:url>
+						<!-- 팀장용 팀 정보 페이지 -->
+						<c:url var="tinfo" value="tinfo.do">
+							<c:param name="tNo" value="${ tlist.tNo }" />
+						</c:url>
+						<!-- 팀원용 팀 정보 페이지 -->
+						<c:url var="tuinfo" value="tuinfo.do">
+							<c:param name="tNo" value="${ tlist.tNo }" />
+						</c:url>
+						<!-- 팀장이라면 팀 관리 버튼이 노출 -->
+						<c:if test="${ tlist.tuLeader eq 'Y' }">
+							<button id="tadmin" onclick="javascript:location.href='${ tadmin }';">팀 관리</button> &nbsp;			
+						</c:if>
+						
+						<!-- 팀원이라면 팀 정보 버튼이 노출 -->
+						<c:if test="${ tlist.tuLeader eq 'N' && tlist.tuInvited eq 'Y' }">
+							<button onclick="javascript:location.href='${ tuinfo }';">팀 정보</button> &nbsp;			
+						</c:if>	
+						
+						<!-- 팀 가입이 되어 있다면 -->
+						<c:if test="${ tlist.tuInvited eq 'Y' }">
+							<c:url var="enter" value="teammain.do">
+								<c:param name="tNo" value="${ tlist.tNo }"/>
+							</c:url>
+							<button id="tmain" onclick="javascript:location.href='${ enter }';">팀 입장</button>
+						</c:if>
+						
+						<!-- 팀 가입이 안 되어 있다면 -->
+						<c:if test="${ tlist.tuInvited eq 'N' }">
+							<input type="hidden" id="tlist_email" value="${ tlist.tuEmail }">
+							<input type="hidden" id="tlist_tno" value="${ tlist.tNo }">
+							<button id="itmember">팀 가입</button>
+						</c:if>
+					</td>
+				</tr>
+			</c:if>
+		</c:forEach>
+		<tr><td align=center><button id="cteam" onclick="createTeam();">팀 생성</button></td></tr>
+	</table>
+
+	<div id="footer">
+		<c:import url="/WEB-INF/views/common/login_footer.jsp"></c:import>
+	</div>	
+</div>
 <hr>
 </body>
 </html>

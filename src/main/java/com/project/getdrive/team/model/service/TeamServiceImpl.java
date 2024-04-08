@@ -15,10 +15,17 @@ public class TeamServiceImpl implements TeamService{
 	@Autowired
 	private TeamDao teamDao;
 	
+	/* 2024.04.06 팀목록/팀초대 수정 */	
 	@Override
-	public ArrayList<Team> selectList() {
-		return teamDao.selectList();
+	public ArrayList<Team> selectList(int mNo) {
+		return teamDao.selectList(mNo);
 	}
+	
+	/* 2024.04.06 나의 팀목록 조회 */	
+	@Override
+	public ArrayList<Team> myTeamList(int mNo) {
+		return teamDao.myTeamList(mNo);
+	}	
 
 	@Override
 	public int insertTeam(TeamCreator teamCreator) {

@@ -18,41 +18,24 @@
 	height: 100px;
 }
 
-#main {
-	width: 100%;
-	height: 650px;
-}
-
-#left {
-	width: 50%;
-	height: 650px;
-	float: left;
-	background-color: #E1F5FE;
-}
-
-#right {
-	width: 49.9%;
-	height: 650px;
-	float: right;
-	text-align: center;
-	background-color: #E1F5FE;
-}
-
-#footer {
-	margin: 10px 0px 0px;
-	width: 100%;
-	height: 90px;
-	text-align: center;
-}
-</style>
-<script type="text/javascript">
-
-</script>
+<!-- 2024.04.05 kimyh : 로그인된 상태시 팀 목록으로 이동 처리 -->
+<c:if test="${!empty loginMember}">
+	<script type="text/javascript">
+		alert("로그인 상태입니다. 팀 목록으로 이동합니다. ");
+		window.location.replace('tmain.do');
+	</script>
+</c:if> 
 </head>
 <body>
-	<div id="full">
-		<div id="header">
-			<c:import url="/WEB-INF/views/common/mainTopbar.jsp"></c:import>
+<div id="full">
+	<div id="header">
+		<c:import url="/WEB-INF/views/common/mainTopbar.jsp"></c:import>
+	</div>
+	<hr>
+	
+	<div id="main">
+		<div id="left">
+			<c:import url="/WEB-INF/views/common/commonMenu.jsp"></c:import>
 		</div>
 		<div id="main">
 			<div id="left">
