@@ -2,8 +2,9 @@ package com.project.getdrive.drive.handler;
 
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayInputStream;
-import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Iterator;
 import java.util.List;
@@ -146,14 +147,26 @@ public class AwsS3 {
     }
 
     // 파일 업로드
-    public void uploadFile(String bucketName, String folderName, String objectName, String filePath) {
+    public void uploadFile(String bucketName, String folderName, String objectName, InputStream inputStream) {
         try {
-            s3.putObject(bucketName, folderName + "/" + objectName, new File(filePath));
+            ObjectMetadata metadata = new ObjectMetadata();
+            metadata.setContentLength(inputStream.available());
+            s3.putObject(bucketName, folderName + "/" + objectName, inputStream, metadata);
             System.out.format("Object %s has been created.\n", objectName);
         } catch (AmazonS3Exception e) {
             e.printStackTrace();
         } catch(SdkClientException e) {
             e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (inputStream != null) {
+                    inputStream.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
     

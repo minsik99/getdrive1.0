@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE configuration PUBLIC
 "-//mybatis.org//DTD Config 3.0//EN"
-"http://mybatis.org/dtd/mybatis-3-config.dtd">
+"http://www.mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 	<settings>
 		<setting name="jdbcTypeForNull" value="NULL"/>
@@ -22,6 +22,10 @@
 		<typeAlias type="com.project.getdrive.common.Paging" alias="Paging" />	
 		<!-- 드라이브 -->
 		<typeAlias type="com.project.getdrive.drive.model.vo.Drive" alias="Drive" />
+		<!-- 폴더 -->
+		<typeAlias type="com.project.getdrive.folder.model.vo.Folder" alias="Folder" />
+		<!-- 파일 -->
+		<typeAlias type="com.project.getdrive.file.model.vo.File" alias="File" />
 		<!-- 회의 -->
 		<typeAlias type="com.project.getdrive.meeting.model.vo.Meeting" alias="Meeting" />	
 		<!-- 2024.04.06 kimyh 캘린더 추가 -->
@@ -40,6 +44,10 @@
 		<mapper resource="mappers/search-mapper.xml" />
 		<!-- 드라이브 -->
 		<mapper resource="mappers/drive-mapper.xml" />
+		<!-- 폴더 -->
+		<mapper resource="mappers/folder-mapper.xml"/>
+		<!-- 파일 -->
+		<mapper resource="mappers/file-mapper.xml"/>
 		<!-- 회의 -->		
 		<mapper resource="mappers/meeting-mapper.xml" />
 		<!-- 2024.04.06 kimyh 캘린더 추가 -->		
