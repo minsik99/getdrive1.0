@@ -27,6 +27,23 @@
 		</property>
 	</bean>
 	
+
+	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="smtp.gmail.com" />
+		<property name="port" value="465" />
+		<property name="username" value="classgetdrive@gmail.com" />
+		<property name="password" value="g h m p j f f n b i so q w t n" />
+		<property name="javaMailProperties">
+			<props>
+				<prop key="mail.transport.protocol">smtp</prop>
+				<prop key="mail.stmp.auth">true</prop>
+				<prop key="mail.smtp.socketFactory.class">javax.net.ssl.SSLSocketFactory</prop>
+				<prop key="mail.smtp.starttls.enable">true</prop>
+				<prop key="mail.debug">true</prop>
+			</props>
+		</property>
+	</bean>
+	
 	<bean class="org.mybatis.spring.SqlSessionFactoryBean" id="sqlSession">
 		<property name="configLocation" value="classpath:mybatis-config.xml" />
 		<property name="dataSource" ref="datasource" />

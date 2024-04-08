@@ -11,54 +11,16 @@
 	header {
 		display: flex;
 		justify-content: space-between;
-		align-items: center;
 	}
 	
 	header h2 {
 		display: inline-block;
 	}
 	
-	img#arrow {
-		width: 3rem;
-		height: 3rem;
-	}
-	
-	img#arrow:hover {
-		cursor: pointer;
-	}
-	
-	img#add {
-		width: 1rem;
-		height: 1rem;
-	}
-	
-	img#add:hover {
-		cursor: pointer;
-	}
-	
-	img#trash {
-		width: 2rem;
-		height: 2rem;
-		margin-top: 15rem;
-	}
-	
-	img#trash:hover {
-		cursor: pointer;
-	}
-	
-	img#sort {
-		width: 1.5rem;
-		height: 1.5rem;
-	}
-	
-	img#sort:hover {
-		cursor: pointer;
-	}
-	
 	section {
 		display: flex;
 	}
-	
+
 	aside {
 		width: 13vw;
 		padding: 1rem 0 1rem 2.5rem;
@@ -163,12 +125,10 @@
         });
         
     });
-    
 </script>
 </head>
 <body>
 <c:import url="/WEB-INF/views/common/mainTopbar.jsp" />
-<hr>
 <header>
     <div style="display: flex; align-items: center;">
         <img id="arrow" src="/getdrive/resources/images/chevron_left.png">
@@ -178,6 +138,7 @@
         <input id="search" placeholder="파일 검색">
     </div>
 </header>
+<hr>
 <section>
     <!-- 사이드 메뉴 -->
     <aside>

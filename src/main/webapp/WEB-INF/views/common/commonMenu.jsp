@@ -63,7 +63,6 @@
 
 .commonButton {
 	background: #6DBFF2;
-
 	border-radius: 5px;
 	color: white;
 	cursor: pointer;
@@ -77,23 +76,43 @@
 	margin-top:30px; 
 }
 
-.commonButton:active {
+.commonButton:hover{
 	color: white;
 	background: rgb(200, 230, 255);
 	border:none;
 }
+.commonButton:disabled {
+	color: #696969;
+	background: #DCDCDC;
+	cursor: default;
+	border: none;
+}
 </style>
 <script type="text/javascript">
 function moveContractPage(){
-	location.href = "contract.do";
+	location.href = "contractPage.do";
+}
+
+function moveTeamMain(){
+	location.href = "tmain.do";
+}
+
+function createTeam(){
+	location.href = "tcreate.do";
 }
 </script>
 </head>
 <body>
 	<div id="top">
 		<div id="topmenu">
-			<h1>Class.getDrive 처음 방문이신가요?</h1>
-			<h3>우선 회원가입을 해주세요.</h3>
+			<c:if test="${ empty sessionScope.loginMember }">
+				<h1>Class.getDrive 처음 방문이신가요?</h1>
+				<h3>우선 회원가입을 해주세요.</h3>
+			</c:if>
+			<c:if test="${ !empty sessionScope.loginMember }">
+				<h2>다른 계정이 필요하신가요?</h2>
+				<h3>회원가입 버튼을 눌러주세요.</h3>
+			</c:if>
 		</div>
 		<div id="topbutton">
 			<button onclick="moveContractPage();" class="commonButton" id="joinButton">회원가입</button>
@@ -102,20 +121,44 @@ function moveContractPage(){
 	<div id="middle">
 		<div id="middlemenu">
 			<h2>팀원들과 함께 프로젝트를 하려는 건가요?</h2>
-			<h3>로그인 후 팀 개설과 팀원 초대를 해 주세요.</h3>
+			<c:if test="${ empty sessionScope.loginMember }">
+				<h3>로그인 후 팀 개설과 팀원 초대를 해 주세요.</h3>
+			</c:if>
+			<c:if test="${ !empty sessionScope.loginMember }">
+				<h3>팀 개설과 팀원 초대를 해 주세요.</h3>
+			</c:if>
 		</div>
-		<div id="middlebutton">
-			<button onclick="moveContractPage();" class="commonButton" id="teamcreateButt">팀 개설</button>
-		</div>
+		<c:if test="${ empty sessionScope.loginMember }">
+			<div id="middlebutton">
+				<button onclick="createTeam();" class="commonButton" id="teamcreateButt" disabled="true">팀 개설</button>
+			</div>
+		</c:if>
+		<c:if test="${ !empty sessionScope.loginMember }">
+			<div id="middlebutton">
+				<button onclick="createTeam();" class="commonButton" id="teamcreateButt">팀 개설</button>
+			</div>
+		</c:if>
 	</div>
 	<div id="bottom">
 		<div id="bottommenu">
 			<h2>팀장 또는 팀원으로 부터 초대를 받으셨나요?</h2>
-			<h3>로그인 후 팀을 선택해주세요.</h3>
+			<c:if test="${ empty sessionScope.loginMember }">
+				<h3>로그인 후 팀을 선택해주세요.</h3>
+			</c:if>
+			<c:if test="${ !empty sessionScope.loginMember }">
+				<h3>팀을 선택해주세요.</h3>
+			</c:if>
 		</div>
-		<div id="middlebutton">
-			<button onclick="moveContractPage();" class="commonButton" id="teamselectButton">팀 선택</button>
+		<c:if test="${ empty sessionScope.loginMember }">
+			<div id="bottombutton">
+				<button onclick="moveTeamMain();" class="commonButton" id="teamselectButton" disabled="true">팀 선택</button>
+			</div>
+		</c:if>
+		<c:if test="${ !empty sessionScope.loginMember }">
+		<div id="bottombutton">
+			<button onclick="moveTeamMain();" class="commonButton" id="teamselectButton">팀 선택</button>
 		</div>
+		</c:if>
 	</div>
 </body>
 </html>

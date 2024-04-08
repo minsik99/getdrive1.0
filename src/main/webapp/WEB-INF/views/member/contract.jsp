@@ -64,11 +64,10 @@ function moveRegisterPage(){
 * {
 	margin: 0;
 	padding: 0;
-	box-sizing: 500px;
+	box-sizing: 510px;
 }
 #header {
 	width: 100%;
-	height: 20%;
 }
 
 body {
@@ -161,7 +160,7 @@ ul.join_box {
 	font-size: 12pt;
 }
 
-.footBtwrap>li>button:active {
+.footBtwrap>li>button:hover {
 	color: white;
 	background: rgb(200, 230, 255);
 }
@@ -179,6 +178,7 @@ ul.join_box {
     height: 1.25em; 
     vertical-align: middle;
     accent-color: rgb(0, 146, 255);
+    float: right;
 }
 .checkAllBtn input.chkAll + label{
     font-size: 1.125em;
@@ -204,9 +204,6 @@ ul.join_box {
 </head>
 <body>
 	<form action="contractPage.do" id="joinForm">
-		<div id="header">
-			<c:import url="/WEB-INF/views/common/mainTopbar.jsp"></c:import>
-		</div>
 		<div id="main">
 		<ul class="join_box">
 			<li class="checkBox">
@@ -255,7 +252,7 @@ ul.join_box {
 Class.getdrive 서비스는 개인정보를 다음의 목적을 위해 처리합니다. 처리한 개인정보는 다음의 목적 이외의 용도로는 사용되지 않으며 이용 목적이 변경될 시에는 사전동의를 구할 예정입니다.
 
 ① Class.getdrive서비스는 법령에 따른 개인정보 보유·이용기간 또는 정보주체로부터 개인정보를 수집시에 동의 받은 개인정보 보유, 이용기간 내에서 개인정보를 처리, 보유합니다.
-② 토스랩은 Class.getdrive 서비스 회원가입, 회원 식별, Class.getdrive 서비스 이용 등을 위해 아래와 같이 개인정보를 수집ᆞ이용합니다.
+② SingleThread는 Class.getdrive 서비스 회원가입, 회원 식별, Class.getdrive 서비스 이용 등을 위해 아래와 같이 개인정보를 수집ᆞ이용합니다.
 수집 목적	수집 항목	수집 근거	보유 기간
 회원 식별 및 Class.getdrive서비스 이용	(필수) 이메일, 비밀번호, 이름
 (선택) 프로필 사진, 부서, 직책, 생년월일	정보주체의 동의	회원탈퇴 시 까지

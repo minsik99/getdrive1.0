@@ -5,7 +5,7 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<title>팀 목록</title>
+<title></title>
 <style>
 
 	center {
@@ -87,23 +87,19 @@ $(function(){
 		});
 	});
 });
+
+	// 대시보드 입장
+	function moveMain(){
+		location.href = "template.do";
+	}
 	
-// 팀 생성 화면 입장
-function createTeam(){
-	location.href = "tcreate.do";
-}
-	
+	// 팀 생성 화면 입장
+	function createTeam(){
+		location.href = "tcreate.do";
+	}
 </script>
-<!-- 2024.04.05 kimyh : 비로그인 상태시 초기화면으로 이동 처리 -->
-<c:if test="${empty loginMember}">
-	<script type="text/javascript">
-	window.location.replace('main.do');
-	</script>
-</c:if>
 </head>
 <body>
-
-
 <div id="full">
 	<div id="header">
 		<c:import url="/WEB-INF/views/common/mainTopbar.jsp"></c:import>
@@ -164,10 +160,8 @@ function createTeam(){
 
 	<div id="footer">
 		<c:import url="/WEB-INF/views/common/login_footer.jsp"></c:import>
-	</div>
-	
+	</div>	
 </div>
-
 <hr>
 </body>
 </html>

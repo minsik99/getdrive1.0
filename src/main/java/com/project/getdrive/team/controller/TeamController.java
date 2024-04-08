@@ -3,7 +3,6 @@ package com.project.getdrive.team.controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -81,16 +80,6 @@ public class TeamController {
 	@RequestMapping("tcreate.do")
 	public String createTeam() {
 		return "team/createTeam";
-	}
-	
-	// 팀 입장 페이지, 팀 고유번호를 세션에 담음 (지금은 드라이브로 갑니다)
-	@RequestMapping("teneter.do")
-	public String enterTeam(HttpSession session,
-			@RequestParam("tNo") int tNo) {
-		
-		session.setAttribute("tNo", tNo);
-		
-		return "redirect:dmain.do";
 	}
 	
 	// 팀 생성

@@ -24,5 +24,20 @@ public class MemberDao {
 		return sqlSessionTemplate.selectOne("memberMapper.selectMember", email);
 	}
 
+	public int selectCheckEmail(String email) {
+		return sqlSessionTemplate.selectOne("memberMapper.selectCheckEmail", email);
+	}
+
+
+	public boolean accountCheck(Member member) {
+		return sqlSessionTemplate.selectOne("memberMapper.accountCheck", member);
+	}
+
+	public void updatePassword(Member member) {
+		sqlSessionTemplate.update("memberMapper.updatePassword",member);
+		
+	}
+
+
 
 }
