@@ -12,4 +12,10 @@ public interface DriveService {
 
 	ArrayList<Drive> selectDriveList(Drive drive);
 
+	int createDrive(Drive drive);
+
+	int selectDriveCount(int tNo);
+
+	Drive selectDrive(int dNo);
+
 }

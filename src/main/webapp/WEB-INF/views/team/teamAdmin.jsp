@@ -93,40 +93,6 @@
 	#submitName:hover {
 		cursor: pointer;
 	}
-
-	/* 모달창 */
-	#modalContainer {
-	  width: 100%;
-	  height: 100%;
-	  position: fixed;
-	  top: 0;
-	  left: 0;
-	  display: flex;
-	  justify-content: center;
-	  align-items: center;
-	  background: rgba(0, 0, 0, 0.5);
-	}
-	
-	#modalContent {
-	  position: absolute;
-	  background-color: #ffffff;
-	  width: 300px;
-	  height: 150px;
-	  padding: 15px;
-	}
-	
-	#modalContainer.hidden {
-	  display: none;
-	}
-	
-	#modalCloseButton {
-		background-color: #e6e6e6;
-		color: black;
-	}
-	
-	.modalButton {
-		margin-top: 4rem;
-	}
 	
 </style>
 <script type="text/javascript" src="/getdrive/resources/js/jquery-3.7.0.min.js"></script>
@@ -159,23 +125,6 @@ $(function(){
         var newTeamName = $('#newTeamName').val();
         $('#modalTeamName').text("작성하신 팀명으로 변경하시겠습니까?");
         $('#modalContainer').removeClass('hidden');
-    });
-
-    // 모달창 확인 버튼
-    $('#submitName').click(function(event){
-        event.preventDefault();
-        
-        if(isDuplicate) {
-            $('#modalContainer').addClass('hidden');
-        } else {
-            $('#teamNameForm').submit();
-        }
-    });
-
-    // 모달창 닫기
-    $('#modalCloseButton').click(function(event){
-        event.preventDefault();
-        $('#modalContainer').addClass('hidden');
     });
     
     // 팀 삭제할 때 비밀번호가 일치하지 않는 경우
@@ -245,15 +194,6 @@ $(function(){
 			    <input type="text" id="newTeamName" name="tName" placeholder="새로운 팀 이름을 입력해주세요"> &nbsp;
 			    <input type="hidden" id="teamNo" name="tNo" value="${team.tNo}">
 			    <button>팀 이름 변경하기</button>
-			    <div id="modalContainer" class="hidden">
-			        <div id="modalContent">
-			            <h4 id="modalTeamName"></h4>
-			            <div class="modalButton">
-			                <button id="modalCloseButton">취소</button>
-			                <input id="submitName" type="submit" value="확인">
-			            </div>
-			        </div>
-			    </div>
 			</form>
 			<h4>팀 삭제</h4>
 			<p style="color: red;">비밀번호 입력</p>

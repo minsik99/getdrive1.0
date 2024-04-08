@@ -27,4 +27,16 @@ public class DriveDao {
 		List list = sqlSessionTemplate.selectList("driveMapper.selectDriveList", drive);
 		return (ArrayList<Drive>) list;
 	}
+
+	public int createDrive(Drive drive) {
+		return sqlSessionTemplate.insert("driveMapper.createDrive", drive);
+	}
+
+	public int selectDriveCount(int tNo) {
+		return sqlSessionTemplate.selectOne("driveMapper.selectDriveCount", tNo);
+	}
+
+	public Drive selectDrive(int dNo) {
+		return sqlSessionTemplate.selectOne("driveMapper.selectDrive", dNo);
+	}
 }
