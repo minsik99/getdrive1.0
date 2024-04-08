@@ -69,7 +69,14 @@ public class TeamUserController {
 			@RequestParam("tno") int tNo,
 			@RequestParam("email") String email) {
 		
-		// 팀 고유번호와 이메일 값을 동시에 보내기 위해 team/common의 TeamCreator 객체를 사용
+		// 2024.04.08 kimyh 이메일로 기존회원의 mno 구하기
+		
+		// 회원정보가 있으면
+		
+		// 회원정보가 없으면 초대하는 대상자가 회원가입 안내 후 이용하도록 메세지 발생
+		
+		// 팀 고유번호, 팀원번호, 이메일 값을 동시에 보내기 위해 team/common의 TeamCreator 객체를 사용
+		// TeamCreator teamCreator = new TeamCreator(mNo, tNo, email);
 		TeamCreator teamCreator = new TeamCreator(tNo, email);
 		
 		int result = teamUserService.insertTeamUser(teamCreator);

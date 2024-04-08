@@ -5,7 +5,22 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<title></title>
+<title>팀 목록</title>
+<!-- 2024.04.05 kimyh : 공통 css 처리 -->
+<link rel="stylesheet" href="/getdrive/resources/css/common.css">
+
+<style type="text/css">
+#full {
+	width: 100%;
+	height: 100%;
+}
+
+#header {
+	width: 100%;
+	height: 100px;
+}
+</style>
+
 <style>
 
 	center {
@@ -69,6 +84,7 @@
 	}
 	
 </style>
+
 <script type="text/javascript" src="/getdrive/resources/js/jquery-3.7.0.min.js"></script>
 <script type="text/javascript">	
 
@@ -106,7 +122,7 @@ $(function(){
 	</div>
 	<hr>
 	
-	<table width=100% align="center">
+	<table width=600 align="center">
 		<tr>
 			<th>${ loginMember.name }님의 초대/가입된 목록입니다. </th>
 		</tr>

@@ -1,11 +1,9 @@
 package com.project.getdrive;
 
-import java.text.DateFormat;
-import java.util.Date;
-import java.util.Locale;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -14,35 +12,25 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+
 import com.project.getdrive.member.model.vo.Member;
 import com.project.getdrive.search.model.service.SearchService;
 import com.project.getdrive.search.model.vo.Search;
 import com.project.getdrive.team.model.service.TeamService;
 import com.project.getdrive.team.model.vo.Team;
 
-/**
- * Handles requests for the application home page.
- */
 @Controller
 public class HomeController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
-
-	/**
-	 * Simply selects the home view to render by returning its name.
-	 */
-	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String home(Locale locale, Model model) {
-		logger.info("Welcome home! The client locale is {}.", locale);
-
 	@Autowired
 	private TeamService teamService;
 	
@@ -53,38 +41,27 @@ public class HomeController {
 	@RequestMapping("main.do")
 	public String forwardMainView(
 		HttpServletRequest request) {
-
 		
-		Date date = new Date();
-		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
-		
-		String formattedDate = dateFormat.format(date);
-		
-		model.addAttribute("serverTime", formattedDate );
-		
-		return "home";
+		return "common/main";
 	}
     
-	// 3. 로그아웃 처리용 메소드
-	@RequestMapping(value = "logout.do") 
-	public String logoutMethod(
-				HttpServletRequest request, 
-				Model model) {
-	    
-		HttpSession session = request.getSession(false);
-
-		// 세션 객체가 있으면 리턴받고, 없으면 null 리턴
-		if(session != null) {
-			session.invalidate();	
-
-			return "redirect:main.do";		    
-		} else {
-			model.addAttribute("message", "일정시간 접속을 하지 않아 자동로그아웃 되었습니다.");
-			
-		    return "common/error";			
-		}    
-
-	}		
+	/*
+	 * // 3. 로그아웃 처리용 메소드
+	 * 
+	 * @RequestMapping(value = "logout.do") public String logoutMethod(
+	 * HttpServletRequest request, Model model) {
+	 * 
+	 * HttpSession session = request.getSession(false);
+	 * 
+	 * // 세션 객체가 있으면 리턴받고, 없으면 null 리턴 if(session != null) { session.invalidate();
+	 * 
+	 * return "redirect:main.do"; } else { model.addAttribute("message",
+	 * "일정시간 접속을 하지 않아 자동로그아웃 되었습니다.");
+	 * 
+	 * return "common/error"; }
+	 * 
+	 * }
+	 */		
 	
 	// 팀 메인으로 이동
 	@RequestMapping(value="teammain.do", method= {RequestMethod.GET, RequestMethod.POST})
