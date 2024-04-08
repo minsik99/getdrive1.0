@@ -1,0 +1,107 @@
+[33mcommit 24b9bea43ced5b13bd83b485b9ee3716dac79d82[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mSC[m[33m)[m
+Author: RhysBlair <hanmanman12345@gmail.com>
+Date:   Mon Apr 8 16:56:56 2024 +0900
+
+    파일삭제
+
+[33mcommit 9875e93f88979b119cb7218e03ee83a232e4bd5b[m
+Author: RhysBlair <hanmanman12345@gmail.com>
+Date:   Mon Apr 8 16:52:57 2024 +0900
+
+    전체수정
+
+[33mcommit b2b651e9060df2c9c5a4e4d1a5b936f365b58520[m[33m ([m[1;31morigin/SC[m[33m, [m[1;32mmain[m[33m)[m
+Author: RhysBlair <hanmanman12345@gmail.com>
+Date:   Fri Apr 5 13:19:48 2024 +0900
+
+    주석수정
+
+[33mcommit a98133be1d7f09c86c81c0ad98cac128d0eda470[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Merge: 265d90a 389e337
+Author: minsik99 <164865777+minsik99@users.noreply.github.com>
+Date:   Fri Apr 5 12:24:33 2024 +0900
+
+    Merge pull request #3 from minsik99/kimyh
+    
+    branch kimyh commit - 메인, 팀록목, 화면이동 수정
+
+[33mcommit 389e33788db4d098d9d3fb5bbdd89fce4fe77744[m[33m ([m[1;31morigin/kimyh[m[33m)[m
+Author: kimyh <hapycity@naver.com>
+Date:   Fri Apr 5 12:20:52 2024 +0900
+
+    branch kimyh commit - 메인, 팀록목, 화면이동 수정
+
+[33mcommit 265d90aaadcc68737307077797bc3aa500772fa9[m
+Merge: 1096432 7d1c22b
+Author: minsik99 <164865777+minsik99@users.noreply.github.com>
+Date:   Fri Apr 5 11:34:04 2024 +0900
+
+    Merge pull request #2 from minsik99/kimyh
+    
+    Kimyh
+
+[33mcommit 7d1c22bfe043e2280069abac1a8f8d5b7d6bdefb[m
+Merge: 9e1bbe9 1096432
+Author: minsik99 <164865777+minsik99@users.noreply.github.com>
+Date:   Fri Apr 5 11:33:41 2024 +0900
+
+    Merge branch 'main' into kimyh
+
+[33mcommit 9e1bbe999b8c62b694b8ab05fb78f85d4c36d08e[m
+Author: kimyh <hapycity@naver.com>
+Date:   Fri Apr 5 11:31:30 2024 +0900
+
+    제외파일 적용한 내용입니다.
+
+[33mcommit dd994debc03ab46c4a81008e980323f29e72a675[m
+Author: kimyh <hapycity@naver.com>
+Date:   Fri Apr 5 11:26:22 2024 +0900
+
+    제약조건 추가
+
+[33mcommit 10964327608d3c46a7c6afce28cb874ba68d1331[m
+Author: minsik99 <164865777+minsik99@users.noreply.github.com>
+Date:   Fri Apr 5 11:17:47 2024 +0900
+
+    Update .gitignore
+
+[33mcommit eb3890289639613721ca0383f964708d4c20a4c0[m
+Merge: 1073784 59fc9b6
+Author: minsik99 <164865777+minsik99@users.noreply.github.com>
+Date:   Fri Apr 5 11:16:59 2024 +0900
+
+    Merge pull request #1 from minsik99/kimyh
+    
+    첫번째 커밋입니다.
+
+[33mcommit 59fc9b65807db7048f92d4c29d720c57f314a514[m
+Author: kimyh <hapycity@naver.com>
+Date:   Fri Apr 5 11:09:19 2024 +0900
+
+    첫번째 커밋입니다.
+    초기화면 수정했어요.
+
+[33mcommit 10737841e0df75b6f73bd99f8166f4978b1dd4b3[m
+Author: minsik99 <164865777+minsik99@users.noreply.github.com>
+Date:   Fri Apr 5 11:02:12 2024 +0900
+
+    Update .gitignore
+
+[33mcommit 5f97bf20d7d4e3c2420f71343a48e59fb43e6613[m
+Merge: 0db9423 712b6d7
+Author: minsik99 <kimminsik0726@gmail.com>
+Date:   Fri Apr 5 10:50:34 2024 +0900
+
+    Merge branch 'main' of https://github.com/minsik99/getdrive1.0.git into main
+
+[33mcommit 0db942309e221819d86a5c5086ef1464150d2684[m
+Author: minsik99 <kimminsik0726@gmail.com>
+Date:   Fri Apr 5 10:47:57 2024 +0900
+
+    first commit
+
+[33mcommit 712b6d783cab39e69109b587167338b403a0a6b9[m
+Author: minsik99 <164865777+minsik99@users.noreply.github.com>
+Date:   Fri Mar 29 20:47:39 2024 +0900
+
+    Initial commit

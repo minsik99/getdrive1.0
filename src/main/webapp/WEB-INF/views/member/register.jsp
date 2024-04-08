@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title></title>
-<script type="text/javascript" src="/first/resources/js/jquery-3.7.0.min.js"></script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.7.0.js"></script>
 <style type="text/css">
 * {
 	margin: 0;
@@ -16,8 +16,7 @@
 
 #header {
 	width: 100%;
-	height: 20%;
-	margin: 0px;
+	margin-left:10px;
 }
 
 #main {
@@ -35,7 +34,7 @@ ul.register_box {
 }
 
 .inputInfo, .inputInfo>ul {
-	position: relative;
+
 }
 
 .inputInfo>ul>li {
@@ -64,11 +63,11 @@ span {
 
 #comment {
 	font-size: 9pt;
-	margin-left: 8px;
+	margin-left: 9px;
 }
 
 .inputText {
-	width: 400px !important;
+	width: 400px;
 	border: 1px solid #ddd;
 	border-radius: 5px;
 	background-color: #fff;
@@ -134,7 +133,7 @@ span {
 	font-size: 12pt;
 }
 
-.registerComplete>button:active {
+.registerComplete>button:hover {
 	color: white;
 	background: rgb(200, 230, 255);
 }
@@ -149,42 +148,17 @@ span {
     display: inline-block;
     border: 1px solid #ddd;
     border-radius: 5px;
-    font-size: 12pt;
     margin-top: 5px;
-    width: 400px;
     
 }
 
 #email {
     background-color: transparent;
-    width: 280px;
+    width: 400px;
     border: 0;
-    font-size: 15pt;
     float: left;
 }
 
-.btn {
-    width: 100px;
-    height: 30px;
-    background: #6DBFF2;
-	border-radius: 5px;
-	color: white;
-    padding: 3px;
-    border: none;
-    font-size: 9pt;
-    vertical-align: top;
-    float: right;
-    margin-top: 5px;
-    margin-right: 9px;
-}
-.btn:hover {
-    cursor: pointer;
-}
-
-.btn:active {
-	color: white;
-	background: rgb(200, 230, 255);
-}
 #loginpagezone{
 	text-align: center;
 	font-family: sans-serif;
@@ -200,52 +174,102 @@ function moveMainPage(){
 }
 </script>
 <script type="text/javascript">
-$(function(){
-	$("#userPwd").keyup(function(){
-        $("#userpwd_msg").html("");
-    });
+
+//회원가입 버튼 활성화/비활성화 함수
+function checkForm() {
+    var emailValid = $(".success").is(":visible"); // 이메일 중복 확인 결과
+    var passwordValid = checkPassword(); // 비밀번호 조건 체크 결과
+
+    // 이메일 중복 확인 결과와 비밀번호 조건 체크 결과가 모두 true이면 버튼 활성화
+    if (emailValid && passwordValid) {
+        $("#rgisterComplete_button").prop("disabled", false);
+    } else {
+        $("#rgisterComplete_button").prop("disabled", true);
+    }
+}
+
+var inputEmailValue = $(".inputEmail").val();
+//입력 이메일입력 값 변수선언
+
+// 문서 로드 후 실행되는 함수
+$(function() {
+    // 폼 체크 함수 호출하여 버튼 상태 설정
+    checkForm();
     
-    $("#userPwd2").keyup(function(){
-        if($("#userPwd").val() != $("#userPwd2").val()){
-            $("#userpwd_msg").html("비밀번호가 일치하지 않습니다");
-            $("#userpwd_msg").css("color","red");
-            return false;
-        }else{
-            $("#userpwd_msg").html("비밀번호가 일치합니다.");
-            $("#userpwd_msg").css("color","#6DBFF2");
-            return true;
+    $(".inputEmail").on("input", function() {
+        // 현재 이메일 값
+        var nowEmailValue = $(this).val();
+
+        // 이메일 값이 변경되었는지 확인
+        if (nowEmailValue !== inputEmailValue) {
+            // 변경된 경우: 중복 확인 실행, 문구변경
+            emailCheck();
+            inputEmailValue = nowEmailValue; // 이전 값 갱신
         }
     });
-    
-	$(".btn").click(function() {
-        var userEmail = $("#email").val();
-        $.ajax({
-            url: "checkEmail.do",
-            type: "POST",
-            data: { email: userEmail },
-            success: function(response) {
-                if(response === "true") {
-                    $("#useremail_msg").html("사용 가능한 이메일입니다.");
-                    $("#useremail_msg").css("color","#6DBFF2");
-                } else {
-                    $("#useremail_msg").html("이미 사용 중인 이메일입니다.");
-                    $("#useremail_msg").css("color","red");
-                }
-            },
-            error: function() {
-                $("#useremail_msg").html("중복 확인 중 오류가 발생했습니다.");
-                $("#useremail_msg").css("color","red");
-            }
-        });
+
+    // 비밀번호 입력란에 입력이 발생할 때마다 폼 체크 함수 호출
+    $("#userPwd, #userPwd2").on("input", function() {
+        checkForm();
     });
+ 
 });
+
+function checkPassword() {
+    var password = $("#userPwd").val();
+    var confirmPassword = $("#userPwd2").val();
+  
+    var empty = password.trim() === '';
+    var length = password.length >= 8 && password.length <= 20;
+    var alphabet = /[a-zA-Z]/.test(password);
+    var digit = /\d/.test(password);
+    var special = /[!@#$%^&*]/.test(password);
+    var match = password === confirmPassword;
+
+    // 각 조건을 검사하고 메시지를 표시
+    $(".empty").toggle(empty);
+    $(".terms").toggle(!empty && (!length || !alphabet || !digit || !special));
+    $(".mismatch").toggle(!empty && !match && !$(".terms").is(":visible")); 
+    $(".match").toggle(match && !empty && !$(".terms").is(":visible") && !$(".mismatch").is(":visible"));
+
+    // 비밀번호가 조건을 모두 충족하는지 확인하여 회원가입 버튼 활성화/비활성화
+    var passwordTerms = !empty && length && alphabet && digit && special && match;
+    
+    return passwordTerms;
+    
+}
+
+function emailCheck(){
+	$.ajax({
+		url: "idchk.do",
+		type: "post",
+		data: { email: $('.inputEmail').val() },
+		success: function(data){
+			console.log("success : " + data);
+			if(data == "ok"){
+				$('.success').show();
+				$('.fail').hide();
+				$('.inputEmail').focus();
+			}else{
+				$('.fail').show();
+				$('.success').hide();
+				$('.inputEmail').select();
+			}
+			checkForm();
+		},
+		error: function(jqXHR, textStatus, errorThrown){
+			console.log("error : " + jqXHR + ", " + textStatus + ", " + errorThrown);
+		}
+	});
+}
+
 </script>
 </head>
 <body>
-<form action="register.do" method ="post" id="registerForm" onsubmit="return validate();">
+<form action="register.do" method ="post" id="registerForm" >
 	<header>
 		<div id="header">
-			<c:import url="/WEB-INF/views/common/mainTopbar.jsp"></c:import>
+			<c:import url="/WEB-INF/views/common/emptyTopbar.jsp"></c:import>
 		</div>
 	</header>
 	<div id="main">
@@ -254,7 +278,7 @@ $(function(){
 				<ul class="clearfix">
 					<li class="inp_text">
 						<label for="userName" class="registerText">이름</label><br>
-						<input type="text" class="inputText" name="name" placeholder="이름 입력" required>
+						<input type="text" id="username" class="inputText" name="name" placeholder="이름 입력" required>
 						<p id="username_msg"></p>
 					</li>
 				</ul>
@@ -265,9 +289,11 @@ $(function(){
 						<label for="userEmail" class="registerText">이메일</label><br>
 						<div class="email_div">
 							<input type="email" id="email" class="inputEmail" name="email" placeholder="이메일 입력" required>
-							<button class="btn">중복확인</button>
 						</div>
-						<p id="useremail_msg"></p>
+						<div class="success" style="display: none; color: #6DBFF2">사용할 수 있는 이메일입니다</div>
+						<div class="fail" style="display: none; color: red">이미 사용중인 이메일입니다</div>
+   						<div class="failure" style="display: none;">아이디는 4~12글자이어야 합니다</div>
+   						<div class="failure2" style="display: none;">영어 또는 숫자만 가능합니다</div>
 					</li>
 				</ul>
 			</li>
@@ -275,16 +301,18 @@ $(function(){
 				<ul class="clearfix">
 					<li class="inp_text">
 						<label for="userEmail" class="registerText">비밀번호 입력
-							<p id="comment">비밀번호는 8~20자 영문, 숫자로 입력하세요</p>
+							<p id="comment">비밀번호는 8~20자 영문, 숫자, 특수문자로 입력하세요</p>
 						</label>
 						<input type="Password" class="inputText" name="pwd" id="userPwd" placeholder="비밀번호 입력" required>
-						<input type="Password" class="inputText" id="userPwd2" placeholder="비밀번호 확인" required>
-						<font id="userpwd_msg" size="2" color="red"></font>
+             		    <input type="Password" class="inputText" id="userPwd2" placeholder="비밀번호 확인" required>
+             		    <div class="terms" style="display: none; color: red">비밀번호 입력 조건과 일치하지 않습니다</div>
+               			<div class="mismatch" style="display: none; color: red">비밀번호가 일치하지 않습니다</div>
+               			<div class="match" style="display: none; color: #6DBFF2">비밀번호가 일치합니다.</div>
 					</li>
 				</ul>
 			</li>
 			<li class="registerComplete">
-				<button id="rgisterComplete_button" type="submit">회원가입 완료</button>
+				<button id="rgisterComplete_button" type="submit" disabled="true" onclick="return emailCheck();">회원가입 완료</button>
 			</li>
 		</ul>
 	</div>

@@ -11,7 +11,7 @@
 	</appender>
 	
 	<appender name="fileLogger" class="org.apache.log4j.DailyRollingFileAppender">
-		<param name="file" value="D:\\spring_workspace\\getdrive\\src\\main\\resources\\logs\\system.log" />		
+		<param name="file" value="C:\\Users\\hanma\\Desktop\\JAVA\\spring_workspace\\getdrive\\src\\main\\resources\\logs\\system.log" />		
 		<param name="Append" value="true" />
 		<param name="DatePattern" value="yyyy-MM-dd" />
 		<layout class="org.apache.log4j.PatternLayout">
@@ -37,7 +37,7 @@
 	</logger>
 	
 	<!-- Application Loggers -->
-	<logger name="org.project.getdrive">
+	<logger name="org.myweb.first">
 		<level value="info" />
 	</logger>
 	

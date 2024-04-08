@@ -1,66 +1,169 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" errorPage="error.jsp"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
 <!DOCTYPE html>
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<title>getdrive 메인 상단 </title>
-
+<title></title>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.7.0.js"></script>
 <style type="text/css">
 #logo {
-	margin: 10px;
-	width: 150px;
+	width: 190px;
+	position: relative;
+	left: 40px;
 }
-
 #logospace {
-	width: 50%;
+	margin: 10px;
+	width: 180px;
+	cursor: pointer;
 	float: left;
-	height:80px;	
+}
+.dropdown{
+	margin: 20px;
+	width: 180px;
+	cursor: pointer;
+	float: right;
+	text-align: center;
+	position: relative;
+	right:30px;
 }
 
-#Temporaryspace {
-	width: 50%;
-	float: right;
-	height:80px;	
-	text-align: right;
+.dropbtn{ 
+  background-color: #FFFFFF;
+  border : none;
+  border-radius: 25px 25px 90px 500px / 25px 25px 0px 0px;
+  color: #6DBFF2;
+  font-weight: 400;
+  padding : 12px;
+  width :200px;
+  cursor : pointer;
+  font-size : 18px;
+  font-weight: 600;
+}
+.dropdown-content{
+  display : none;
+  position : absolute;
+  z-index : 1;
+  font-weight: 400;
+  background-color: #9BD1F2;
+  min-width : 200px;
+  border-radius: 90px 500px 25px 25px / 0px 0px 25px 25px;
+}
+.dropdown-content>#a1{
+  display : block;
+  text-decoration : none;
+  color : white;
+  font-size : 18px;
+  padding : 0px 10px 10px 10px;
+}
+.dropdown-content>#a2{
+  display : block;
+  text-decoration : none;
+  color : white;
+  font-size : 18px;
+  padding : 0px 10px 12px 10px;
+  border-radius: 90px 500px 25px 25px / 0px 0px 25px 25px;
+}
+
+.dropdown-content a:hover{
+  background-color : #C9E2F2;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+#user{
+	width: 25px;
+	position: relative;
+	top: 5px;
+}
+
+#setting{
+	width: 30px;
+	position: relative;
+	top: 8px;
+}
+
+#logout{
+	width: 28px;
+	position: relative;
+	top: 7px;
+}
+.dropdown-content {
+    display: none;
+    opacity: 0; /* 초기에는 투명하게 설정 */
+    transition: opacity 0.3s ease; /* opacity 변화에 대한 transition 효과 추가 */
+}
+.dropdown:hover .dropdown-content {
+    display: block;
+    opacity: 1; /* 드롭다운 메뉴가 활성화될 때 투명도를 조절하여 부드럽게 보이도록 함 */
 }
 </style>
-
+<script type="text/javascript">
+function moveAccountSetting(){
+	location.href = "accountSettingPage.do";
+}
+function logout(){
+	location.href = "logout.do";
+}
+</script>
+<script type="text/javascript">
+//카카오로그아웃  
+function kakaoLogout() {
+	if (Kakao.Auth.getAccessToken()) {
+		Kakao.API.request({
+			url : '/v1/user/unlink',
+			success : function(response) {
+				console.log(response)
+				
+			},
+			fail : function(error) {
+				console.log(error);
+			},
+		})
+		Kakao.Auth.setAccessToken(undefined);
+	}
+}
+</script>
+<!-- 드롭다운 부드럽게 -->
+<script type="text/javascript">
+$(function(){
+    $(".dropdown").hover(function(){
+        $(".dropdown-content", this).stop().slideDown(3000); // 드롭다운 메뉴가 천천히 내려오도록 300밀리초로 변경
+    },
+    function(){
+        $(".dropdown-content", this).stop().slideUp(3000); // 드롭다운 메뉴가 천천히 올라가도록 300밀리초로 변경
+    });
+});
+</script>
 </head>
 <body>
-	<%--2024.04.05 kimyh 세션확인용 삭제대상 --%>
-	<div align="left">
-		파일명 : view > common > mainTopbar.jsp <br>
-		세션 : ${ loginMember } <br>
-		고유번호 : ${ loginMember.getAccountNo() } | 아이디 : ${ loginMember.getName() }, 이름 : ${ loginMember.getEmail() }, 가입일 : ${ loginMember.getCdate() }
-	</div>	
-	
 	<div id="logospace">
-	
-		<%--로그인 하지 않았을 때 --%>
-		<c:if test="${ empty sessionScope.loginMember }">
-			<%-- <a href="${ pageContext.servletContext.contextPath }/teamMain.do"> --%>
-			<a href="${ pageContext.servletContext.contextPath }/main.do">
-			<img id="logo" alt="getdrive"src="/getdrive/resources/images/logo.png">
-			</a>
-		</c:if>
-	
-		<%-- 로그인 했을 때 --%>
-		<c:if test="${ !empty sessionScope.loginMember }">
-			<%-- <a href="${ pageContext.servletContext.contextPath }/mainPage.do"> --%>
-			<a href="${ pageContext.servletContext.contextPath }/tmain.do">
-			<img id="logo" alt="getdrive"src="/getdrive/resources/images/logo.png">
-			</a>
-		</c:if>
+	<%--로그인 하지 않았을 때 --%>
+	<c:if test="${ empty sessionScope.loginMember }">
+		<a href="${ pageContext.servletContext.contextPath }/mainPage.do">
+		<img id="logo" alt="getdrive"src="/getdrive/resources/images/logo.png">
+		</a>
+	</c:if>
+	<%-- 로그인 했을 때 --%>
+	<c:if test="${ !empty sessionScope.loginMember }">
+		<a href="${ pageContext.servletContext.contextPath }/mainPage.do">
+		<img id="logo" alt="getdrive"src="/getdrive/resources/images/logo.png">
+		</a>
+	</c:if>
 	</div>
-	
-	<%--2024.04.05 kimyh 로그아웃 처리 삭제대상 --%>	
-	<div id="Temporaryspace">
-		[ <a href="tmain.do"> 팀목록 </a> |		
-		 <a href="logout.do"> 로그아웃 </a> ]	
-	</div>	
-		
+	<c:if test="${ !empty sessionScope.loginMember }">
+	<div class="dropdown">
+      <button class="dropbtn"><img id="user" alt="user" src="/getdrive/resources/images/user.png">
+        <span class="dropbtn_icon">${ sessionScope.loginMember.name }</span>
+      </button>
+      <div class="dropdown-content">
+        <a id="a1" onclick="moveAccountSetting();"><img id="setting" alt="setting" src="/getdrive/resources/images/setting.png">계정설정</a>
+        <a id="a2" onclick="logout(); kakaoLogout();"><img id="logout" alt="logout" src="/getdrive/resources/images/logout.png">로그아웃</a>
+      </div>
+    </div>
+    </c:if>
 </body>
 </html>

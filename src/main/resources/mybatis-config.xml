@@ -11,6 +11,7 @@
 	<typeAliases>
 		<!-- 회원 -->
 		<typeAlias type="com.project.getdrive.member.model.vo.Member" alias="Member" />
+		<typeAlias type="com.project.getdrive.member.model.vo.Social_Member" alias="Social_Member" />
 		<!-- 팀 -->
 		<typeAlias type="com.project.getdrive.team.model.vo.Team" alias="Team" />
 		<typeAlias type="com.project.getdrive.team.common.TeamCreator" alias="TeamCreator" />
@@ -22,13 +23,12 @@
 		<typeAlias type="com.project.getdrive.search.model.vo.Search" alias="Search" />	
 		<typeAlias type="com.project.getdrive.common.CommonSch" alias="CommonSch" />	
 		<typeAlias type="com.project.getdrive.common.Paging" alias="Paging" />	
-		<!-- 드라이브 -->
-		<typeAlias type="com.project.getdrive.drive.model.vo.Drive" alias="Drive" />	
 	</typeAliases>
 	
 	<mappers>
 		<!-- 회원 -->
 		<mapper resource="mappers/member-mapper.xml" />
+		<mapper resource="mappers/social-member-mapper.xml" />
 		<!-- 팀 -->
 		<mapper resource="mappers/team-mapper.xml"/>
 		<!-- 팀 유저 -->
@@ -37,7 +37,5 @@
 		<mapper resource="mappers/chatuser-mapper.xml"/>
 		<!-- 종합 검색 -->
 		<mapper resource="mappers/search-mapper.xml" />
-		<!-- 드라이브 -->
-		<mapper resource="mappers/drive-mapper.xml" />
 	</mappers>
 </configuration>
