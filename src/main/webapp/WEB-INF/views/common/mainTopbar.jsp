@@ -7,6 +7,8 @@
 <meta charset="UTF-8">
 <title></title>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.7.0.js"></script>
+
+
 <style type="text/css">
 #logo {
 	width: 190px;
@@ -19,6 +21,7 @@
 	cursor: pointer;
 	float: left;
 }
+
 .dropdown{
 	margin: 20px;
 	width: 180px;
@@ -41,6 +44,7 @@
   font-size : 18px;
   font-weight: 600;
 }
+
 .dropdown-content{
   display : none;
   position : absolute;
@@ -50,6 +54,7 @@
   min-width : 200px;
   border-radius: 90px 500px 25px 25px / 0px 0px 25px 25px;
 }
+
 .dropdown-content>#a1{
   display : block;
   text-decoration : none;
@@ -57,6 +62,7 @@
   font-size : 18px;
   padding : 0px 10px 10px 10px;
 }
+
 .dropdown-content>#a2{
   display : block;
   text-decoration : none;
@@ -91,16 +97,20 @@
 	position: relative;
 	top: 7px;
 }
+
 .dropdown-content {
     display: none;
     opacity: 0; /* 초기에는 투명하게 설정 */
     transition: opacity 0.3s ease; /* opacity 변화에 대한 transition 효과 추가 */
 }
+
 .dropdown:hover .dropdown-content {
     display: block;
     opacity: 1; /* 드롭다운 메뉴가 활성화될 때 투명도를 조절하여 부드럽게 보이도록 함 */
 }
+
 </style>
+
 <script type="text/javascript">
 function moveAccountSetting(){
 	location.href = "accountSettingPage.do";
@@ -109,6 +119,7 @@ function logout(){
 	location.href = "logout.do";
 }
 </script>
+
 <script type="text/javascript">
 //카카오로그아웃  
 function kakaoLogout() {
@@ -127,6 +138,7 @@ function kakaoLogout() {
 	}
 }
 </script>
+
 <!-- 드롭다운 부드럽게 -->
 <script type="text/javascript">
 $(function(){
@@ -138,32 +150,30 @@ $(function(){
     });
 });
 </script>
+
 </head>
 <body>
+	
 	<div id="logospace">
-	<%--로그인 하지 않았을 때 --%>
-	<c:if test="${ empty sessionScope.loginMember }">
 		<a href="${ pageContext.servletContext.contextPath }/mainPage.do">
 		<img id="logo" alt="getdrive"src="/getdrive/resources/images/logo.png">
 		</a>
-	</c:if>
-	<%-- 로그인 했을 때 --%>
-	<c:if test="${ !empty sessionScope.loginMember }">
-		<a href="${ pageContext.servletContext.contextPath }/mainPage.do">
-		<img id="logo" alt="getdrive"src="/getdrive/resources/images/logo.png">
-		</a>
-	</c:if>
 	</div>
+		
 	<c:if test="${ !empty sessionScope.loginMember }">
-	<div class="dropdown">
-      <button class="dropbtn"><img id="user" alt="user" src="/getdrive/resources/images/user.png">
-        <span class="dropbtn_icon">${ sessionScope.loginMember.name }</span>
-      </button>
-      <div class="dropdown-content">
-        <a id="a1" onclick="moveAccountSetting();"><img id="setting" alt="setting" src="/getdrive/resources/images/setting.png">계정설정</a>
-        <a id="a2" onclick="logout(); kakaoLogout();"><img id="logout" alt="logout" src="/getdrive/resources/images/logout.png">로그아웃</a>
-      </div>
-    </div>
+		<div class="dropdown">
+	      <button class="dropbtn"><img id="user" alt="user" src="/getdrive/resources/images/user.png">
+	        <span class="dropbtn_icon">${ sessionScope.loginMember.name }</span>
+	      </button>
+	      
+	      <div class="dropdown-content">
+	        <a id="a1" onclick="moveAccountSetting();"><img id="setting" alt="setting" src="/getdrive/resources/images/setting.png">계정설정</a>
+	        <a id="a2" onclick="logout(); kakaoLogout();"><img id="logout" alt="logout" src="/getdrive/resources/images/logout.png">로그아웃</a>
+	      </div>
+	    </div>
     </c:if>
+   
+    
 </body>
+
 </html>
