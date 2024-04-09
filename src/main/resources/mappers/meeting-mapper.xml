@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC
+"-//mybatis.org//DTD Mapper 3.0//EN"
+"http://www.mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="meetingMapper">
+
+	<resultMap type="Meeting" id="resultMeeting">
+		<result column= "MEETING_ID" property="meetingId" />
+		<result column= "MEETING_TITLE" property="meetingTitle" />
+		<result column= "MEETING_DATE" property="meetingDate" />
+		<result column= "MEETING_UPDATE" property="meetingUpdate" />
+		<result column= "MEETING_WRITER" property="meetingWriter" />
+		<result column= "MEETING_CONTENT" property="meetingContent" />
+		<result column= "MEETING_ORIGINAL_FILENAME" property="meetingOriginalFileName" />
+		<result column= "MEETING_RENAME_FILENAME" property="meetingRenameFileName" />
+		<result column= "IMPORTANCE" property="importance" />
+		<result column= "IMP_END_DATE" property="impEndDate" />
+		<result column= "READCOUNT" property="readCount" />
+		<result column= "M_TID" property="m_teamid" />
+	</resultMap>
+	
+	<!--select ********************************************************************************************** -->
+	<!-- 회의글 총갯수  -->
+	<select id="getListCount" resultType="_int">
+		select count(*) from meeting
+	</select>
+	
+	<!-- 회의글 전체 조회 -->
+	<select id="selectList" parameterType="Paging" resultMap="resultMeeting">
+		SELECT * FROM MEETING ORDER BY MEETING_ID DESC
+	</select>
+	
+	<!-- 회의글 1개 조회 -->
+	<select id="selectOne" parameterType="_int" resultMap="resultMeeting">
+		SELECT * FROM MEETING WHERE MEETING_ID = #{ no }
+	</select>
+	
+	<!-- create, update, delete **************************************************************************** -->
+	<!-- 새 회의글 작성 -->
+	<insert id="insertMeeing" parameterType="Meeting">
+		INSERT INTO MEETING
+		<if test="importance != null"> <!-- C1. 중요글 -->
+		VALUES ((SELECT MAX(MEETING_ID) +1 FROM MEETING),
+				#{meetingTitle}, DEFAULT, NULL, #{meetingWriter}, #{meetingContent},
+				#{meetingOriginalFileName}, #{meetingRenameFileName}, #{importance}, default, DEFAULT, 1)
+		</if>
+		
+		<if test="importance == null"> <!-- C2. 일반글 -->
+		VALUES ((SELECT MAX(MEETING_ID) +1 FROM MEETING),
+			#{meetingTitle}, DEFAULT, NULL, #{meetingWriter}, #{meetingContent},
+			#{meetingOriginalFileName}, #{meetingRenameFileName}, DEFAULT, DEFAULT, DEFAULT, 1)
+		</if>
+	</insert>
+	
+	<update id="addReadCount" parameterType="_int">
+		UPDATE MEETING
+		SET READCOUNT = READCOUNT + 1
+		WHERE MEETING_ID = #{meetingId}
+	</update>
+	
+	<update id="updateMeeting" parameterType="Meeting">
+		UPDATE MEETING
+		SET MEETING_TITLE = #{meetingTitle}, MEETING_UPDATE = SYSDATE,
+			MEETING_CONTENT = #{meetingContent},
+			IMPORTANCE = #{importance}, IMP_END_DATE = #{impEndDate}
+		<if test="meetingOriginalFileName == null">
+			, MEETING_ORIGINAL_FILENAME = null, MEETING_RENAME_FILENAME = null
+		</if>	
+		<if test="meetingOriginalFileName != null">
+			, MEETING_ORIGINAL_FILENAME = #{meetingOriginalFileName}
+			, MEETING_RENAME_FILENAME = #{meetingRenameFileName}
+		</if>
+		WHERE MEETING_ID = #{meetingId}
+	</update>
+	
+	<delete id="deleteMeeting" parameterType="_int">
+		DELETE FROM MEETING WHERE MEETING_ID = #{ NO }
+	</delete>
+	
+</mapper>
