@@ -121,9 +121,13 @@ public class BoardController {
 	
 	//새 게시글 등록 페이지 요청 처리용 (첨부파일 업로드 기능 추가)
 	@RequestMapping(value="binsert.do", method=RequestMethod.POST)
-	public String boardInsertMethod(Board board, Model model, HttpServletRequest request,
-			@RequestParam(name="upfile", required=false) MultipartFile mfile) {
-		logger.info("binsert.do : " + board);
+	public String boardInsertMethod(
+		Board board, 
+		Model model, 
+		HttpServletRequest request,
+		@RequestParam(name="upfile", required=false) MultipartFile mfile) {
+		
+		logger.info("##### binsert.do : " + board);
 		
 		//게시글 첨부파일 저장용 폴더 지정 : 톰캣(WAS)이 구동하고 있는 애플리케이션 프로젝트 안의 폴더 지정
 		//el 절대경로 표기인 ${ pageContext.servletContext.contextPage } 와 같은 의미의 코드임

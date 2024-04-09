@@ -109,6 +109,8 @@ public class CalendarController {
 		}
 	}
 		
+	
+	
 	//스케줄 등록 페이지 내보내기용
 	@RequestMapping("clinsertform.do")
 	public String scheduleInsertPage(
@@ -131,6 +133,7 @@ public class CalendarController {
 	    return "calendar/calendarInsertForm";
 	}
 	
+	
 		
 		//스케줄 등록 처리용
 		@RequestMapping("clinsert.do")
@@ -146,6 +149,8 @@ public class CalendarController {
 			return "common/error";	
 	    	}    	
 		}
+		
+		
 		
 		//스케줄 삭제 처리용
 		@RequestMapping("cldelete.do")
