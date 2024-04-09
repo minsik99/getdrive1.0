@@ -12,7 +12,8 @@ public interface CalendarService {
 	public ArrayList<Calendar> CalendarList();
 	
 	//일정 입력
-	public int scheduleInsert(Calendar calendar);	
+	public int scheduleInsert(Calendar calendar);
+	
 	
 	//일정 리스트 출력
 	public ArrayList<Calendar> scheduleList(CommonCL commonCL);

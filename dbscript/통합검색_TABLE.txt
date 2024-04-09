@@ -1,0 +1,59 @@
+--  게시판테이블 등록시 검색테이블에 등록
+ CREATE  or replace TRIGGER TRI_INSERT_MT_Search
+AFTER INSERT ON MEETING
+FOR EACH ROW
+BEGIN
+  INSERT INTO TB_Search ( S_NO, S_MENU, S_TITLE, S_CONTENT, S_DATE, S_CRUID, S_ID, S_CTID, S_TID )
+  VALUES ( (select nvl(max(s_no),0)+1 from tb_search) , 'MT', :NEW.MEETING_TITLE,  :NEW.MEETING_CONTENT,  :NEW.MEETING_DATE,  1, 1, 1, :NEW.M_TID);
+END;
+
+
+commit;
+
+create or replace TRIGGER TRI_INSERT_BD_Search
+AFTER INSERT ON TB_Board
+FOR EACH ROW
+BEGIN
+  INSERT INTO TB_Search ( S_NO, S_MENU, S_TITLE, S_CONTENT, S_DATE, S_CRUID, S_ID, S_CTID, S_TID )
+  VALUES ( (select nvl(max(s_no),0)+1 from tb_search) , 'BD', :NEW.B_Title,  :NEW.B_CONTENT,  :NEW.B_CDATE,  :NEW.B_CRUID,  :NEW.B_NO,  :NEW.B_CTID, :NEW.B_TID);
+END;
+
+
+select count(*)
+ from TB_SEARCH 
+			where ( S_TITLE like '%' || '회의' || '%' ) 
+				or ( S_CONTENT like '%' || '회의' || '%' );
+                
+                
+select *
+		from 
+ (select rownum rnum, S_NO, S_MENU, S_TITLE, S_CONTENT, 
+		          S_DATE, S_CRUID, S_ID, S_CTID, S_TID
+                  
+                  
+                  
+drop Table TB_SEARCH;
+
+-- 9. 통합검색 테이블
+CREATE TABLE TB_SEARCH 
+(	
+	S_NO NUMBER NOT NULL, 
+	S_MENU VARCHAR2(20 BYTE) NOT NULL, 
+	S_TITLE VARCHAR2(200 BYTE) NOT NULL, 
+	S_CONTENT VARCHAR2(4000 BYTE), 
+	S_DATE DATE NOT NULL, 
+	S_CRUID NUMBER NOT NULL, 
+	S_ID NUMBER NOT NULL, 
+    S_CTID NUMBER NOT NULL, 
+	S_TID NUMBER NOT NULL
+);
+
+COMMENT ON COLUMN TB_SEARCH.S_NO IS '알람 고유번호';
+COMMENT ON COLUMN TB_SEARCH.S_MENU IS '구분 게시물 카테고리/채팅/드라이브/캘린더';
+COMMENT ON COLUMN TB_SEARCH.S_TITLE IS '제목 or 파일명';
+COMMENT ON COLUMN TB_SEARCH.S_CONTENT IS '내용';
+COMMENT ON COLUMN TB_SEARCH.S_DATE IS '등록일 or 수정일';
+COMMENT ON COLUMN TB_SEARCH.S_CRUID IS '등록자 고유번호';
+COMMENT ON COLUMN TB_SEARCH.S_ID IS '원 게시물의 고유번호';
+COMMENT ON COLUMN TB_SEARCH.S_CTID IS '원 게시물의 카테고리번호';
+COMMENT ON COLUMN TB_SEARCH.S_TID IS '팀 고유번호';
