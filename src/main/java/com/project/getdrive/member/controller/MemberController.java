@@ -2,6 +2,8 @@ package com.project.getdrive.member.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.security.Principal;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -13,9 +15,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.support.SessionStatus;
 
 import com.project.getdrive.mail.MailHandler;
@@ -72,16 +78,24 @@ public class MemberController {
 		mailHandler.sendEmail(from, to, title, contents);
 	}
 
+
+	@RequestMapping(value="passwordSetting.do", method= {RequestMethod.GET, RequestMethod.POST})
+    public void sendEmail(@RequestParam("email")String email,Member member, Model model) {
+
+        mailHandler.sendEmail("classgetdrive@gmail.com", email, "Classgetdrive 인증메일 입니다.", "내용테스트");
+    }
 	
 	
 	//비밀번호 찾기
-	@RequestMapping(value="passwordFind.do", method=RequestMethod.POST)
-	public void passwordFind(@RequestParam("email")String email,Member member, Model model) {
+	//@RequestMapping("/passwordFind.do")
+	//public String passwordFind(@RequestParam("email")String email,Member member, Model model) {
 		
-		mailSend("classgetdrive@gmail.com", email, "제목테스트", "내용테스트");
+		//mailSend("classgetdrive@gmail.com", email, "제목테스트", "내용테스트");
 		
-		
-	}
+		//return null;
+			
+	//}
+
 	
 	/*
 	 * //회원가입완료페이지 이동
@@ -165,7 +179,6 @@ public class MemberController {
 		//자료형 값저장변수명 = request.getParameter("전송온이름");  코드와 같음
 		
 		int idCount = memberService.selectCheckEmail(email);
-		
 		
 		String returnStr = null;
 		if(idCount == 0) {

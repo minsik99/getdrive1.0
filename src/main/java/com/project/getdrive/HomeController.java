@@ -45,23 +45,6 @@ public class HomeController {
 		return "common/main";
 	}
     
-	/*
-	 * // 3. 로그아웃 처리용 메소드
-	 * 
-	 * @RequestMapping(value = "logout.do") public String logoutMethod(
-	 * HttpServletRequest request, Model model) {
-	 * 
-	 * HttpSession session = request.getSession(false);
-	 * 
-	 * // 세션 객체가 있으면 리턴받고, 없으면 null 리턴 if(session != null) { session.invalidate();
-	 * 
-	 * return "redirect:main.do"; } else { model.addAttribute("message",
-	 * "일정시간 접속을 하지 않아 자동로그아웃 되었습니다.");
-	 * 
-	 * return "common/error"; }
-	 * 
-	 * }
-	 */		
 	
 	// 팀 메인으로 이동
 	@RequestMapping(value="teammain.do", method= {RequestMethod.GET, RequestMethod.POST})

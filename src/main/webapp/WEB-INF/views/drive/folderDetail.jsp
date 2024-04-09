@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title></title>
+<title>folderDetail</title>
 <style type="text/css">
 
 	header {
@@ -163,13 +163,32 @@
 </header>
 <section>
     <!-- 사이드 메뉴 -->
-    <aside>
-        <div style="display: flex; align-items: center;">
-            <p style="font-weight: bold; margin-bottom: 1rem;">새 드라이브 생성</p>
-            <img id="add" src="/getdrive/resources/images/add.png" style="margin-left: 0.5rem;">
-        </div>
-        <img id="trash" src="/getdrive/resources/images/trash.png">
-    </aside>
+    <div style="display: flex; align-items: center;">
+        <p style="font-weight: bold; margin-bottom: 1rem;">새 드라이브 생성</p>
+        <img id="add" src="/getdrive/resources/images/add.png" style="margin-left: 0.5rem;">
+    </div>
+
+	<span>팀 드라이브</span> &nbsp; 
+    <button id="expand">+</button>
+    <div class="list-container">
+      <ul class="list">
+        <c:forEach items="${ list }" var="dlist">
+            <c:if test="${ dlist.dPub eq 'Y' }">
+				<c:url var="drive" value="dpage.do">
+					<c:param name="tNo" value="${ dlist.dTID }"/>
+					<c:param name="dNo" value="${ dlist.dNo }"/>
+					<c:param name="tUID" value="${ loginMember.accountNo }"/>
+				</c:url>
+                <li><a href="${ drive }">${ dlist.dName }</a></li>
+            </c:if>
+        </c:forEach>
+      </ul>    
+     </div>
+     <br>     
+     <div style="border:0px solid; width:100%;">
+   		 <img id="trash" src="/getdrive/resources/images/trash.png">
+     </div>  
+     
     <div class="wrapper">
         <div class="wrapper_header">
             <p>${ selectedFolder.fdName }</p>
