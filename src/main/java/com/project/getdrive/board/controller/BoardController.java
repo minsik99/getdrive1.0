@@ -206,7 +206,7 @@ public class BoardController {
 			return "board/boardMain";
 		}else {
 			model.addAttribute("message", "페이지 목록 조회 실패");
-			return "common/error";
+			return "board/boardMain";
 		}
 	}
 	

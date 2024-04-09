@@ -191,6 +191,7 @@
   </div>
 
   <div id="sidebar">
+  
 	<c:import url="/WEB-INF/views/common/teamleft_drive.jsp" />
 
 
@@ -202,16 +203,7 @@
      <span>팀 드라이브</span> &nbsp; 
      <button id="expand">+</button>
      <div class="list-container">
-       <ul class="list">
-		<%-- 		  	
-			<c:url var="drive" value="dpage.do">
-			<c:param name="tNo" value="${ dlist.dTID }"/>
-			<c:param name="dNo" value="${ dlist.dNo }"/>
-			<c:param name="tUID" value="${ loginMember.accountNo }"/>
-			</c:url>
-          <li><a href="${ drive }">${ dlist.dName }</a></li>   
-         --%>     
-       </ul>
+       <ul class="list"></ul>
      </div> 
     
      <br>     
@@ -221,14 +213,12 @@
     
   </div>	
 	    
-  <div id="content">	
+  <div id="content">
+  	
 		<header>
 		    <div style="display: flex; align-items: center;">
 		        <img id="arrow" src="/getdrive/resources/images/chevron_left.png">
 		        <h2>${ drive.dName } 드라이브</h2>
-		    </div>
-		    <div>
-		        <input id="search" placeholder="파일 검색">
 		    </div>
 		</header>
 						
@@ -237,8 +227,7 @@
 	            <p>${ drive.dName }</p>
 	            <div class="functions">
 	                <div>
-	                    <input type="checkbox"><span>전체선택</span> &nbsp;
-	                    <button id="newFolder">새 폴더</button> &nbsp;
+	                    <button id="newFolder">새 폴더 생성</button> &nbsp;
 	                </div>
 	                <div style="display: flex; align-items: center;">
 	                    <img id="sort" src="/getdrive/resources/images/sort.png">
@@ -255,7 +244,8 @@
 						<c:param name="fdCRUID" value="${ folder.fdCRUID }"/>
 						<c:param name="fdNo" value="${ folder.fdNo }"/>
 	        		</c:url>
-	        		<li><a href="${ folderpage }">${ folder.fdName }</a></li>
+	        		<li><img src="/getdrive/resources/images/folder.png" style="width:30px;">
+	        		<a href="${ folderpage }">${ folder.fdName }</a></li>
 	        	</c:forEach>
 	        </ul>
 	    </div>				
@@ -291,6 +281,7 @@
 		        </div>
 		    </div>
 		</form>
+		
 	</div>
   <div id="footer">
     <c:import url="/WEB-INF/views/common/teamfooter.jsp" />

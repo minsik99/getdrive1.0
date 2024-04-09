@@ -18,11 +18,12 @@
 <style type="text/css">
 
 .board-container {
-	display: flex;
-	justify-content: center; /* 수평 가운데 정렬*/
-	align-items: center; /* 수직 가운데 정렬 */
-	height: 100vh; /* 화면의 높이를 전체 화면으로 설정 */
+	/* display: flex; */
+	/* justify-content: center; /* 수평 가운데 정렬*/ */
+	/* align-items: center; /* 수직 가운데 정렬 */ */
+/* 	height: 100vh; /* 화면의 높이를 전체 화면으로 설정 */ */
 }
+
 /* 전체 감싸주는 div 태그에서 가운데 정렬 셋팅 */
 .board-con-01{
 	width: 80%;
@@ -146,9 +147,11 @@ fieldset#ss {
 	text-align: center; /* 텍스트 가운데 정렬 */
 	margin-bottom: 20px; /*간격 추가*/
 }
+
 form fieldset {
 	width: 600px;	
 }
+
 form.sform {
 	background: lightgray;
 	width: 630px;
@@ -185,140 +188,166 @@ $(function(){
 }); //document ready
 
 
-	function moveWritePage(){
-		
-		location.href="bwrite.do";
-	}
+function moveWritePage(){
 	
+	location.href="bwrite.do";
+}
+
 	
 </script>
 </head>
 <body>
 
-<section class="board-container">
+<div id="container">
 
-<!-- 전체 감싸주는 div 태그 -->
-<div class="board-con-01"> 
-
-		<div class="board_box-primary">
-		
-			<div class="board-header with-border">
+  <div id="jb-header">      
+	<c:import url="/WEB-INF/views/common/teamtop.jsp" />        
+  </div>
+  
+  <div id="sidebar">
+	<c:import url="/WEB-INF/views/common/teamleft.jsp" />
+  </div>
+  
+  <div id="content">
+	
+	
+	<section class="board-container">
+	
+	<!-- 전체 감싸주는 div 태그 -->
+	<div class="board-con-01"> 
+	
+			<div class="board_box-primary">
 			
-				<h2 class="board-title" align="center">게시글 목록</h2>
+				<div class="board-header with-border">
 				
-											<!-- 항목별 검색 기능 추가 -->
-						<fieldset id="ss">
-							<legend>검색할 항목을 선택하세요.</legend>
-							<input type="radio" name="item" id="title"> 제 목 &nbsp;
-							<input type="radio" name="item" id="writer"> 작 성 자 &nbsp;
-							<input type="radio" name="item" id="date"> 등록날짜 &nbsp;	
-						</fieldset>	
-						<br>
-						
-							<!-- 제목 검색  -->
-						<form id="titleform" class="sform" action="bsearchTitle.do" method="post">
-							<input type="hidden" name="action" value="title">
-						<fieldset>	
-							<legend>제목으로 검색</legend>
-							<input type="search" name="keyword"> &nbsp;
+					<h2 class="board-title" align="center">게시글 목록</h2>
+					
+												<!-- 항목별 검색 기능 추가 -->
+							<fieldset id="ss">
+								<legend>검색할 항목을 선택하세요.</legend>
+								<input type="radio" name="item" id="title"> 제 목 &nbsp;
+								<input type="radio" name="item" id="writer"> 작 성 자 &nbsp;
+								<input type="radio" name="item" id="date"> 등록날짜 &nbsp;	
+							</fieldset>	
+							<br>
+							
+								<!-- 제목 검색  -->
+							<form id="titleform" class="sform" action="bsearchTitle.do" method="post">
+								<input type="hidden" name="action" value="title">
+							<fieldset>	
+								<legend>제목으로 검색</legend>
+								<input type="search" name="keyword"> &nbsp;
+									<select name="limit">
+										<option value="5" selected>5</option>
+									</select> &nbsp; 
+								<input type="submit" value="검색">
+							</fieldset>	
+							</form>
+							
+								<!-- 작성자 검색 -->
+							<form id="wirterform" class="sform" action="bsearchWriter.do" method="post">
+								<input type="hidden" name="action" value="writer">
+							<fieldset>
+								<legend>작성자로 검색</legend>
+								<input type="search" name="keyword"> &nbsp;
+									<select name="limit">
+										<option value="5" selected>5</option>
+									</select> &nbsp; 
+								<input type="submit" value="검색">
+							</fieldset>
+							</form>
+							
+							 <!-- 등록날짜 검색 -->
+							<form id="dateform" class="sform" action="bsearchDate.do" method="post">
+								<input type="hidden" name="action" value="date">
+							<fieldset>
+								<legend>검색할 등록 날짜를 선택하시오.</legend>
+								<input type="date" name="begin"> ~ <input type="date" name="end"> &nbsp;
 								<select name="limit">
-									<option value="5" selected>5</option>
-								</select> &nbsp; 
-							<input type="submit" value="검색">
-						</fieldset>	
-						</form>
+										<option value="5" selected>5</option>
+									</select> &nbsp; 
+								<input type="submit" value="검색">
+							</fieldset>
+							</form>				
+				</div>				
+			</div>
+		<!-- 여기까지 게시글 목록 타이틀 -->
+		
+		<!-- 목록 밑에 게시글 리스트 정렬 파트 -->
+		<div class="board-body" align="center">
+			<table class="table-bodered">
+				<tbody>
+				<tr>	
+						<th style="width: 30px"> 번호 </th>
+						<th>제목</th>
+						<th style="width: 100px"> 작성자 </th>
+						<th style="width: 150px"> 내용 </th>
+						<th style="width: 60px"> 생성날짜 </th>	
+						<th style="width:150px"> 첨부파일 </th>
+				</tr>
+				<!--  forEach 문으로 DB 리스트 불러오기 -->
+				<c:forEach items="${ list }" var="b" >
+				<tr>	
+					<td> ${ b.bNo} <!-- EL문으로 변경 ${ B_NO } --></td>
+					<!-- 밑에 문장은 JSTL url태그로 실행 -->
+					<c:url var="bdetail" value="bdetail.do">
+						<c:param name="bNo" value="${ b.bNo }" />
+						<c:param name="page" value="${ nowpage }" />
+					</c:url>
+					<td align="center"><a href="${ bdetail }">${ b.bTitle  }</a></td><!-- EL문으로 변경 클릭하면 해당 페이지로 넘어가야함 B_TITLE --> 
+					<td align="center"> ${ b.bName } <!-- EL문으로 변경 B_NAME --></td>
+					<td align="center"> ${ b.bContent } <!-- EL문으로 변경 B_CONTENT  --></td>
+					<td align="center"> ${ b.bcDate } <!-- EL문으로 변경 B_CDATE  --></td>
+					<td align="center">
+					
+					<c:if test="${ !empty b.bOriginFileName }">
+					▣
+					</c:if>
+					<c:if test="${ empty b.bOriginFileName }">
+					&nbsp;
+					</c:if>
+					</td>
+				</tr>
+				</c:forEach>		
+				</tbody>			
+			</table>	
+		</div>	
+		
+		<div class="board-footer">
+			
+			<div class="board-right">
+				
+				<button type="button" class="btn-success" id="writeBtn">
+					<div class="writeBtn">
+	
+							<a href="bwrite.do"><img id="write" src="/getdrive/resources/images/write.png"  
+														   onmouseover='this.src="/getdrive/resources/images/tap.png"' 
+														   onmouseout='this.src="/getdrive/resources/images/write.png"'><br>글쓰기</a>
 						
-							<!-- 작성자 검색 -->
-						<form id="wirterform" class="sform" action="bsearchWriter.do" method="post">
-							<input type="hidden" name="action" value="writer">
-						<fieldset>
-							<legend>작성자로 검색</legend>
-							<input type="search" name="keyword"> &nbsp;
-								<select name="limit">
-									<option value="5" selected>5</option>
-								</select> &nbsp; 
-							<input type="submit" value="검색">
-						</fieldset>
-						</form>
-						
-						 <!-- 등록날짜 검색 -->
-						<form id="dateform" class="sform" action="bsearchDate.do" method="post">
-							<input type="hidden" name="action" value="date">
-						<fieldset>
-							<legend>검색할 등록 날짜를 선택하시오.</legend>
-							<input type="date" name="begin"> ~ <input type="date" name="end"> &nbsp;
-							<select name="limit">
-									<option value="5" selected>5</option>
-								</select> &nbsp; 
-							<input type="submit" value="검색">
-						</fieldset>
-						</form>
+					<center>
+						<button class="btn" onclick="javascript:location.href='${ pageContext.servletContext.contextPath }/bmain.do?page=1';">목록</button>
+					</center>
+					<br>
+					</div>
+				</button>
 				
 			</div>
 			
+			<br>
+			<c:import url="/WEB-INF/views/common/pagingView.jsp" />
 		</div>
-	<!-- 여기까지 게시글 목록 타이틀 -->
-	
-	<!-- 목록 밑에 게시글 리스트 정렬 파트 -->
-	<div class="board-body" align="center">
-		<table class="table-bodered">
-			<tbody>
-			<tr>	
-					<th style="width: 30px"> 번호 </th>
-					<th>제목</th>
-					<th style="width: 100px"> 작성자 </th>
-					<th style="width: 150px"> 내용 </th>
-					<th style="width: 60px"> 생성날짜 </th>	
-					<th style="width:150px"> 첨부파일 </th>
-			</tr>
-			<!--  forEach 문으로 DB 리스트 불러오기 -->
-			<c:forEach items="${ list }" var="b" >
-			<tr>	
-				<td> ${ b.bNo} <!-- EL문으로 변경 ${ B_NO } --></td>
-				<!-- 밑에 문장은 JSTL url태그로 실행 -->
-				<c:url var="bdetail" value="bdetail.do">
-					<c:param name="bNo" value="${ b.bNo }" />
-					<c:param name="page" value="${ nowpage }" />
-				</c:url>
-				<td align="center"><a href="${ bdetail }">${ b.bTitle  }</a></td><!-- EL문으로 변경 클릭하면 해당 페이지로 넘어가야함 B_TITLE --> 
-				<td align="center"> ${ b.bName } <!-- EL문으로 변경 B_NAME --></td>
-				<td align="center"> ${ b.bContent } <!-- EL문으로 변경 B_CONTENT  --></td>
-				<td align="center"> ${ b.bcDate } <!-- EL문으로 변경 B_CDATE  --></td>
-				<td align="center">
-				
-				<c:if test="${ !empty b.bOriginFileName }">
-				▣
-				</c:if>
-				<c:if test="${ empty b.bOriginFileName }">
-				&nbsp;
-				</c:if>
-				</td>
-			</tr>
-			</c:forEach>		
-			</tbody>			
-		</table>	
-	</div>	
-	<div class="board-footer">
-		<div class="board-right">
-			<button type="button" class="btn-success" id="writeBtn">
-				<div class="writeBtn">
-
-						<a href="bwrite.do"><img id="write" src="/getdrive/resources/images/write.png"  
-													   onmouseover='this.src="/getdrive/resources/images/tap.png"' 
-													   onmouseout='this.src="/getdrive/resources/images/write.png"'><br>글쓰기</a>
-					
-				<center>
-					<button class="btn" onclick="javascript:location.href='${ pageContext.servletContext.contextPath }/bmain.do?page=1';">목록</button>
-				</center>
-				<br>
-				</div>
-			</button>
-		</div>
-		<br>
-<c:import url="/WEB-INF/views/common/pagingView.jsp" />
+		
 	</div>
+	</section>
+	
+  </div>
+
+  <div id="footer">
+    <c:import url="/WEB-INF/views/common/teamfooter.jsp" />
+  </div>
+
 </div>
-</section>
-<c:import url="/WEB-INF/views/common/footer.jsp" />
+
+
 </body>
 </html>
