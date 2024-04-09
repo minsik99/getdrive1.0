@@ -130,21 +130,6 @@
         $('#arrow').click(function(){
         	history.back();
         });
-        
-        // 파일 다운로드
-        $('.download-button').click(function() {
-            var fileId = $(this).data('fileId');
-            
-            $.ajax({
-            	url: "fdown.do",
-            	type: "post",
-            	data: {fileId: fileId},
-            	success: function(){
-            		alert("파일 다운");
-            	}
-            });
-        });
-        
     });
     
 </script>
@@ -196,8 +181,8 @@
         	<c:forEach items="${ list }" var="file">
         		<li>
         			<span>${ file.flName }</span> &nbsp;
-        			<a href="https://example.com/path/to/your/file.txt" download>다운로드</a>
-        			<button class="download-button" data-file-id="${file.flNo}">다운로드</button>
+		        	<!-- 파일 다운로드 링크 -->
+		            <a href="fdown.do?fileId=${file.flNo}" download>다운로드</a>
         		</li>
         	</c:forEach>
         </ul>
