@@ -31,10 +31,8 @@ public class SearchContoller {
 		@RequestParam("keyword") String keyword,
 		@RequestParam("tNo") int tNo,
 		@RequestParam(name = "limit", required=false) String slimit,		
-		ModelAndView mv ) {
-		
-		logger.info("#### searchList.do ");		
-		
+		ModelAndView mv ) {		
+	
 		// (페이징) 출력할 페이지 지정
 		int currentPage = 1;
 		if(page != null) {
@@ -47,11 +45,16 @@ public class SearchContoller {
 			limit = Integer.parseInt( slimit );
 		}	
 		
+		CommonSch commonSch1 = new CommonSch();	
+		commonSch1.setKeyword(keyword);
+		commonSch1.settNo(tNo);
+		
 		// (페이징) 총 페이지 수 계산을 위한 전체 목록 갯수 조회
-		int listCount = searchService.selectSearchCount(keyword);
+		int listCount = searchService.selectSearchCount(commonSch1);
+
 		
 		// (페이징) 메소드 호출 및 페이징 계산 
-		Paging paging = new Paging(listCount, currentPage, limit, "searchList.do");
+		Paging paging = new Paging(listCount, currentPage, limit, "searchList.do", tNo);
 		paging.calculate();		
  
 		// 한 페이지에 출력할 검색 결과 적용된 목록 조회

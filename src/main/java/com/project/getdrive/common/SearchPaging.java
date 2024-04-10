@@ -6,22 +6,32 @@ public class SearchPaging {
 	
 	//페이지 검색 기능을 위해 추가함
 	   private String keyword;
-	   private int startRow;  //페이지의 시작행
-	   private int endRow;   //페이지의 끝행
+	   private int startRow;  //페이지의 시작
+	   private int endRow;   //페이지의 끝
 	   private Date begin;
 	   private Date end;
+	   private int tNo;
 	   
 	public SearchPaging() {
 		super();
 	}
 	
-	public SearchPaging(String keyword, int startRow, int endRow, Date begin, Date end) {
+	public SearchPaging(String keyword, int startRow, int endRow, Date begin, Date end, int tNo) {
 		super();
 		this.keyword = keyword;
 		this.startRow = startRow;
 		this.endRow = endRow;
 		this.begin = begin;
 		this.end = end;
+		this.tNo = tNo;
+	}
+	
+	public int gettNo() {
+		return tNo;
+	}
+	
+	public void settNo(int tNo) {
+		this.tNo = tNo;
 	}
 	
 	public String getKeyword() {
@@ -54,11 +64,14 @@ public class SearchPaging {
 	public void setEnd(Date end) {
 		this.end = end;
 	}
-	
+
 	@Override
 	public String toString() {
-		return "SearchPaging [keyword=" + keyword + ", startRow=" + startRow + ", endRow=" + endRow + "]";
+		return "SearchPaging [keyword=" + keyword + ", startRow=" + startRow + ", endRow=" + endRow + ", begin=" + begin
+				+ ", end=" + end + ", tNo=" + tNo + "]";
 	}
+	
+
 	   
 	   
 

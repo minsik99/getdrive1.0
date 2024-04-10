@@ -33,7 +33,7 @@
 
 			
 	<%--2024.04.05 kimyh 세션확인용 삭제대상 --%>	
-<%-- 				
+				
 	<div align="left" style="color:red;">
 		## 수신받는 정보 ## <br>
 		<!--  로그인세션정보(loginMember) : ${ loginMember } -->
@@ -41,6 +41,6 @@
 		이메일(email) : ${ loginMember.email } | 이름(name) : ${ loginMember.name }
 		| 가입일(cdate) : ${ loginMember.cdate }
 	</div>
---%>
+
 </body>
 </html>

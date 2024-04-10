@@ -41,15 +41,15 @@ public class MeetingController {
 	//회의글 수정페이지로 이동 처리용 ---------------------------------------------------------------------
 	@RequestMapping("mmoveup.do")
 	public ModelAndView moveUpdatePage(
-			@RequestParam("meetingId") int meetingId, ModelAndView mv) {
+			@RequestParam("mtId") int mtId, ModelAndView mv) {
 		//수정페이지에 출력할 공지글 조회해 옴
-		Meeting meeting = meetingService.selectOne(meetingId);
+		Meeting meeting = meetingService.selectOne(mtId);
 		
 		if( meeting != null) {
 			mv.addObject("meeting", meeting);
 			mv.setViewName("meeting/meetingUpdateView");
 		}else {
-			mv.addObject("message", meetingId + "번 공지글 수정페이지로 이동 실패!");
+			mv.addObject("message", mtId + "번 공지글 수정페이지로 이동 실패!");
 			mv.setViewName("common/error");
 		}
 		
@@ -61,7 +61,11 @@ public class MeetingController {
 	public String meetingListMethod(
 			@RequestParam(name="page", required=false) String page, 
 			@RequestParam(name="limit", required=false) String slimit, 
-			Model model) {
+			Model model, HttpServletRequest request) {
+		
+		// 세션에서 tNo를 받아옴
+		int tNo = (int) request.getSession().getAttribute("tNo");	
+		
 		int currentPage = 1;
 		if (page != null) {
 			currentPage = Integer.parseInt(page);
@@ -74,9 +78,10 @@ public class MeetingController {
 		}
 		
 		//총 페이지 수 계산을 위한 공지글 총갯수 조회
-		int listCount = meetingService.selectListCount();
+		int listCount = meetingService.selectListCount(tNo);
 		//페이지 관련 항목 계산 처리
 		Paging paging = new Paging(listCount, currentPage, limit, "mlist.do");
+		paging.setTNo(tNo);
 		paging.calculate();
 		
 		//페이지에 출력할 목록 조회해 옴
@@ -90,8 +95,8 @@ public class MeetingController {
 			
 			return "meeting/meetingListView";
 		}else {
-			model.addAttribute("message", currentPage + "페이지 목록 조회 실패!");
-			return "common/error";
+			model.addAttribute("message", "글이 없습니다. ");
+			return "meeting/meetingListView";
 		}
 	}
 	
@@ -99,19 +104,19 @@ public class MeetingController {
 	//회의록 상세보기 요청 처리용 --------------------------------------------------------------------
 	@RequestMapping("mdetail.do")
 	public ModelAndView meetingDetailMethod(
-			@RequestParam("no") int meetingId, ModelAndView mv, HttpSession session) {
+			@RequestParam("no") int mtId, ModelAndView mv, HttpSession session) {
 		//관리자용 상세보기 페이지와 일반회원 | 비회원 상세보기 페이지 구분해서 내보냄
 		//관리자인지 확인하기 위해 session 매개변수 추가함
-		Meeting meeting = meetingService.selectOne(meetingId);
+		Meeting meeting = meetingService.selectOne(mtId);
 		
 		//조회수 1증가 처리
-		meetingService.updateAddReadCount(meetingId);
+		meetingService.updateAddReadCount(mtId);
 		
 		if(meeting != null) {
 			mv.addObject("meeting", meeting);
 			mv.setViewName("meeting/meetingDetailView");
 		}else {
-			mv.addObject("message", meetingId + "번 회의글 상세보기 조회 실패!");
+			mv.addObject("message", mtId + "번 회의글 상세보기 조회 실패!");
 			mv.setViewName("common/error");
 		}
 		
@@ -146,18 +151,17 @@ public class MeetingController {
 	
 	//새 회의록 등록 요청 처리용 (파일 업로드 기능 보유)
 		@RequestMapping(value="minsert.do", method=RequestMethod.POST)
-		public String meetingInsertMethod(Meeting meeting, Model model, HttpServletRequest request, 
+		public String meetingInsertMethod(
+				Meeting meeting, 
+				Model model, 
+				HttpServletRequest request, 
 				@RequestParam(name="ofile", required=false) MultipartFile mfile) {
+			
 			logger.info("minsert.do : " + meeting);
 			
 			//공지사항 첨부파일 저장 폴더 경로 지정
 			String savePath = request.getSession().getServletContext().getRealPath(
 					"resources/meeting_upfiles");
-			/*
-			 * //만약 중요도 체크를 안해서 date 객체로 ''이 넘어간다면 if (meeting.getImpEndDate() == null ||
-			 * meeting.getImpEndDate().equals("")) { meeting.setImpEndDate(new
-			 * java.sql.Date(System.currentTimeMillis())); }
-			 */
 			
 			//첨부파일이 있을 때
 			if(!mfile.isEmpty()) {
@@ -182,8 +186,8 @@ public class MeetingController {
 					}
 				}  //파일명 바꾸기
 				//notice 객체에 첨부파일 정보 저장 처리
-				meeting.setOriginalFileName(fileName);
-				meeting.setRenameFileName(renameFileName);
+				meeting.setMtOriginalFileName(fileName);
+				meeting.setMtRenameFileName(renameFileName);
 			} //첨부파일 있을 때		
 			
 			if(meetingService.insertMeeting(meeting) > 0) {
@@ -212,13 +216,13 @@ public class MeetingController {
 		//첨부파일이 변경된 경우의 처리 
 		//1. 원래 첨부파일이 있는데 '파일삭제'를 선택한 경우
 		//   또는 원래 첨부파일이 있는데 새로운 첨부파일이 업로드된 경우
-		if(meeting.getMeetingOriginalFileName() != null && 
+		if(meeting.getMtOriginalFileName() != null && 
 				(delFlag != null && delFlag.equals("yes")) || !mfile.isEmpty()) {
 			//저장 폴더에서 파일 삭제함
-			new File(savePath + "\\" + meeting.getMeetingRenameFileName()).delete();
+			new File(savePath + "\\" + meeting.getMtRenameFileName()).delete();
 			//meeting 안의 파일정보도 제거함
-			meeting.setMeetingOriginalFileName(null);
-			meeting.setMeetingRenameFileName(null);
+			meeting.setMtOriginalFileName(null);
+			meeting.setMtRenameFileName(null);
 		}
 		
 		//2. 새로운 첨부파일이 있을 때 (공지글 첨부파일은 1개임)
@@ -244,15 +248,15 @@ public class MeetingController {
 				}
 			}  //파일명 바꾸기
 			//notice 객체에 첨부파일 정보 저장 처리
-			meeting.setMeetingOriginalFileName(fileName);
-			meeting.setMeetingRenameFileName(renameFileName);
+			meeting.setMtOriginalFileName(fileName);
+			meeting.setMtRenameFileName(renameFileName);
 		} //첨부파일 있을 때	
 		
 		if(meetingService.updateMeeting(meeting) > 0) {
 			//공지글 수정 성공시 목록 보기 페이지로 이동
 			return "redirect:mlist.do";
 		}else {
-			model.addAttribute("message", meeting.getMeetingId() + "번 회의록 수정 실패!");
+			model.addAttribute("message", meeting.getMtId() + "번 회의록 수정 실패!");
 			return "common/error";
 		}
 	}
@@ -260,23 +264,23 @@ public class MeetingController {
 	//회의글 삭제 요청 처리용 ------------------------------------------------------------------------------
 	@RequestMapping("mdelete.do")
 	public String noticeDeleteMethod(
-			@RequestParam("meetingId") int meetingId,
-			@RequestParam(name="rfile", required=false) String meetingRenameFileName,
+			@RequestParam("mtId") int mtId,
+			@RequestParam(name="rfile", required=false) String mtRenameFileName,
 			HttpServletRequest request, Model model) {
 		
-		if(meetingService.deleteMeeting(meetingId) > 0) {
+		if(meetingService.deleteMeeting(mtId) > 0) {
 			//공지글 삭제 성공시 저장 폴더에 있는 첨부파일도 삭제함
-			if(meetingRenameFileName != null) {
+			if(mtRenameFileName != null) {
 				//공지사항 첨부파일 저장 폴더 경로 지정
 				String savePath = request.getSession().getServletContext().getRealPath(
 						"resources/meeting_upfiles");
 				//저장 폴더에서 파일 삭제함
-				new File(savePath + "\\" + meetingRenameFileName).delete();
+				new File(savePath + "\\" + mtRenameFileName).delete();
 			}
 			
 			return "redirect:mlist.do";
 		}else {
-			model.addAttribute("message", meetingId + "번 회의글 삭제 실패!");
+			model.addAttribute("message", mtId + "번 회의글 삭제 실패!");
 			return "common/error";
 		}
 	}

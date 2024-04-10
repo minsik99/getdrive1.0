@@ -38,6 +38,17 @@ public class MemberDao {
 		
 	}
 
+	public Member selectCheckPwd(String email) {
+		return sqlSessionTemplate.selectOne("memberMapper.selectCheckPwd", email);
+	}
+
+	public int updateMember(Member member) {
+		return sqlSessionTemplate.update("memberMapper.updateMember",member);
+	}
+
+	public int deleteMember(String email) {
+		return sqlSessionTemplate.delete("memberMapper.deleteMember",email);
+	}
 
 
 }

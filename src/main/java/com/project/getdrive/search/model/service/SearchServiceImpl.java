@@ -16,8 +16,8 @@ public class SearchServiceImpl implements SearchService {
 	private SearchDao searchDao;
 	
 	@Override
-	public int selectSearchCount(String keyword) {
-		return searchDao.selectSearchCount(keyword);
+	public int selectSearchCount(CommonSch commonSch) {
+		return searchDao.selectSearchCount(commonSch);
 	}
 
 	@Override

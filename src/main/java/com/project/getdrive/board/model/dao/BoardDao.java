@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.project.getdrive.board.model.vo.Board;
 import com.project.getdrive.common.Paging;
+import com.project.getdrive.common.Search;
 import com.project.getdrive.common.SearchDate;
 import com.project.getdrive.common.SearchPaging;
 
@@ -24,8 +25,8 @@ public class BoardDao {
 		return (ArrayList<Board>) list;
 	}
 	
-	public int selectListCount() {
-		return sqlSessionTemplate.selectOne("boardMapper.selectListCount");
+	public int selectListCount(int btId) {
+		return sqlSessionTemplate.selectOne("boardMapper.selectListCount", btId);
 	}
 
 	public int insertOriginBoard(Board board) {

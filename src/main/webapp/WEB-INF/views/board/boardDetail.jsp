@@ -11,7 +11,14 @@
 <!-- 삭제 처리  -->
 <c:url var="bdel" value="bdelete.do">
 	<c:param name="bNo" value="${ board.bNo }" />
+	<c:param name="btId" value="${ board.btId }" />
 </c:url>
+
+<!--  목록으로 이동 처리 -->
+<c:url var="blist" value="bmain.do">
+	<c:param name="tNo" value="${ board.btId }" />
+</c:url>
+
 
 <style type="text/css">
 
@@ -31,7 +38,7 @@ h1 {
 
 .board-container {
     margin: 20px auto;
-    width: 80%;
+    width: 40%;
 }
 
 .board-con-01 {
@@ -97,20 +104,28 @@ h1 {
     margin-left: 10px;
 }
 
+.board-footer{
+	margin-bottom: 20px;
+	display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
 
 
 
 </style>
+
 <script type="text/javascript" src="/getdrive/resources/js/jquery-3.7.0.min.js"></script>
 <script type="text/javascript">	
 
 function moveListPage(){
-	location.href="bmain.do";
+	location.href="${ blist }";
 }
 
 //href 이나 a 태그 방식은 무조건 GET 방식이다.
 function moveUpdatePage(){
-	location.href="bupdate.do";
+	location.href="bupdate.do?page=${ currentPage }&bNo=${ board.bNo }";
 }
 
 function deletePage(){
@@ -122,9 +137,22 @@ function deletePage(){
 </head>
 <body>
 
+<div id="container">
+
+  <div id="jb-header">      
+	<c:import url="/WEB-INF/views/common/teamtop.jsp" />        
+  </div>
+  
+  <div id="sidebar">
+	<c:import url="/WEB-INF/views/common/teamleft.jsp" />
+  </div>
+  
+  <div id="content">
+  
+
 <h1 align="center"> ${ board.bNo } 번 게시글 상세보기</h1>
 
-<section class="board-container">
+<section>
 
 <div class="board-con-01">
 	
@@ -162,16 +190,16 @@ function deletePage(){
 			
 		</div>
 		
-		<div class="board-footer">
-			<button  class="btn" onclick="moveListPage();">목록</button>
-			<div class="pull-right">
-			<!-- 수정 버튼 form 으로 감싸주고 input 태그에 hidden 속성 넣어서 update로 넘겨주니 에러 사라짐 -->
-				<form action="bupdate.do">
-					<input type="hidden" name="bNo" value="${ board.bNo }">
-					<input type="submit" value="수정">
-				</form>
-				<button class="btn" onclick="deletePage(); return false;"> 삭제 </button>
+		<div class="board-footer" style="display: flex; justify-content: space-between;">
+			
+			<div>	
+					<button  class="btn btn-primary" onclick="moveListPage(); return false;">목록</button>
 			</div>
+					<div class="pull-right">
+					<!-- 수정 버튼 form 으로 감싸주고 input 태그에 hidden 속성 넣어서 update로 넘겨주니 에러 사라짐 -->
+						<button class="btn btn-primary" onclick="moveUpdatePage(); return false;"> 수정 </button>
+						<button class="btn btn-danger" onclick="deletePage(); return false;"> 삭제 </button>
+					</div>
 		</div>
 	
 		</div>
@@ -179,6 +207,15 @@ function deletePage(){
 	</div>
 	
 </section>
+
+
+  </div>
+
+  <div id="footer">
+    <c:import url="/WEB-INF/views/common/teamfooter.jsp" />
+  </div>
+
+</div>
 
 </body>
 </html>

@@ -16,8 +16,8 @@ public class SearchDao {
 	@Autowired
 	private SqlSessionTemplate sqlSessionTemplate;
 	
-	public int selectSearchCount(String keyword) {
-		return sqlSessionTemplate.selectOne("searchMapper.selectSearchCount", keyword);
+	public int selectSearchCount(CommonSch commonSch) {
+		return sqlSessionTemplate.selectOne("searchMapper.selectSearchCount", commonSch);
 	}
 
 	public ArrayList<Search> selectSearch(CommonSch commonSch) {

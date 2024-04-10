@@ -263,7 +263,7 @@ function logout(){
 <body>
 
 	<%--2024.04.05 kimyh 세션확인용 삭제대상 --%>
-	<%-- 	
+
 	<div align="left">
 		## 수신받는 정보 ## <br>
 		<!--  로그인세션정보(loginMember) : ${ loginMember } --> 
@@ -274,7 +274,7 @@ function logout(){
 			가입일(cdate) : ${ loginMember.cdate } <br>
 		팀코드(tNo) : ${ tNo }
 	</div>	
-	 --%>
+
 	 
 <table id="headerTable">
 <tr><th width=230 align=left>

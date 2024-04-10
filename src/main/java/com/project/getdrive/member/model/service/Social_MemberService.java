@@ -7,10 +7,9 @@ public interface Social_MemberService {
 
 	int kakaoRegister(Social_Member social_member);
 	int seletEmail(String email);
-	void kakaoNomalRegister(Member member);
 	int selectSocialEmail(String email);
+	int selectKakao(String id);
+	void kakaoNomalRegister(Member loginMember);
+	int seletAccountNoEmail(String email);
 
-
-
-	
 }

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.project.getdrive.board.model.vo.Board;
 import com.project.getdrive.common.Paging;
+import com.project.getdrive.common.Search;
 import com.project.getdrive.common.SearchDate;
 import com.project.getdrive.common.SearchPaging;
 
@@ -21,7 +22,7 @@ public interface BoardService {
 
 	int deleteBoard(Board board);
 
-	int selectListCount();
+	int selectListCount(int btId);
 
 	int selectSearchTitleCount(String keyword);
 	

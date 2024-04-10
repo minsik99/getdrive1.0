@@ -19,8 +19,8 @@ public class MeetingDao {
 	private SqlSessionTemplate sqlSessionTemplate;
 	
 	//회의글 총갯수
-	public int getListCount() {
-		return sqlSessionTemplate.selectOne("meetingMapper.getListCount");
+	public int getListCount(int tNo) {
+		return sqlSessionTemplate.selectOne("meetingMapper.getListCount", tNo);
 	}
 	
 	//회의글 페이지 단위로 목록 조회 : 회의 목록 보기용 
@@ -35,20 +35,20 @@ public class MeetingDao {
 	}
 
 	//회의글번호로 한 개 조회 :회의글 상세보기용
-	public Meeting selectOne(int meetingId) {
-		return sqlSessionTemplate.selectOne("meetingMapper.selectOne", meetingId);
+	public Meeting selectOne(int mtId) {
+		return sqlSessionTemplate.selectOne("meetingMapper.selectOne", mtId);
 	}
 
-	public int addReadCount(int meetingId) {
-		return sqlSessionTemplate.update("meetingMapper.addReadCount", meetingId);
+	public int addReadCount(int mtId) {
+		return sqlSessionTemplate.update("meetingMapper.addReadCount", mtId);
 	}
 
 	public int updateMeeting(Meeting meeting) {
 		return sqlSessionTemplate.update("meetingMapper.updateMeeting", meeting);
 	}
 
-	public int deleteMeeting(int meetingId) {
-		return sqlSessionTemplate.delete("meetingMapper.deleteMeeting", meetingId);
+	public int deleteMeeting(int mtId) {
+		return sqlSessionTemplate.delete("meetingMapper.deleteMeeting", mtId);
 	}
 
 	public int getSearchTitleCount(String keyword) {
