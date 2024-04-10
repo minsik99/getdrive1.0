@@ -9,12 +9,11 @@
 <title>main</title>
 <script type="text/javascript" src="/getdrive/resources/js/jquery-3.7.0.min.js"></script>
 <script type="text/javascript">
-$(function(){
-	
-	/*  
+$(function(){	
+ 
 	// 팀 메인 > 상단 > 알림 갯수 - HomeController 
 	$.ajax({
-		url: "alarmCountList.do?",
+		url: "alarmCountList.do?tno=${ tNo }",
 		type: "post",
 		dataType: "json",
 		success: function(data){
@@ -54,7 +53,6 @@ $(function(){
 		}
 		
 	});  //ajax
-	*/
 	
 	$(document).ready(function(){
 		$("#openDivImg").click(function(){
@@ -121,6 +119,7 @@ body {
 
 #alarmCount{
 	width : 50px ;
+	margin-top: 8px;
 }
 
 .clickDown-content{
@@ -135,8 +134,8 @@ body {
 
 </style>
 
-
 <style type="text/css">
+
 /* 2024.04.09 kimyh 계정영역  */
 #logo {
 	width: 190px;
@@ -152,29 +151,28 @@ body {
 }
 
 .dropdown{
-	margin: 20px;
-	/* width: 180px; */
+	border:0px solid;
 	cursor: pointer;
 	float: right;
 	text-align: center;
-	position: relative;
 	right:30px;
 }
 
 .dropbtn{ 
-  background-color: #FFFFFF;
-  border : none;
-  border-radius: 25px 25px 90px 500px / 25px 25px 0px 0px;
-  color: #6DBFF2;
-  font-weight: 400;
-  padding : 12px;
-/*   width :200px; */
-  cursor : pointer;
-  font-size : 18px;
-  font-weight: 600;
+	border:0px solid;
+  	background-color: #FFFFFF;
+  	border-radius: 25px 500px 0px 0px / 25px 25px 25px 0px;
+  	color: #6DBFF2;
+  	font-weight: 400;
+  	padding : 12px;
+	/*   width :200px; */
+  	cursor : pointer;
+  	font-size : 18px;
+  	font-weight: 600;
 }
 
 .dropdown-content{
+  margin-left: -150px;
   display : none;
   position : absolute;
   z-index : 1;
@@ -209,6 +207,17 @@ body {
   display: block;
 }
 
+.dropdown-content {
+    display: none;
+    opacity: 0; /* 초기에는 투명하게 설정 */
+    transition: opacity 0.3s ease; /* opacity 변화에 대한 transition 효과 추가 */
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+    opacity: 1; /* 드롭다운 메뉴가 활성화될 때 투명도를 조절하여 부드럽게 보이도록 함 */
+}
+
 #user{
 	width: 25px;
 	position: relative;
@@ -227,15 +236,10 @@ body {
 	top: 7px;
 }
 
-.dropdown-content {
-    display: none;
-    opacity: 0; /* 초기에는 투명하게 설정 */
-    transition: opacity 0.3s ease; /* opacity 변화에 대한 transition 효과 추가 */
-}
-
-.dropdown:hover .dropdown-content {
-    display: block;
-    opacity: 1; /* 드롭다운 메뉴가 활성화될 때 투명도를 조절하여 부드럽게 보이도록 함 */
+#searchForm input {
+    width: 200px;
+    height: 30px;
+    border: 1px solid #6DBFF2;
 }
 
 </style>
@@ -257,7 +261,9 @@ function logout(){
 </c:if> 
 
 <body>
+
 	<%--2024.04.05 kimyh 세션확인용 삭제대상 --%>
+	<%-- 	
 	<div align="left">
 		## 수신받는 정보 ## <br>
 		<!--  로그인세션정보(loginMember) : ${ loginMember } --> 
@@ -268,36 +274,46 @@ function logout(){
 			가입일(cdate) : ${ loginMember.cdate } <br>
 		팀코드(tNo) : ${ tNo }
 	</div>	
-		
+	 --%>
+	 
 <table id="headerTable">
 <tr><th width=230 align=left>
 	<a href="/getdrive/"><img id="logo" alt="getdrive"src="/getdrive/resources/images/logo.png"></a></th>
-	<th width=300 >	
+	<th width=380>	
 		<form id="searchForm" action="searchList.do" method="post">
-			<input type="hidden" name="limit" value="10">	
+			<input type="hidden" name="limit" value="10">
+			<input type="hidden" name="tNo" value="${ tNo }">	
 			<input type="search" name="keyword" value="${ keyword }"> &nbsp;
-			<input type="submit" value="검색">
+			<input type="submit" style="width:100px;" value="통합검색">
 		</form>
 		</th>	
 	<th align="right">
 		
-		<table>
-		<tr valign=middle><Td>
-			<div id="alarmCount"></div>
-			</Td><td>
-			<c:if test="${ !empty sessionScope.loginMember }">
-				<div class="dropdown">
-			      <button class="dropbtn"><img id="user" alt="user" src="/getdrive/resources/images/user.png">
-			        <span class="dropbtn_icon"></span>
-			      </button>
-			      
-			      <div class="dropdown-content">
-			        <a id="a1" onclick="moveAccountSetting();"><img id="setting" alt="setting" src="/getdrive/resources/images/setting.png">계정설정</a>
-			        <a id="a2" onclick="logout(); kakaoLogout();"><img id="logout" alt="logout" src="/getdrive/resources/images/logout.png">로그아웃</a>
-			      </div>
-			    </div>
-		    </c:if>   
-	    </td></tr></table>		
+		<table style="border:0px solid;width:100%">
+		<tr valign=middle>
+			<Td align="right">
+				<!-- 알람 -->
+				<div id="alarmCount"></div>
+			</Td>
+			<td align="right" width="10">
+				<!-- 내계정관리/로그아웃 -->
+				<c:if test="${ !empty sessionScope.loginMember }">
+					<div class="dropdown">
+				      <button class="dropbtn"><img id="user" alt="user" src="/getdrive/resources/images/user.png">
+				        <span class="dropbtn_icon"></span>
+				      </button>
+				      
+				      <div class="dropdown-content">
+				        <a id="a1" onclick="moveAccountSetting();"><img id="setting" alt="setting" src="/getdrive/resources/images/setting.png">계정설정</a>
+				        <a id="a2" onclick="logout(); kakaoLogout();"><img id="logout" alt="logout" src="/getdrive/resources/images/logout.png">로그아웃</a>
+				      </div>
+				    </div>
+				    
+			    </c:if>   
+	    	</td>
+	    </tr>
+	    </table>		
+	    
 	</th>
 </tr>	
 </table>

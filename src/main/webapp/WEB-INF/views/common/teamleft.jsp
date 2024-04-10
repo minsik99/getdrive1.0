@@ -6,8 +6,9 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>teamleft</title>
 <style type="text/css">
+
 /* 버튼 */
 .button_red {
   background-color: #E96354;
@@ -118,7 +119,7 @@ border-radius: 100%;
 	width: 138px; height: 36px; line-height: 36px; background: #9f2f60; color: #ffffff; text-align: center; 
 	border: none; font-size: 16px;
 }	
- 	
+	
 </style>
 
 <script type="text/javascript">
@@ -293,10 +294,11 @@ $(function(){
 <body>
 	<!-- 팀 목록  -->
 	<b>My Team List</b>
+	
 	<div style="width:100%; align:center">		
-		<select id="teamSelect" onchange="window.open(value,'_self');">
-		</select>	
+		<select id="teamSelect" onchange="window.open(value,'_self');" style="width: 150px; height: 30px; background-color: #FFFFFF; color: black; border: 2px solid #6DBFF2; padding: 5px; border-radius: 5px;" ></select>	
 	</div>		
+
 	<hr>
 	<b><a href="bmain.do?tNo=${ tNo }">Board</a></b>	
 	<div style="width:100%; align:left">

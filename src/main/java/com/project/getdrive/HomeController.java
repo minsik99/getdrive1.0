@@ -54,13 +54,12 @@ public class HomeController {
 		HttpServletResponse Response,
 		HttpSession session,
 		ModelAndView mv) {
-		
-		logger.info("### teammain.do "+ teamcode);
+				
+		Team team = teamService.selectTeam(teamcode);
 		
 		session.setAttribute("tNo", teamcode);
 		
-		// 2024.04.07 kimyh - 각테이블별 갯수 구하기
-		
+		mv.addObject("team", team);
 		mv.addObject("tNo", teamcode);
 		mv.setViewName("common/teammain");		
 		return mv;		
@@ -73,7 +72,9 @@ public class HomeController {
 	@ResponseBody	
 	public String alarmCount(
 		HttpServletRequest request) throws UnsupportedEncodingException {
-				
+		
+		logger.info("##### alarmCountList.do ############");
+		
 		// 세션
 		HttpSession session = request.getSession();
 		Member loginMember = (Member) session.getAttribute("loginMember");

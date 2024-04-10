@@ -117,6 +117,7 @@ function createTeam(){
 </script>
 </head>
 <body>
+
 <div id="full">
 	<div id="header">
 		<c:import url="/WEB-INF/views/common/mainTopbar.jsp"></c:import>
@@ -172,9 +173,14 @@ function createTeam(){
 				</tr>
 			</c:if>
 		</c:forEach>
-		<tr><td align=center><button id="cteam" onclick="createTeam();">팀 생성</button></td></tr>
 	</table>
-
+	<br><br>
+	<div align=center>
+		<button id="cteam" onclick="createTeam();">팀 생성</button>
+	</div>
+	<br><br>
+	<hr>
+	
 	<div id="footer">
 		<c:import url="/WEB-INF/views/common/mainFooter.jsp"></c:import>
 	</div>	

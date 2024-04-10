@@ -6,7 +6,7 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head> 
-<title> template </title>
+<title> teammain </title>
 <body>
 
 <div id="container">
@@ -21,7 +21,7 @@
   
   <div id="content">
   
-    <h2>${ teamName }팀 메인 화면입니다. </h2>
+    <h2>"${ team.tName }" 팀 메인 화면입니다. </h2>
     <div><h4>기능별 진행상황</h4>
     	<ul>
     		<li>회원가입 관련</li>

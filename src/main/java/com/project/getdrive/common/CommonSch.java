@@ -6,7 +6,16 @@ public class CommonSch {
 	private String keyword; // 키워드
 	private int startRow;	// 시작행
 	private int endRow;		// 끝행
+	private int tNo;		// 팀코드	
 	
+	public int gettNo() {
+		return tNo;
+	}
+
+	public void settNo(int tNo) {
+		this.tNo = tNo;
+	}
+
 	// 생성자
 	public CommonSch() {
 		super();	
@@ -37,9 +46,9 @@ public class CommonSch {
 		this.endRow = endRow;
 	}
 
-	// toString
 	@Override
 	public String toString() {
-		return "Search [keyword=" + keyword + ", startRow=" + startRow + ", endRow=" + endRow + "]";
+		return "CommonSch [keyword=" + keyword + ", startRow=" + startRow + ", endRow=" + endRow + ", tNo=" + tNo + "]";
 	}
+
 }
