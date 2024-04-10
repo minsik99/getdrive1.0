@@ -110,7 +110,7 @@
 <script type="text/javascript" src="/getdrive/resources/js/jquery-3.7.0.min.js"></script>
 <script type="text/javascript">
     $(function(){
-        
+
          // 새 드라이브 생성 모달창
         $('#add').click(function() {
             $('#modalContainer').removeClass('hidden');
@@ -130,22 +130,8 @@
         $('#arrow').click(function(){
         	history.back();
         });
-        
-        // 파일 다운로드
-        $('.download-button').click(function() {
-            var fileId = $(this).data('fileId');
-            
-            $.ajax({
-            	url: "fdown.do",
-            	type: "post",
-            	data: {fileId: fileId},
-            	success: function(){
-            		alert("파일 다운");
-            	}
-            });
-        });
-        
     });
+    
     
 </script>
 </head>

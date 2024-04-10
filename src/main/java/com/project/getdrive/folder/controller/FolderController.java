@@ -9,7 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.project.getdrive.drive.handler.AwsS3;
+import com.project.getdrive.drive.handler.Aws;
+import com.project.getdrive.drive.model.service.DriveService;
 import com.project.getdrive.drive.model.vo.Drive;
 import com.project.getdrive.file.model.service.FileService;
 import com.project.getdrive.file.model.vo.File;
@@ -19,6 +20,8 @@ import com.project.getdrive.folder.model.vo.Folder;
 @Controller
 public class FolderController {
 
+	@Autowired
+	private DriveService driveService;
 	@Autowired
 	private FolderService folderService;
 	@Autowired
@@ -31,11 +34,16 @@ public class FolderController {
 		
 		drive.setdName(flName);
 		
+		// 아마존 버킷에 지정될 번호 추출
+		int count = driveService.selectDriveCount(drive.getdTID()) - 1;
+		
+		Aws aws = new Aws();
+		aws.createFolder("team"+drive.getdTID()+"drive-"+count, flName);
+		
 		if(folderService.createFolder(drive) > 0) {
-			AwsS3 aws = new AwsS3();
-			aws.createFolder("team"+drive.getdTID()+"drive-"+drive.getdNo(), flName);
 			
-			return "redirect:dpage.do";
+			return "redirect:dpage.do?tNo="+drive.getdTID()+
+					"&dNo="+drive.getdNo()+"&tUID="+drive.getdCRUID();
 		} else {
 			model.addAttribute("message", "폴더 생성 실패");
 			return "common/error";

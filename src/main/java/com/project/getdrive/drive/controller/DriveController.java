@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.project.getdrive.drive.handler.AwsS3;
+import com.project.getdrive.drive.handler.Aws;
 import com.project.getdrive.drive.model.service.DriveService;
 import com.project.getdrive.drive.model.vo.Drive;
 import com.project.getdrive.folder.model.service.FolderService;
@@ -44,7 +44,7 @@ public class DriveController {
 		drive.setdCRUID(tUID);
 		
 		// 휴지통 (index: 0, 드라이브 고유 번호: 1) 먼저 생성
-		AwsS3 aws = new AwsS3();
+		Aws aws = new Aws();
 		
 		// 휴지통이 생성되지 않았다면 생성
 		if(driveService.checkTrash(drive) <= 0) {
@@ -76,12 +76,14 @@ public class DriveController {
 		drive.setdCRUID(tUID);
 		
 		int result = driveService.createDrive(drive);
-		int count = driveService.selectDriveCount(tNo);
+		int count = driveService.selectDriveCount(tNo) - 1;
+		
+		Aws aws = new Aws();
 		
 		if(result > 0) {
 			// 네이버 버킷에 담을 고유 이름
-			AwsS3 aws = new AwsS3();
 			aws.createBucket("team"+tNo+"drive-"+count);
+			aws.makeBucketPublic("team"+tNo+"drive-"+count);
 			return "redirect:dmain.do";
 		} else {
 			model.addAttribute("message", "드라이브 생성 실패");
