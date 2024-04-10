@@ -32,8 +32,8 @@ public class Aws {
     private final S3Client s3Client;
 
     // 아마존 액세스 API 키
-    private final String accessKey = "AKIAYS2NXNON3FNNTRVI";
-    private final String secretKey = "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";
+    private final String accessKey = "accessKey";
+    private final String secretKey = "secretKey";
 
     // 생성자
     public Aws() {
