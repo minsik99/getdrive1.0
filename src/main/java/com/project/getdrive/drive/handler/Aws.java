@@ -35,6 +35,7 @@ public class Aws {
     private final String accessKey = "AKIAYS2NXNON3FNNTRVI";
     private final String secretKey = "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";
 
+
     // 생성자
     public Aws() {
         AwsBasicCredentials awsCredentials = AwsBasicCredentials.create(accessKey, secretKey);

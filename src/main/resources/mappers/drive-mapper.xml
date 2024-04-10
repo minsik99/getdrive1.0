@@ -30,19 +30,20 @@
 	
 	<!-- 팀에 존재하는 드라이브 갯수 조회 -->
 	<select id="selectDriveCount" parameterType="_int" resultType="_int">
-		select count(*) from tb_drive where d_tid = #{ tNo }
+		select count(*) from tb_drive where d_tid = #{ dTID }
 	</select>
 	
 	<!-- 휴지통이 생성되어 있는지 확인 -->
 	<select id="checkTrash" parameterType="Drive" resultType="_int">
 		select count(*) from tb_drive
-		where d_trcan = 'Y'
+		where d_trcan = 'Y' and d_tid = #{ dTID }
 	</select>
 	
 	<!-- 1번째 드라이브로 휴지통 생성 -->
 	<insert id="insertTrashCan" parameterType="Drive">
 		insert into tb_drive
-		values(1, '휴지통', sysdate, null, 'Y', 'Y', #{ dCRUID }, #{ dTID })
+		values((select nvl(max(d_no), 0) from tb_drive) + 1,
+			  '휴지통', sysdate, null, 'Y', 'Y', #{ dCRUID }, #{ dTID })
 	</insert>
 	
 	<!-- 드라이브 생성 -->
