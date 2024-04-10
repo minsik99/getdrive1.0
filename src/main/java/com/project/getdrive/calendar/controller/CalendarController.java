@@ -10,8 +10,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,26 +26,26 @@ import com.project.getdrive.common.CommonCL;
 //캘린더 전체 출력
 @Controller
 public class CalendarController {
-	//이 컨트롤러 안의 메소드들이 구동되는지, 값이 잘 전달되었는지 확인을 위한 로그 객체를 생성
-	private static final Logger logger = LoggerFactory.getLogger(CalendarController.class);
 	
 	@Autowired
 	private CalendarService calendarService;
-
+	
+	//달력창 호출
 	@RequestMapping(value = "calendar.do", method = RequestMethod.GET)
 	public String calendarMain() {
 			
-			return "calendar/calendar";
+	return "calendar/calendar";
 		
 	}
 	
-	//스케줄 표시
+	//스케줄 표시 처리용
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value="cllist.do", method=RequestMethod.POST)
 	@ResponseBody
 	public String scheduleListMethod(
 			@RequestParam("year") int year,
 			@RequestParam("month") int month,
+			@RequestParam("tNo") int calendarTid,			
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		//ajax 요청시 리턴방법은 여러가지가 있음
 		//response 객체 이용시에는 2가지 중 선택 사용하면 됨
@@ -59,7 +57,7 @@ public class CalendarController {
 		CommonCL commonCL = new CommonCL();
 		commonCL.setMonth(month);
 		commonCL.setYear(year);
-		
+		commonCL.setCalendarTid(calendarTid);		
 			
 		ArrayList<Calendar> list = calendarService.scheduleList(commonCL);
 		
@@ -89,14 +87,16 @@ public class CalendarController {
 		return sendJson.toJSONString();
 		
 	}
-		//스케줄 등록 상세보기
+		//등록된 스케줄 일정보기
 	@RequestMapping("cldetail.do")
 	public String scheduleDetailMethod(
 			@RequestParam("clnum") int calendarNo,
-			@RequestParam(name="page", required=false) String page, Model model) {
+			@RequestParam(name="page", required=false)
+			String page, Model model) {
 
 		//조회 처리용
 		Calendar calendar = calendarService.scheduleView(calendarNo);
+		
 		
 		if(calendar != null) {
 				model.addAttribute("calendar", calendar);
@@ -109,14 +109,33 @@ public class CalendarController {
 		}
 	}
 		
-		//스케줄 등록 페이지 내보내기용
-		@RequestMapping("clinsertform.do")
-		public String scheduleInsertPage() {
-			return "calendar/calendarInsertForm";
-		}
+	
+	
+	//스케줄 등록 페이지 내보내기용
+	@RequestMapping("clinsertform.do")
+	public String scheduleInsertPage(
+	        @RequestParam("year") int year,
+	        @RequestParam("month") int month,
+	        @RequestParam("day") int day, Model model) {
+	    
+	    // CommonCL 인스턴스에는 날짜 정보가 담겨 있음
+		/* CommonCL commonCL = new CommonCL(); */
+//	    commonCL.setMonth(month);
+//	    commonCL.setYear(year);
+//	    commonCL.setDay(day);
+ 
+	    // 모델에 commonCL 객체 추가
+	    model.addAttribute("year", year);
+	    model.addAttribute("month", month);
+	    model.addAttribute("day", day);
+	    
+	    // 스케줄 등록 페이지 뷰 이름 반환
+	    return "calendar/calendarInsertForm";
+	}
+	
+	
 		
-		
-		//스케줄 등록 메소드
+		//스케줄 등록 처리용
 		@RequestMapping("clinsert.do")
 		public String scheduleInsertMethod(Calendar calendar,
 				 Model model) {
@@ -131,6 +150,8 @@ public class CalendarController {
 	    	}    	
 		}
 		
+		
+		
 		//스케줄 삭제 처리용
 		@RequestMapping("cldelete.do")
 		public String scheduleDeleteMethod(
@@ -143,7 +164,7 @@ public class CalendarController {
 				return "redirect:calendar.do";
 				
 				} else {
-				 model.addAttribute("message", calendarNo + "스케줄 삭제 실패! ");
+				 model.addAttribute("message", calendarNo + "스케줄 삭제 실패! 권한이 없습니다 ");
 				 return "common/error";
 			}	
 		}	
@@ -161,7 +182,7 @@ public class CalendarController {
 						
 						return "calendar/calendarUpdateView";
 				}else {
-						model.addAttribute( "message" ,calendarNo + "수정페이지로 이동 실패!");
+						model.addAttribute( "message" , calendarNo + "수정페이지로 이동 실패!");
 						return "common/error";
 				}
 			}
@@ -181,10 +202,19 @@ public class CalendarController {
 		         return "redirect:cldetail.do"; //리다이렉트를 사용하면 주소창이 바뀜
 		         
 		      } else {
-		         model.addAttribute("message", calendar.getCalendarNo() + "스케줄 수정 실패!!!");
+		         model.addAttribute("message", calendar.getCalendarNo() + "스케줄 수정 권한이 없습니다!");
 		         return "common/error";
 		      }
 		
 		}
+		
+			//지도 표시 처리용
+			@RequestMapping("clmap.do")
+			public String scheduleMapMethod() {
+				
+				return "calendar/calendarMapDiv";
+			}
+			
+		
 		
 }

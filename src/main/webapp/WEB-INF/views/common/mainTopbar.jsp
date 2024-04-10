@@ -6,8 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title></title>
-<script type="text/javascript" src="https://code.jquery.com/jquery-3.7.0.js"></script>
-
+<script type="text/javascript" src="/getdrive/resources/js/jquery-3.7.0.min.js"></script>
 
 <style type="text/css">
 #logo {
@@ -115,14 +114,17 @@
 function moveAccountSetting(){
 	location.href = "accountSettingPage.do";
 }
-function logout(){
-	location.href = "logout.do";
-}
 </script>
 
+<script src="/getdrive/resources/js/kakao.min.js"></script>
 <script type="text/javascript">
 //카카오로그아웃  
 function kakaoLogout() {
+	
+	//발급받은 키 중 javascript키를 사용해준다.
+	Kakao.init('780473bbd7b187c82f902ed7cb766777');
+	console.log(Kakao.isInitialized()); 
+	
 	if (Kakao.Auth.getAccessToken()) {
 		Kakao.API.request({
 			url : '/v1/user/unlink',
@@ -136,6 +138,8 @@ function kakaoLogout() {
 		})
 		Kakao.Auth.setAccessToken(undefined);
 	}
+	
+	location.href = "logout.do";
 }
 </script>
 
@@ -167,12 +171,11 @@ $(function(){
 	      </button>
 	      
 	      <div class="dropdown-content">
-	        <a id="a1" onclick="moveAccountSetting();"><img id="setting" alt="setting" src="/getdrive/resources/images/setting.png">계정설정</a>
-	        <a id="a2" onclick="logout(); kakaoLogout();"><img id="logout" alt="logout" src="/getdrive/resources/images/logout.png">로그아웃</a>
+	        <a id="a1" onclick="moveAccountSetting();return;"><img id="setting" alt="setting" src="/getdrive/resources/images/setting.png">계정설정</a>
+	        <a id="a2" onclick="kakaoLogout();return;"><img id="logout" alt="logout" src="/getdrive/resources/images/logout.png">로그아웃</a>
 	      </div>
 	    </div>
-    </c:if>
-   
+    </c:if>   
     
 </body>
 

@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title></title>
+<title>driveDetail</title>
 <style type="text/css">
 
 	header {
@@ -66,10 +66,12 @@
 		color: white;
 	}
 	
+	/*
 	.wrapper {
 		width: 87vw;
 		margin-left: 2rem;
 	}
+	*/
 	
 	.functions {
 		display: flex;
@@ -181,83 +183,111 @@
 </script>
 </head>
 <body>
-<c:import url="/WEB-INF/views/common/mainTopbar.jsp" />
-<hr>
-<header>
+
+<div id="container">
+
+  <div id="jb-header">      
+	<c:import url="/WEB-INF/views/common/teamtop.jsp" />        
+  </div>
+
+  <div id="sidebar">
+  
+	<c:import url="/WEB-INF/views/common/teamleft_drive.jsp" />
+
+
     <div style="display: flex; align-items: center;">
-        <img id="arrow" src="/getdrive/resources/images/chevron_left.png">
-        <h2>${ drive.dName } 드라이브</h2>
+        <p style="font-weight: bold; margin-bottom: 1rem;">새 드라이브 생성</p>
+        <img id="add" src="/getdrive/resources/images/add.png" style="margin-left: 0.5rem">
     </div>
-    <div>
-        <input id="search" placeholder="파일 검색">
-    </div>
-</header>
-<section>
-    <!-- 사이드 메뉴 -->
-    <aside>
-        <div style="display: flex; align-items: center;">
-            <p style="font-weight: bold; margin-bottom: 1rem;">새 드라이브 생성</p>
-            <img id="add" src="/getdrive/resources/images/add.png" style="margin-left: 0.5rem">
-        </div>
-        <img id="trash" src="/getdrive/resources/images/trash.png">
-    </aside>
-    <div class="wrapper">
-        <div class="wrapper_header">
-            <p>${ drive.dName }</p>
-            <div class="functions">
-                <div>
-                    <input type="checkbox"><span>전체선택</span> &nbsp;
-                    <button id="newFolder">새 폴더</button> &nbsp;
-                </div>
-                <div style="display: flex; align-items: center;">
-                    <img id="sort" src="/getdrive/resources/images/sort.png">
-                </div>
-            </div>
-        </div>
-        <hr>
-        <!-- 폴더가 있다면 출력 -->
-        <ul>
-        	<c:forEach items="${ list }" var="folder">
-        		<c:url var="folderpage" value="fpage.do">
-        			<c:param name="fdTID" value="${ folder.fdTID }"/>
-					<c:param name="fdDID" value="${ folder.fdDID }"/>
-					<c:param name="fdCRUID" value="${ folder.fdCRUID }"/>
-					<c:param name="fdNo" value="${ folder.fdNo }"/>
-        		</c:url>
-        		<li><a href="${ folderpage }">${ folder.fdName }</a></li>
-        	</c:forEach>
-        </ul>
-    </div>
-</section>
-<!-- 새 드라이브 생성 모달창 -->
-<form id="driveNameForm" action="idrive.do">
-    <div id="modalContainer" class="hidden">
-        <div id="modalContent">
-            <h4>새 드라이브 생성</h4>
-            <div style="margin-top: 3rem;">
-                <input name="dName" type="text" placeholder="새 드라이브 이름을 입력하세요."><br>
-                <input name="tNo" type="hidden" value="${ tNo }">
-                <button id="modalCloseButton">취소</button> &nbsp;
-                <input id="submitDriveName" type="submit" value="확인">
-            </div>
-        </div>
-    </div>
-</form>
-<!-- 새 폴더 생성 모달창 -->
-<form id="folderNameForm" action="ifolder.do" method="post">
-    <div id="modalFolderContainer" class="hidden">
-        <div id="modalFolderContent">
-            <h4>새 폴더 생성</h4>
-            <div style="margin-top: 3rem;">
-                <input name="flName" type="text" placeholder="새 폴더 이름을 입력하세요."><br>
-                <input name="dTID" type="hidden" value="${ drive.dTID }">
-                <input name="dNo" type="hidden" value="${ drive.dNo }">
-                <input name="dCRUID" type="hidden" value="${ loginMember.accountNo }">
-                <button id="modalFolderCloseButton">취소</button> &nbsp;
-                <input id="submitFolderName" type="submit" value="확인">
-            </div>
-        </div>
-    </div>
-</form>
+    
+     <span>팀 드라이브</span> &nbsp; 
+     <button id="expand">+</button>
+     <div class="list-container">
+       <ul class="list"></ul>
+     </div> 
+    
+     <br>     
+     <div style="border:0px solid; width:100%;">
+     	<img id="trash" src="/getdrive/resources/images/trash.png" style="width:30px">
+     </div>   
+    
+  </div>	
+	    
+  <div id="content">
+  	
+		<header>
+		    <div style="display: flex; align-items: center;">
+		        <img id="arrow" src="/getdrive/resources/images/chevron_left.png">
+		        <h2>${ drive.dName } 드라이브</h2>
+		    </div>
+		</header>
+						
+		<div class="wrapper">
+	        <div class="wrapper_header">
+	            <p>${ drive.dName }</p>
+	            <div class="functions">
+	                <div>
+	                    <button id="newFolder">새 폴더 생성</button> &nbsp;
+	                </div>
+	                <div style="display: flex; align-items: center;">
+	                    <img id="sort" src="/getdrive/resources/images/sort.png">
+	                </div>
+	            </div>
+	        </div>
+	        <hr>
+	        <!-- 폴더가 있다면 출력 -->
+	        <ul>
+	        	<c:forEach items="${ list }" var="folder">
+	        		<c:url var="folderpage" value="fpage.do">
+	        			<c:param name="fdTID" value="${ folder.fdTID }"/>
+						<c:param name="fdDID" value="${ folder.fdDID }"/>
+						<c:param name="fdCRUID" value="${ folder.fdCRUID }"/>
+						<c:param name="fdNo" value="${ folder.fdNo }"/>
+	        		</c:url>
+	        		<li><img src="/getdrive/resources/images/folder.png" style="width:30px;">
+	        		<a href="${ folderpage }">${ folder.fdName }</a></li>
+	        	</c:forEach>
+	        </ul>
+	    </div>				
+				
+		<!-- 새 드라이브 생성 모달창 -->
+		<form id="driveNameForm" action="idrive.do">
+		    <div id="modalContainer" class="hidden">
+		        <div id="modalContent">
+		            <h4>새 드라이브 생성</h4>
+		            <div style="margin-top: 3rem;">
+		                <input name="dName" type="text" placeholder="새 드라이브 이름을 입력하세요."><br>
+		                <input name="tNo" type="hidden" value="${ tNo }">
+		                <button id="modalCloseButton">취소</button> &nbsp;
+		                <input id="submitDriveName" type="submit" value="확인">
+		            </div>
+		        </div>
+		    </div>
+		</form>
+		
+		<!-- 새 폴더 생성 모달창 -->
+		<form id="folderNameForm" action="ifolder.do" method="post">
+		    <div id="modalFolderContainer" class="hidden">
+		        <div id="modalFolderContent">
+		            <h4>새 폴더 생성</h4>
+		            <div style="margin-top: 3rem;">
+		                <input name="flName" type="text" placeholder="새 폴더 이름을 입력하세요."><br>
+		                <input name="dTID" type="hidden" value="${ drive.dTID }">
+		                <input name="dNo" type="hidden" value="${ drive.dNo }">
+		                <input name="dCRUID" type="hidden" value="${ loginMember.accountNo }">
+		                <button id="modalFolderCloseButton">취소</button> &nbsp;
+		                <input id="submitFolderName" type="submit" value="확인">
+		            </div>
+		        </div>
+		    </div>
+		</form>
+		
+	</div>
+  <div id="footer">
+    <c:import url="/WEB-INF/views/common/teamfooter.jsp" />
+  </div>
+
+</div>
+	
 </body>
 </html>

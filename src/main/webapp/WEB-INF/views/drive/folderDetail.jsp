@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title></title>
+<title>folderDetail</title>
 <style type="text/css">
 
 	header {
@@ -136,72 +136,100 @@
 </script>
 </head>
 <body>
-<c:import url="/WEB-INF/views/common/mainTopbar.jsp" />
-<hr>
-<header>
-    <div style="display: flex; align-items: center;">
-        <img id="arrow" src="/getdrive/resources/images/chevron_left.png">
-        <h2>${ selectedFolder.fdName } 폴더 </h2>
-    </div>
-    <div>
-        <input id="search" placeholder="파일 검색">
-    </div>
-</header>
-<section>
+
+<div id="container">
+
+  <div id="jb-header">      
+	<c:import url="/WEB-INF/views/common/teamtop.jsp" />        
+  </div>
+
+  <div id="sidebar">
+
+	<c:import url="/WEB-INF/views/common/teamleft_drive.jsp" />
+
     <!-- 사이드 메뉴 -->
-    <aside>
-        <div style="display: flex; align-items: center;">
-            <p style="font-weight: bold; margin-bottom: 1rem;">새 드라이브 생성</p>
-            <img id="add" src="/getdrive/resources/images/add.png" style="margin-left: 0.5rem;">
-        </div>
-        <img id="trash" src="/getdrive/resources/images/trash.png">
-    </aside>
-    <div class="wrapper">
-        <div class="wrapper_header">
-            <p>${ selectedFolder.fdName }</p>
-            <div class="functions">
-                <div>
-                    <input type="checkbox"><span>전체선택</span> &nbsp;
-                    <form action="upload.do" method="post" enctype="multipart/form-data">
-                		<input type="hidden" name="flTID" value="${ selectedFolder.fdTID }">
-                		<input type="hidden" name="flDID" value="${ selectedFolder.fdDID }">
-                		<input type="hidden" name="flFDID" value="${ selectedFolder.fdNo }">
-                		<input type="hidden" name="flCRUID" value="${ loginMember.accountNo }">
-				        <input type="file" name="file" id="file">
-				        <input type="submit">
-				    </form>
-                </div>
-                <div style="display: flex; align-items: center;">
-                    <img id="sort" src="/getdrive/resources/images/sort.png">
-                </div>
-            </div>
-        </div>
-        <hr>
-        <!-- 파일이 있다면 출력 -->
-        <ul>
-        	<c:forEach items="${ list }" var="file">
-        		<li>
-        			<span>${ file.flName }</span> &nbsp;
-		        	<!-- 파일 다운로드 링크 -->
-		            <a href="fdown.do?fileId=${file.flNo}" download>다운로드</a>
-        		</li>
-        	</c:forEach>
-        </ul>
+    <div style="display: flex; align-items: center;">
+        <p style="font-weight: bold; margin-bottom: 1rem;">새 드라이브 생성</p>
+        <img id="add" src="/getdrive/resources/images/add.png" style="margin-left: 0.5rem;">
     </div>
-</section>
-<!-- 새 드라이브 생성 모달창 -->
-<form id="driveNameForm" action="idrive.do">
-    <div id="modalContainer" class="hidden">
-        <div id="modalContent">
-            <h4>새 드라이브 생성</h4>
-            <div style="margin-top: 3rem;">
-                <input name="dName" type="text" placeholder="새 드라이브 이름을 입력하세요."><br>
-                <input name="tNo" type="hidden" value="${ folder.fdTID }">
-                <button id="modalCloseButton">취소</button> &nbsp;
-                <input id="submitDriveName" type="submit" value="확인">
-            </div>
-        </div>
-    </div>
-</form>
+
+	<span>팀 드라이브</span> &nbsp; 
+    <button id="expand">+</button>
+    <div class="list-container">
+      <ul class="list"></ul>    
+     </div>
+     
+     <br>     
+     <div style="border:0px solid; width:100%;">
+   		 <img id="trash" src="/getdrive/resources/images/trash.png">
+     </div> 
+
+
+  </div>	
+	    
+  <div id="content">
+	<header>
+	    <div style="display: flex; align-items: center;">
+	        <img id="arrow" src="/getdrive/resources/images/chevron_left.png" style="width:30px;height:30px">
+	        <h2>${ selectedFolder.fdName } 폴더 </h2>
+	    </div>
+	</header>
+	
+	<section>	     
+	    <div class="wrapper">
+	        <div class="wrapper_header">
+	            <p>${ selectedFolder.fdName }</p>
+	            <div class="functions">
+	                <div>
+	                    <form action="upload.do" method="post" enctype="multipart/form-data">
+	                		<input type="hidden" name="flTID" value="${ selectedFolder.fdTID }">
+	                		<input type="hidden" name="flDID" value="${ selectedFolder.fdDID }">
+	                		<input type="hidden" name="flFDID" value="${ selectedFolder.fdNo }">
+	                		<input type="hidden" name="flCRUID" value="${ loginMember.accountNo }">
+					        <input type="file" name="file" id="file">
+					        <input type="submit">
+					    </form>
+	                </div>
+	                <div style="display: flex; align-items: center;">
+	                    <img id="sort" src="/getdrive/resources/images/sort.png">
+	                </div>
+	            </div>
+	        </div>
+	        <hr>
+	        <!-- 파일이 있다면 출력 -->
+	        <ul>
+	        	<c:forEach items="${ list }" var="file">
+	        		<li>
+	        			<span>${ file.flName }</span> &nbsp;
+	        			<a href="https://example.com/path/to/your/file.txt" download>다운로드</a>
+	        			<button class="download-button" data-file-id="${file.flNo}">다운로드</button>
+	        		</li>
+	        	</c:forEach>
+	        </ul>
+	    </div>
+	</section>
+	<!-- 새 드라이브 생성 모달창 -->
+	<form id="driveNameForm" action="idrive.do">
+	    <div id="modalContainer" class="hidden">
+	        <div id="modalContent">
+	            <h4>새 드라이브 생성</h4>
+	            <div style="margin-top: 3rem;">
+	                <input name="dName" type="text" placeholder="새 드라이브 이름을 입력하세요."><br>
+	                <input name="tNo" type="hidden" value="${ folder.fdTID }">
+	                <button id="modalCloseButton">취소</button> &nbsp;
+	                <input id="submitDriveName" type="submit" value="확인">
+	            </div>
+	        </div>
+	    </div>
+	</form>
+
+  </div>
+
+  <div id="footer">
+    <c:import url="/WEB-INF/views/common/teamfooter.jsp" />
+  </div>
+
+</div>
+
 </body>
 </html>

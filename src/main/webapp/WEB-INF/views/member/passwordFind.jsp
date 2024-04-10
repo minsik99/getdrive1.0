@@ -64,6 +64,9 @@
 	margin: 0px;
 	font-weight: 0;
 }
+#fail{
+	font-size: 9pt;
+}
 </style>
 <script type="text/javascript">
 function emailCheck(){
@@ -74,10 +77,10 @@ function emailCheck(){
 		success: function(data){
 			console.log("success : " + data);
 			if(data == "ok"){
-				$('.fail').hide();
+				$('.fail').show();
 				$('.inputEmail').focus();
 			}else{
-				$('.fail').show();
+				$('.fail').hide();
 				$('.inputEmail').select();
 			}
 			checkForm();
@@ -89,31 +92,50 @@ function emailCheck(){
 }
 </script>
 <script type="text/javascript">
-$(document).ready(function() {
-    // 이메일 인증하기 버튼에 클릭 이벤트 리스너 추가
-    $("#sendCall").on("click", function(event) {
-        // 기본 동작 중지
-        event.preventDefault();
-    });
-});
-</script>
-<script type="text/javascript">
 //회원가입 버튼 활성화/비활성화 함수
 function checkForm() {
-  var passwordValid = checkPassword(); // 비밀번호 조건 체크 결과
+    var emailValid = $(".success").is(":visible"); // 이메일 중복 확인 결과
+    var passwordValid = checkPassword(); // 비밀번호 조건 체크 결과
 
-  // 이메일 중복 확인 결과와 비밀번호 조건 체크 결과가 모두 true이면 버튼 활성화
-  if (passwordValid) { // 비밀번호 조건을 만족하는 경우
-      $("#passwordSettingButton").prop("disabled", false); // 버튼 활성화
-  } else { // 비밀번호 조건을 만족하지 않는 경우
-      $("#passwordSettingButton").prop("disabled", true); // 버튼 비활성화
-  }
+    // 이메일 중복 확인 결과와 비밀번호 조건 체크 결과가 모두 true이면 버튼 활성화
+    if (emailValid && passwordValid) {
+        $("#passwordSettingButton").prop("disabled", false);
+    } else {
+        $("#passwordSettingButton").prop("disabled", true);
+    }
 }
+
+var inputEmailValue = $("#email").val();
+//입력 이메일입력 값 변수선언
+
+// 문서 로드 후 실행되는 함수
+$(function() {
+    // 폼 체크 함수 호출하여 버튼 상태 설정
+    checkForm();
+    
+    $("#email").on("input", function() {
+        // 현재 이메일 값
+        var nowEmailValue = $(this).val();
+
+        // 이메일 값이 변경되었는지 확인
+        if (nowEmailValue !== inputEmailValue) {
+            // 변경된 경우: 중복 확인 실행, 문구변경
+            emailCheck();
+            inputEmailValue = nowEmailValue; // 이전 값 갱신
+        }
+    });
+
+    // 비밀번호 입력란에 입력이 발생할 때마다 폼 체크 함수 호출
+    $("#userPwd, #userPwd2").on("input", function() {
+        checkForm();
+    });
+ 
+});
 
 function checkPassword() {
     var password = $("#userPwd").val();
     var confirmPassword = $("#userPwd2").val();
-
+  
     var empty = password.trim() === '';
     var length = password.length >= 8 && password.length <= 20;
     var alphabet = /[a-zA-Z]/.test(password);
@@ -123,46 +145,53 @@ function checkPassword() {
 
     // 각 조건을 검사하고 메시지를 표시
     $(".empty").toggle(empty);
-    $("#terms").toggle(!empty && (!length || !alphabet || !digit || !special));
-    $("#mismatch").toggle(!empty && !match && !$("#terms").is(":visible")); 
-    $("#match").toggle(match && !empty && !$("#terms").is(":visible") && !$("#mismatch").is(":visible"));
+    $(".terms").toggle(!empty && (!length || !alphabet || !digit || !special));
+    $(".mismatch").toggle(!empty && !match && !$(".terms").is(":visible")); 
+    $(".match").toggle(match && !empty && !$(".terms").is(":visible") && !$(".mismatch").is(":visible"));
 
     // 비밀번호가 조건을 모두 충족하는지 확인하여 회원가입 버튼 활성화/비활성화
     var passwordTerms = !empty && length && alphabet && digit && special && match;
-  
+    
     return passwordTerms;
+    
 }
 
-// 문서 로드 후 실행되는 함수
-$(function() {
-    // 폼 체크 함수 호출하여 버튼 상태 설정
-    checkForm();
-
-    // 비밀번호 입력란에 입력이 발생할 때마다 폼 체크 함수 호출
-    $("#userPwd, #userPwd2").on("input", function() {
-        checkForm();
-        checkPassword(); // 비밀번호 조건 확인
-    });
-
-    // 문서 로딩 시에도 비밀번호 조건 확인 및 버튼 상태 설정
-    checkPassword();
-    checkForm();
-});
+function emailCheck(){
+	$.ajax({
+		url: "idchk.do",
+		type: "post",
+		data: { email: $('#email').val() },
+		success: function(data){
+			console.log("success : " + data);
+			if(data == "ok"){
+				$('#fail').show();
+				$('#email').focus();
+			}else{
+				$('#fail').hide();
+				$('#email').select();
+			}
+			checkForm();
+		},
+		error: function(jqXHR, textStatus, errorThrown){
+			console.log("error : " + jqXHR + ", " + textStatus + ", " + errorThrown);
+		}
+	});
+}
 </script>
 </head>
 <body id="full">
-	<form action="passwordFind.do" method ="post" id="passwordFindForm" >
+	<form id="passwordFindForm" >
 		<div id="passwordFindZone">
 			<div class="emailInput">
 				<label for="userEmail" class="registerText">이메일</label><br>
-						<form id="emailInput" action="passwordFind.do">
+						<form id="emailInput" action="passwordSetting.do">
 							<input type="email" id="email" class="inputText" name="email" placeholder="이메일 입력" required>
-							<button id="sendCall" class="button">인증메일전송</button>
-						<div class="fail" style="display: none; color: red">가입되지 않은 이메일입니다</div>
+							<button id="sendCall1" class="button">인증메일전송</button>
+						<div id="fail" style="display: none; color: red">가입되지 않은 이메일입니다</div>
 						</form>
 						<form class="authorization">
 							<input type="text" id="authorization" class="inputText" name="authorization" placeholder="인증번호 입력" required>
-							<button id="sendCall" class="button" type="submit">인증번호확인</button>
+							<button id="sendCall2" class="button" type="submit">인증번호확인</button>
 						</form>
 			</div>
 				<label class="subtitle">새 비밀번호</label><br>

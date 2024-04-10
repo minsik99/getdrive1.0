@@ -43,7 +43,7 @@
 			WHERE TRUNC(S_DATE) = TRUNC(SYSDATE) 
 			    and  s_tid = '5' 
 			    and s_no not in (
-			        select ac_sid from tb_alarm_check where ac_uid = '1' and ac_tid = '5'
+			        select AC_AID from tb_alarm_check where ac_uid = '1' and ac_tid = '5'
 			    )
 			order by s_no desc))
 	</select>	

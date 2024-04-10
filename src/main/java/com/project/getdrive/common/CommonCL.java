@@ -5,17 +5,19 @@ public class CommonCL {
 	
 	private int year;
 	private int month;
+	private int calendarTid;
 	
 	
-	public CommonCL() {
-		super();
-	}
-
-
-	public CommonCL(int year, int month) {
+	public CommonCL(int year, int month, int calendarTid) {
 		super();
 		this.year = year;
 		this.month = month;
+		this.calendarTid = calendarTid;
+	}
+
+
+	public CommonCL() {
+		super();
 	}
 
 
@@ -39,9 +41,21 @@ public class CommonCL {
 	}
 
 
+	public int getCalendarTid() {
+		return calendarTid;
+	}
+
+
+	public void setCalendarTid(int calendarTid) {
+		this.calendarTid = calendarTid;
+	}
+
+
 	@Override
 	public String toString() {
-		return "CommonCL [year=" + year + ", month=" + month + "]";
+		return "CommonCL [year=" + year + ", month=" + month + ", calendarTid=" + calendarTid + "]";
 	}
+
+	
 	
 }

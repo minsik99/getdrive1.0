@@ -9,9 +9,11 @@
 	</settings>
 
 	<typeAliases>
+		<!-- 게시판 -->
+		<typeAlias type="com.project.getdrive.board.model.vo.Board" alias="Board" />	
 		<!-- 회원 -->
 		<typeAlias type="com.project.getdrive.member.model.vo.Member" alias="Member" />
-		<!-- <typeAlias type="com.project.getdrive.member.model.vo.Social_Member" alias="Social_Member" /> -->
+		<typeAlias type="com.project.getdrive.member.model.vo.Social_Member" alias="Social_Member" />
 		<!-- 팀 -->
 		<typeAlias type="com.project.getdrive.team.model.vo.Team" alias="Team" />
 		<typeAlias type="com.project.getdrive.team.common.TeamCreator" alias="TeamCreator" />
@@ -35,9 +37,11 @@
 	</typeAliases>
 	
 	<mappers>
+		<!-- 게시판 -->
+		<mapper resource="mappers/board-mapper.xml" />	
 		<!-- 회원 -->
 		<mapper resource="mappers/member-mapper.xml" />
-		<!-- <mapper resource="mappers/social-member-mapper.xml" /> -->
+		<mapper resource="mappers/social-member-mapper.xml" />
 		<!-- 팀 -->
 		<mapper resource="mappers/team-mapper.xml"/>
 		<!-- 팀 유저 -->
@@ -56,3 +60,4 @@
 		<mapper resource="mappers/calendar-mapper.xml" />		
 	</mappers>
 </configuration>
+

@@ -112,9 +112,8 @@ function showWriteForm(){
 				<td>${ b.s_no }</td>
 				<td align="left">
 					${ b.s_menu }
-					<c:url var="bd" value="bdetail.do">
-						<c:param name="bnum" value="${ b.s_no }" />
-						<c:param name="page" value="${ nowpage }" />
+					<c:url var="bd" value="mdetail.do">
+						<c:param name="no" value="${ b.s_id }" />
 					</c:url>
 					<a href="${ bd }">${ b.s_title }</a>
 				</td>

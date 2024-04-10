@@ -14,7 +14,7 @@
 	background-color: #E1F5FE;
 }
 #accountSettingZone{
-	width :	27%;
+	width :	460px;
 	margin : auto;
 	top : 50px;
 	margin-bottom: 0px;
@@ -181,7 +181,7 @@ summary{
 #accountDeleteButton{
 	background: #EF5350;
 	position: relative;
-	left: 2px;
+	right: 18px;
 }
 
 #accountDeleteButton:active{
@@ -202,7 +202,7 @@ summary{
 }
 .accountDeletCheck{
 	list-style: none;
-	font-size:14px;
+	font-size:12px;
 	font-weight: 600;
 }
 
@@ -328,7 +328,7 @@ function pwdCheck() {
 			<div markdown="1" class="subzone">
 				<label class="subtitle">현재 비밀번호</label><br>
 				<input type="Password" class="inputText" id="nowPwd" name="nowPwd" placeholder="현재 비밀번호 입력" required><br>
-				<div class="terms" id="fail">현재 비밀번호와 일치하지 않습니다.</div>
+				<div class="terms" id="fail" style="display: none;color: red">현재 비밀번호와 일치하지 않습니다.</div>
 				<label class="subtitle">새 비밀번호</label><br>
 				<p id="comment">비밀번호는 8~20자 영문, 숫자, 특수문자로 입력하세요</p>
 				<input type="Password" class="inputText" name="pwd" id="userPwd" placeholder="새 비밀번호 입력" ><br>
