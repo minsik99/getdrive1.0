@@ -8,19 +8,19 @@ import com.project.getdrive.meeting.model.vo.Meeting;
 
 public interface MeetingService {
 
-	int selectListCount();
+	int selectListCount(int tNo);
 
 	ArrayList<Meeting> selectList(Paging paging);
 
 	int insertMeeting(Meeting meeting);
 
-	Meeting selectOne(int meetingId);
+	Meeting selectOne(int mtId);
 
-	void updateAddReadCount(int meetingId);
+	void updateAddReadCount(int mtId);
 
 	int updateMeeting(Meeting meeting);
 
-	int deleteMeeting(int meetingId);
+	int deleteMeeting(int mtId);
 
 	int selectSearchTitleCount(String keyword);
 

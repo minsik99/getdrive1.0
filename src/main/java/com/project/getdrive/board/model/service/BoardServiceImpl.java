@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.project.getdrive.board.model.dao.BoardDao;
 import com.project.getdrive.board.model.vo.Board;
 import com.project.getdrive.common.Paging;
+import com.project.getdrive.common.Search;
 import com.project.getdrive.common.SearchDate;
 import com.project.getdrive.common.SearchPaging;
 
@@ -22,8 +23,8 @@ public class BoardServiceImpl implements BoardService {
 	}
 	
 	@Override
-	public int selectListCount() {
-		return boardDao.selectListCount();
+	public int selectListCount(int btId) {
+		return boardDao.selectListCount(btId);
 	}
 
 	@Override

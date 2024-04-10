@@ -1,5 +1,9 @@
 package com.project.getdrive.member.model.service;
 
+import java.io.IOException;
+
+import javax.servlet.http.HttpServletResponse;
+
 import com.project.getdrive.member.model.vo.Member;
 
 public interface MemberService {
@@ -10,5 +14,8 @@ public interface MemberService {
 	boolean accountCheck(Member member);
 	Member selectMember(String email);
 	void updatePassword(Member member);
+	Member selectCheckPwd(String email);
+	int updateMember(Member loginMember);
+	int deleteMember(String email);
 
 }

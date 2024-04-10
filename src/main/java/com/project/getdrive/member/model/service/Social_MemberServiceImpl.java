@@ -1,5 +1,7 @@
 package com.project.getdrive.member.model.service;
 
+import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,8 @@ import com.project.getdrive.member.model.vo.Social_Member;
 
 @Service("social_MemberService")
 public class Social_MemberServiceImpl implements Social_MemberService {
+	
+	private static final Logger logger = LoggerFactory.getLogger(MemberServiceImpl.class);
 	
 	@Autowired 
 	private Social_MemberDao social_MemberDao;
@@ -25,16 +29,29 @@ public class Social_MemberServiceImpl implements Social_MemberService {
 		return social_MemberDao.seletEmail(email);
 	}
 
-	@Override
-	public void kakaoNomalRegister(Member member) {
-		social_MemberDao.kakaoNomalRegister(member);
-		
-	}
 
 	@Override
 	public int selectSocialEmail(String email) {
 		return social_MemberDao.selectSocialEmail(email);
 	}
+
+	@Override
+	public int selectKakao(String id) {
+		return social_MemberDao.selectKakao(id);
+	}
+
+	@Override
+	public void kakaoNomalRegister(Member loginMember) {
+		social_MemberDao.kakaoNomalRegister(loginMember);
+		
+	}
+
+	@Override
+	public int seletAccountNoEmail(String email) {
+		return social_MemberDao.seletAccountNoEmail(email);
+	}
+
+
 
 
 

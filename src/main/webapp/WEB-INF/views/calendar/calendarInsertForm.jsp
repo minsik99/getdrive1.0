@@ -85,6 +85,18 @@ $('#calendarDate').change(function() {
 </script>
 <body>
 
+<div id="container">
+
+ <div id="jb-header">      
+<c:import url="/WEB-INF/views/common/teamtop.jsp" />        
+ </div>
+ 
+ <div id="sidebar">
+<c:import url="/WEB-INF/views/common/teamleft.jsp" />
+ </div>
+ 
+ <div id="content">
+ 
 
 <h1 align="center">스케줄 등록</h1>
 
@@ -94,6 +106,7 @@ $('#calendarDate').change(function() {
 <input type="hidden" name="year"  id ="year" value=${ year }>
 <input type="hidden" name="month" id="month" value=${ month }>
 <input type="hidden" name="day" id="day" value=${ day }>
+<input type="hidden" name="calendarCheck" value="Y">
 
 <table align="center" width="500" border="1" cellspacing="0" cellpadding="5">
 
@@ -113,6 +126,7 @@ $('#calendarDate').change(function() {
 			<input type="number" name="calendarEnd" min="0" max="24"></td>
 	</tr>
 	
+<!-- 	
 	<tr>
 	<td colspan="2" align="center" style="background-color: #6DBFF2;" ><a href="javascript:void(0);" style="color: #000000;" onclick="openLayerWindow();">장소설정</a>
 		<script>
@@ -121,7 +135,7 @@ $('#calendarDate').change(function() {
 		}
 		</script></td>
 	 </tr>
-	 
+-->
 	<tr>
 		<th style="background-color: #6DBFF2;">제 목</th>
 		<td>
@@ -142,21 +156,30 @@ $('#calendarDate').change(function() {
         <textarea name="calendarContent" style="width: 400px; height: 200px; resize: none;"></textarea>
    	 </td>
 	</tr>
-	
+<!-- 	
 	<tr>
 		<th colspan="2" style="color: black;">
 			<input type="radio" name="calendarCheck" value="Y" checked >공개 &nbsp; 
 			<input type="radio" name="calendarCheck" value="N">비공개</th></tr>
 
-	
+ -->	
 	<tr>
 		<td colspan="2" align="center">
 			<input type="submit" value="등록" style="color: white; background-color: #6DBFF2"> &nbsp; 
 			<input type="button" value="이전페이지" 
-			onclick="javascript:location.href='calendar.do'; return false;" style="color: white; background-color: #6DBFF2">
+			onclick="javascript:history.back(-1); return false;" style="color: white; background-color: #6DBFF2">
 	</td>		
 	</tr>
 </table>
 </form>	
+
+	</div>
+	
+	<div id="footer">
+    <c:import url="/WEB-INF/views/common/teamfooter.jsp" />
+  </div>
+
+</div>
+
 </body>
 </html>	

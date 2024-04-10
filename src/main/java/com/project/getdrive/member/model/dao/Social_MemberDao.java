@@ -1,5 +1,7 @@
 package com.project.getdrive.member.model.dao;
 
+import java.util.Map;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -21,12 +23,20 @@ public class Social_MemberDao {
 		return sqlSessionTemplate.selectOne("memberMapper.selectCheckEmail",email);
 	}
 
-	public void kakaoNomalRegister(Member member) {
-		sqlSessionTemplate.insert("memberMapper.kakaoNomalRegister", member);
+	public void kakaoNomalRegister(Member loginMember) {
+		sqlSessionTemplate.insert("memberMapper.kakaoNomalRegister", loginMember);
 	}
 
 	public int selectSocialEmail(String email) {
 		return sqlSessionTemplate.selectOne("socialMemberMapper.selectSocialEmail",email);
+	}
+
+	public int selectKakao(String id) {
+		return sqlSessionTemplate.selectOne("socialMemberMapper.selectKakao",id);
+	}
+
+	public int seletAccountNoEmail(String email) {
+		return sqlSessionTemplate.selectOne("memberMapper.seletAccountNoEmail",email);
 	}
 
 }

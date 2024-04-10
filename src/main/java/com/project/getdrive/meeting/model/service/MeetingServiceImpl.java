@@ -16,13 +16,12 @@ public class MeetingServiceImpl implements MeetingService {
 	private MeetingDao meetingDao;
 
 	@Override
-	public int selectListCount() {
-		return meetingDao.getListCount();
+	public int selectListCount(int tNo) {
+		return meetingDao.getListCount(tNo);
 	}
 
 	@Override
 	public ArrayList<Meeting> selectList(Paging paging) {
-		// TODO Auto-generated method stub
 		return meetingDao.selectList(paging);
 	}
 
@@ -32,13 +31,13 @@ public class MeetingServiceImpl implements MeetingService {
 	}
 
 	@Override
-	public Meeting selectOne(int meetingId) {
-		return meetingDao.selectOne(meetingId);
+	public Meeting selectOne(int mtId) {
+		return meetingDao.selectOne(mtId);
 	}
 
 	@Override
-	public void updateAddReadCount(int meetingId) {
-		meetingDao.addReadCount(meetingId);	
+	public void updateAddReadCount(int mtId) {
+		meetingDao.addReadCount(mtId);	
 	}
 
 	@Override
@@ -47,8 +46,8 @@ public class MeetingServiceImpl implements MeetingService {
 	}
 
 	@Override
-	public int deleteMeeting(int meetingId) {
-		return meetingDao.deleteMeeting(meetingId);
+	public int deleteMeeting(int mtId) {
+		return meetingDao.deleteMeeting(mtId);
 	}
 
 	@Override

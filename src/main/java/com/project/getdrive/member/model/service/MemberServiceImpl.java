@@ -1,11 +1,17 @@
 package com.project.getdrive.member.model.service;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.servlet.http.HttpServletResponse;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.project.getdrive.mail.MailHandler;
 import com.project.getdrive.member.model.dao.MemberDao;
 import com.project.getdrive.member.model.vo.Member;
 
@@ -64,12 +70,20 @@ public class MemberServiceImpl implements MemberService {
 		
 	}
 
+	@Override
+	public Member selectCheckPwd(String email) {
+		return memberDao.selectCheckPwd(email);
+	}
 
+	@Override
+	public int updateMember(Member member) {
+		return memberDao.updateMember(member);
+	}
 
-
-
-	
-
+	@Override
+	public int deleteMember(String email) {
+		return memberDao.deleteMember(email);
+	}
 
 
 }

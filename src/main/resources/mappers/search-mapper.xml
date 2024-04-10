@@ -17,11 +17,14 @@
 	</resultMap>
 		
 	<!-- 검색갯수 : selectSearchCount -->	
-	<select id="selectSearchCount" parameterType="string"  resultType="_int">
+	<select id="selectSearchCount" parameterType="CommonSch"  resultType="_int">
 		select count(*) from TB_SEARCH 
-			where ( S_TITLE like '%' || #{ keyword } || '%' ) 
-				or ( S_CONTENT like '%' || #{ keyword } || '%' )				   
-	</select>
+			where ( ( S_TITLE like '%' || #{ keyword } || '%' ) 
+				or ( S_CONTENT like '%' || #{ keyword } || '%' ) )	
+		<if test="tNo != null and tNo != ''">
+			and S_TID = #{ tNo }
+ 		</if>							   
+	</select>	
 	
 	<select id="selectSearch" parameterType="CommonSch" resultMap="resultList">
 		select *
@@ -31,7 +34,10 @@
 		           where ( S_TITLE like '%' || #{ keyword } || '%' ) 
 					or ( S_CONTENT like '%' || #{ keyword } || '%' )
 		           order by s_no desc))
-		where rnum between #{ startRow } and #{ endRow }    
+		where rnum between #{ startRow } and #{ endRow }   
+		<if test="tNo != null and tNo != ''">
+			and S_TID = #{ tNo }
+ 		</if>			 
 	</select>
 	
 	<select id="selectAlarmList" parameterType="_int" resultMap="resultList">
@@ -43,7 +49,10 @@
 			WHERE TRUNC(S_DATE) = TRUNC(SYSDATE) 
 			    and  s_tid = '5' 
 			    and s_no not in (
-			        select AC_AID from tb_alarm_check where ac_uid = '1' and ac_tid = '5'
+			        select AC_AID from tb_alarm_check
+						<if test="tNo != null and tNo != ''">
+							where ac_uid =  #{ mNo } and ac_tid =  #{ tNo }
+				 		</if>				         
 			    )
 			order by s_no desc))
 	</select>	

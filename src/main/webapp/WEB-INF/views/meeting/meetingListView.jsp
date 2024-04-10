@@ -14,45 +14,57 @@
 <title>회의록</title>
 
 <style type="text/css">
+
+button {
+    background-color: #41AEF2; 
+    border: none;
+    color: white;
+    width: 150px;
+    padding: 10px 21px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    font-weight: bold;
+    margin: 20px 4px;
+    cursor: pointer;
+	}
+
  fieldset#ss {
-    /*  width: 98%; */
-     /* position: absolute; */
-     /* top: 14%; */
-     /* left: 50%; */
-     /* transform: translate(-50%, -50%); */
-     text-align: center; /* 가운데 정렬 */
+    width: 70%;
+    position: relative;
+    top: 2rem;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center; 
  }
 
  form fieldset {
-     /* width: 600px; */
-     margin: auto; /* 가운데 정렬 */
+     width: 600px;
+     margin: 0 auto;
  }
 
  form.sform {
-     background: #6DBFF2;
      width: 650px;
-     margin: auto; /* 가운데 정렬 */
-     display: none; /* 안 보이게 함 */
+     margin: 0 auto; 
+     margin-bottom: 20px;
+     display: none; 
  }
 
 /* 2024.04.07 kimyh : 팀공통 상단영역과 충돌하여 수정함  */
- #mettingList {
+ #meetingList {
      width: 100%;
-     margin: auto; /* 가운데 정렬 */
+     margin: 0 auto; 
      border-collapse: collapse;
  }
 
- #mettingList th, #mettingList td {
+ #meetingList th, #meetingList td {
      border: 1px solid #dddddd;
      text-align: center;
      padding: 8px;
  }
 
- #mettingList th {
-     background-color: #f2f2f2;
- }
-
- #mettingList tr:nth-child(even) {
+ #meetingList th {
      background-color: #f2f2f2;
  }
 
@@ -96,6 +108,7 @@
  }
 </script>
 </head>
+
 <body>
 
 <div id="container">
@@ -110,45 +123,22 @@
   
   <div id="content">	  
 	
-	<h1 align="center">회의록</h1>
-	<br>
-	<center>
-		<button onclick="javascript:location.href='${ pageContext.servletContext.contextPath }/mlist.do?page=1';">목록</button>
-		&nbsp; &nbsp;
+	<h1 align="center">회의록</h1><hr>
+	<div align="center">
 		<button onclick="javascript:location.href='${ pageContext.servletContext.contextPath }/movewrite.do';">회의록 등록</button>
-	</center>
+	</div>
 	<br>
 	
+	<!-- 검색 -->
 	<fieldset id="ss">
 	    <legend>검색할 항목을 선택하세요.</legend>
 	    <input type="radio" name="item" id="title"> 제목 &nbsp;
 	    <input type="radio" name="item" id="content2"> 내용 &nbsp;
 	    <input type="radio" name="item" id="date"> 등록날짜 &nbsp;
-	    <b>출력할 목록 갯수를 선택하세요 : </b>
-	    <select id="limit" onchange="changeLimit(this.value);">
-	        <c:if test="${ currentLimit eq 10 }">
-	            <option value="10" selected>10개씩 출력</option>
-	        </c:if>
-	        <c:if test="${ currentLimit ne 10 }">
-	            <option value="10">10개씩 출력</option>
-	        </c:if>
-	        <c:if test="${ currentLimit eq 15 }">
-	            <option value="15" selected>15개씩 출력</option>
-	        </c:if>
-	        <c:if test="${ currentLimit ne 15 }">
-	            <option value="15">15개씩 출력</option>
-	        </c:if>
-	        <c:if test="${ currentLimit eq 20 }">
-	            <option value="20" selected>20개씩 출력</option>
-	        </c:if>
-	        <c:if test="${ currentLimit ne 20 }">
-	            <option value="20">20개씩 출력</option>
-	        </c:if>
-	    </select>
 	</fieldset>
 	<br>
 	
-	<!-- 검색 항목별 값 입력 전송용 폼 만들기 -->
+	<!-- 검색 항목별 값 입력 전송용 폼 생성 -->
 	<!-- 제목 검색 폼 -->
 	<form id="titleform" class="sform" action="msearchTitle.do" method="get">
 	    <input type="hidden" name="action" value="title">
@@ -183,7 +173,7 @@
 	</form>
 	
 	<!-- 조회된 회의록 목록 출력 -->
-	<table id=mettingList>
+	<table id=meetingList>
 	    <tr>
 	        <th>번호</th>
 	        <th>회의제목</th>
@@ -198,43 +188,45 @@
 	    <c:forEach items="${ requestScope.list }" var="m">
 	        <tr>
 	            <!-- 번호 -->
-	            <td>${ m.meetingId }</td>
+	            <td>${ m.mtId }</td>
 	
 	            <!-- 회의제목 -->
 	            <td>
-	                <a href="${ pageContext.servletContext.contextPath }/mdetail.do?no=${ m.meetingId }">
-	                    ${ m.meetingTitle }
+	                <a href="${ pageContext.servletContext.contextPath }/mdetail.do?no=${ m.mtId }">
+	                    ${ m.mtTitle }
 	                </a>
 	            </td>
 	
 	            <!-- 작성자 -->
-	            <td>${ m.meetingWriter }</td>
+	            <td>${ m.mtWriter }</td>
 	
 	            <!-- 중요여부 -->
 	            <td>
-	                <c:if test="${ m.importance eq 'Y'}">
+	                <c:if test="${ m.mtImportance eq 'Y'}">
 	                    <img src="${ pageContext.servletContext.contextPath }/resources/images/importance.png" width="15" height="15">
 	                </c:if>
-	                <c:if test="${ m.importance eq 'N' }">-</c:if>
+	                <c:if test="${ m.mtImportance eq 'N' }">-</c:if>
 	            </td>
 	
 	            <!-- 첨부파일 여부 -->
 	            <td>
-	                <c:if test="${ !empty m.meetingOriginalFileName }">◎</c:if>
-	                <c:if test="${ empty m.meetingRenameFileName }">-</c:if>
+	                <c:if test="${ !empty m.mtOriginalFileName }">◎</c:if>
+	                <c:if test="${ empty m.mtRenameFileName }">-</c:if>
 	            </td>
 	
 	            <!-- 조회수 -->
-	            <td>${ m.readCount }</td>
+	            <td>${ m.mtReadCount }</td>
 	
 	            <!-- 등록날짜 -->
 	            <td>
-	                <fmt:formatDate value="${ m.meetingDate }" pattern="yyyy-MM-dd" />
+	                <fmt:formatDate value="${ m.mtDate }" pattern="yyyy-MM-dd" />
 	            </td>
 	        </tr>
 	    </c:forEach>
 	</table>
 	<br>
+	
+	<c:import url="/WEB-INF/views/common/pagingView.jsp" />
 
   </div>
 

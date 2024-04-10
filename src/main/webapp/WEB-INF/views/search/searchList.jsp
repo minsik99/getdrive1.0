@@ -13,7 +13,7 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<title>first</title>
+<title>searchList</title>
 <script type="text/javascript" src="/first/resources/js/jquery-3.7.0.min.js"></script>
 <script type="text/javascript">
 $(function(){
@@ -110,12 +110,23 @@ function showWriteForm(){
 		<c:forEach items="${ requestScope.list }" var="b">
 			<tr align="center">
 				<td>${ b.s_no }</td>
-				<td align="left">
-					${ b.s_menu }
-					<c:url var="bd" value="mdetail.do">
-						<c:param name="no" value="${ b.s_id }" />
-					</c:url>
-					<a href="${ bd }">${ b.s_title }</a>
+				<td align="left">					
+					<!-- Meeting -->
+					<c:if test="${ b.s_menu eq 'MT' }">
+						[Meeting] 
+						<c:url var="bd" value="mdetail.do">
+							<c:param name="no" value="${ b.s_id }" />
+						</c:url>
+						<a href="${ bd }">${ b.s_title }</a>
+					</c:if>
+					<!-- Board -->
+					<c:if test="${ b.s_menu eq 'BD' }">
+						[Board] 
+						<c:url var="bd" value="bdetail.do">
+							<c:param name="bNo" value="${ b.s_id }" />
+						</c:url>
+						<a href="${ bd }">${ b.s_title }</a>
+					</c:if>					
 				</td>
 				<td>${ b.s_cruid }</td>
 				<td>${ b.s_date }</td>				

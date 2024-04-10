@@ -11,12 +11,42 @@
 #full{
 	width: 100%;
 	height: 100%;
+	
+}
+#header {
+	width: 100%;
+	height: 100px;
+	background-color: #FFFFFF;
+	
+}
+#main {
+	width: 100%;
+	height: 900px;
+}
+#left {
+	width: 50%;
+	height: 900px;
+	float: left;
 	background-color: #E1F5FE;
 }
+
+#right {
+	width: 49.9%;
+	height: 900px;
+	float: right;
+	background-color: #E1F5FE;
+}
+#footer {
+	margin: 10px 0px 0px;
+	width: 100%;
+	height: 90px;
+	text-align: center;
+}
 #accountSettingZone{
-	width :	460px;
+	width :	490px;
 	margin : auto;
-	top : 50px;
+	position : relative;
+	top : 100px;
 	margin-bottom: 0px;
 }
 
@@ -63,6 +93,7 @@ summary{
 	border: 1px solid #ddd;
 	background-color: white;
 	cursor: pointer;
+	
 }
 .settingZone:not(:last-child) {
     border-bottom: 1px solid #ddd; /* 마지막 항목을 제외한 모든 항목에 가로 선 추가 */
@@ -96,9 +127,9 @@ summary{
 	border-radius: 5px;
 	background-color: #fff;
 	box-sizing: border-box;
-	margin: 15px 0px;
 	font-weight: 600;
 	padding-left: 10px;
+	margin : 5px 0px;
 }
 
 .inp_text {
@@ -124,8 +155,11 @@ summary{
 }
 
 .terms {
-	font-size: 13px;
+	font-size: 12pt;
 	font-weight: 600;
+	position: relative;
+	bottom: 10px;
+	margin-top: 13px;
 }
 
 #pointer{
@@ -139,6 +173,7 @@ summary{
 #comment {
 	font-size: 9pt;
 	margin: 0px;
+	font-weight: 600;
 }
 .commonButton {
 	background: #6DBFF2;
@@ -146,7 +181,7 @@ summary{
 	border: none;
 	color: white;
 	cursor: pointer;
-	width: 120px;
+	width: 140px !important;
 	height: 45px;
 	text-align: center;
 	font-size: 12pt;
@@ -154,6 +189,7 @@ summary{
 	float: right;
 	position: relative;
 	right:20px;
+	bottom: 20px;
 }
 
 .commonButton:active {
@@ -183,10 +219,14 @@ summary{
 	position: relative;
 	right: 18px;
 }
-
-#accountDeleteButton:active{
-	background: #EF9A9A;
+#accountDeleteButton:disabled{
+	background: #DCDCDC;
+	position: relative;
+	right: 18px;
+	color: '#696969';
+	border: 'none';
 }
+
 
 .commentzone{
 	width: 95%;
@@ -202,7 +242,7 @@ summary{
 }
 .accountDeletCheck{
 	list-style: none;
-	font-size:12px;
+	font-size:10pt;
 	font-weight: 600;
 }
 
@@ -221,6 +261,51 @@ input.chkAll + label{
     vertical-align: middle;
     accent-color: rgb(0, 146, 255);
 }
+.pwdchk{
+	font-size: 12pt;
+	margin-top: 10px;
+	font-weight: 600;
+	position: relative;
+    bottom: 10px;
+    font-weight: 600;
+}
+#pwdchkbutton{
+	background: #6DBFF2;
+	border-radius: 5px;
+	border: none;
+	color: white;
+	cursor: pointer;
+	width: 120px;
+	height: 25px;
+	text-align: center;
+	font-size: 12pt;
+	font-weight: 600;
+	position: relative;
+    left: 10px;
+}
+#pwdchkbutton:active{
+	background: rgb(200, 230, 255);
+}
+
+#pwd_div {
+ 	width: 380px;
+    height: 50px;
+    position: relative;
+    display: flex;
+ }
+#nowPwd { 
+	width: 100%;
+}
+#pwdchkbutton {
+ 	position: absolute;
+    bottom: 12px;
+    left: 250px;
+    float: right;
+ }
+ #nowPwd3 { 
+	width: 100%;
+}
+
 </style>
 <!-- 다른 페이지가 펼쳐지면 나머지는 접히게 하는 스크립트 -->
 <script>
@@ -235,17 +320,19 @@ input.chkAll + label{
 </script>
 <script type="text/javascript">
 
-//회원가입 버튼 활성화/비활성화 함수
+
 function checkForm() {
+  var pwdValid = $("#success").is(":visible"); // 기존 비밀번호 일치 확인 결과
   var passwordValid = checkPassword(); // 비밀번호 조건 체크 결과
 
   // 이메일 중복 확인 결과와 비밀번호 조건 체크 결과가 모두 true이면 버튼 활성화
-  if (passwordValid) { // 비밀번호 조건을 만족하는 경우
+  if (pwdValid && passwordValid) { // 비밀번호 조건을 만족하는 경우
       $("#passwordSettingButton").prop("disabled", false); // 버튼 활성화
   } else { // 비밀번호 조건을 만족하지 않는 경우
       $("#passwordSettingButton").prop("disabled", true); // 버튼 비활성화
   }
 }
+var inputpwdValue = $("#nowPwd").val();
 
 function checkPassword() {
     var password = $("#userPwd").val();
@@ -274,7 +361,18 @@ function checkPassword() {
 $(function() {
     // 폼 체크 함수 호출하여 버튼 상태 설정
     checkForm();
+	
+    $("#nowPwd").on("input", function() {
+        // 현재 비밀번호 값
+        var nowPwdValue = $(this).val();
 
+        // 비밀번호 값이 변경되었는지 확인
+        if (nowPwdValue !== inputPwdValue) {
+            // 변경된 경우: 일치확인 실행, 문구변경
+            pwdCheck();
+            inputPwdValue = nowPwdValue; // 이전 값 갱신
+        }
+    });
     // 비밀번호 입력란에 입력이 발생할 때마다 폼 체크 함수 호출
     $("#userPwd, #userPwd2").on("input", function() {
         checkForm();
@@ -294,13 +392,15 @@ function pwdCheck() {
         success: function(data) {
             console.log("success : " + data);
             if (data == "ok") {
-                $('#fail').hide();
-                $('#nowPwd').focus();
+                $('#fail').hide(); // 비밀번호 불일치 문구 숨기기
+                $('#success').show(); // 비밀번호 일치 문구 보이기
+                $('#nowPwd').focus(); // 비밀번호 입력란에 포커스
             } else {
-                $('#fail').show();
-                $('#nowPwd').select();
+                $('#success').hide(); // 비밀번호 일치 문구 숨기기
+                $('#fail').show(); // 비밀번호 불일치 문구 보이기
+                $('#nowPwd').select(); // 비밀번호 입력란 선택
             }
-            checkForm();
+            checkForm(); // 폼 체크 함수 호출
         },
         error: function(jqXHR, textStatus, errorThrown) {
             console.log("error : " + jqXHR + ", " + textStatus + ", " + errorThrown);
@@ -308,8 +408,174 @@ function pwdCheck() {
     });
 }
 </script>
+<script type="text/javascript">
+$(function() {
+    // 폼이 제출되었을 때
+    $("form").submit(function(event) {
+        // 폼 제출을 막습니다.
+        event.preventDefault();
+        
+        // 비밀번호를 가져옵니다.
+        var password = $("#nowPwd").val();
+
+        // 비밀번호를 비동기적으로 서버로 보냅니다.
+        $.ajax({
+            type: "POST",
+            url: "pwdchk2.do",
+            data: {nowPwd: password},
+            success: function(response) {
+                if (response == "ok") {
+                    $("#fail").hide();
+                    $("#success").show();
+                } else {
+                    $("#success").hide();
+                    $("#fail").show();
+                }
+            }
+        });
+    });
+});
+</script>
+<script type="text/javascript">
+$(function() {
+    // 폼이 제출되었을 때
+    $("form[action='passwordChange.do']").submit(function(event) {
+        // 폼 제출을 막습니다.
+        event.preventDefault();
+        
+        // 비밀번호를 가져옵니다.
+        var password = $("#userPwd").val();
+
+        // 비밀번호를 비동기적으로 서버로 보냅니다.
+        $.ajax({
+            type: "POST",
+            url: "passwordChange.do",
+            data: {pwd: password},
+            success: function(response) {
+                if (response == "ok") {
+                    // 비밀번호 변경이 완료되었음을 알리는 알림을 표시합니다.
+                    alert("비밀번호 변경이 완료되었습니다.");
+                    location.href = "main.do";
+                } else {
+                    alert("비밀번호 변경이 실패하였습니다.");
+                }
+            }
+        });
+    });
+});
+</script>
+<script type="text/javascript">
+
+$(function(){
+    $("#chk").change(function(){
+        var isChecked = this.checked;
+        if(isChecked){
+            $("#accountDeleteButton").prop("disabled", false).css({'color': 'white', 'background': '#EF5350' });
+    	} else {
+            $("#accountDeleteButton").prop("disabled", true).css({'color': '#696969', 'background': '#DCDCDC', 'border': 'none'});
+        }
+    });
+    
+    $("#success3").change(function(){
+        var isVisible = $(this).is(":visible");
+        if(isVisible){
+            $("#accountDeleteButton").prop("disabled", false).css({'color': 'white', 'background': '#EF5350' });
+    	} else {
+            $("#accountDeleteButton").prop("disabled", true).css({'color': '#696969', 'background': '#DCDCDC', 'border': 'none'});
+        }
+    });
+});
+var inputpwdValue = $("#nowPwd3").val();
+
+//문서 로드 후 실행되는 함수
+$(function() {
+  // 폼 체크 함수 호출하여 버튼 상태 설정
+  checkForm();
+	
+  $("#nowPwd3").on("input", function() {
+      // 현재 비밀번호 값
+      var nowPwd3Value = $(this).val();
+
+      // 비밀번호 값이 변경되었는지 확인
+      if (nowPwd3Value !== inputPwd3Value) {
+          // 변경된 경우: 일치확인 실행, 문구변경
+          pwdCheck();
+          inputPwd3Value = nowPwd3Value; // 이전 값 갱신
+      }
+  });
+
+  // 문서 로딩 시에도 비밀번호 조건 확인 및 버튼 상태 설정
+  checkPassword();
+  checkForm();
+});
+
+function pwdCheck() {
+  $.ajax({
+      url: "pwdchk3.do",
+      type: "post",
+      data: { nowpwd3: $('#nowPwd3').val() },
+      success: function(data) {
+          console.log("success : " + data);
+          if (data == "ok") {
+              $('#fail3').hide(); // 비밀번호 불일치 문구 숨기기
+              $('#success3').show(); // 비밀번호 일치 문구 보이기
+              $('#nowPwd3').focus(); // 비밀번호 입력란에 포커스
+          } else {
+              $('#success3').hide(); // 비밀번호 일치 문구 숨기기
+              $('#fail3').show(); // 비밀번호 불일치 문구 보이기
+              $('#nowPwd3').select(); // 비밀번호 입력란 선택
+          }
+          checkForm(); // 폼 체크 함수 호출
+      },
+      error: function(jqXHR, textStatus, errorThrown) {
+          console.log("error : " + jqXHR + ", " + textStatus + ", " + errorThrown);
+      }
+  });
+}
+</script>
+<script type="text/javascript">
+$(function() {
+  // 폼이 제출되었을 때
+  $("form").submit(function(event) {
+      // 폼 제출을 막습니다.
+      event.preventDefault();
+      
+      // 비밀번호를 가져옵니다.
+      var password = $("#nowPwd3").val();
+
+      // 비밀번호를 비동기적으로 서버로 보냅니다.
+      $.ajax({
+          type: "POST",
+          url: "pwdchk3.do",
+          data: {nowPwd3: password},
+          success: function(response) {
+              if (response == "ok") {
+                  $("#fail3").hide();
+                  $("#success3").show();
+              } else {
+                  $("#success3").hide();
+                  $("#fail3").show();
+              }
+          }
+      });
+  });
+});
+</script>
+<script type="text/javascript">
+function memberDelete(){
+	location.href = "mdel.do";
+}
+</script>
 </head>
 <body id="full" onload="collapse()">
+<div id="header">
+	<c:import url="/WEB-INF/views/common/mainTopbar.jsp"></c:import>
+</div>
+<div id="main">
+<div id="left">
+	<c:import url="/WEB-INF/views/common/commonMenu.jsp"></c:import>
+</div>
+<div id="right">
 <div id="accountSettingZone">
 	<div id="profile">
 		<h3>프로필</h3>
@@ -326,9 +592,16 @@ function pwdCheck() {
 		<details>
 		<summary id="passwordSettingTitle" class="settingTitle"  onclick="collapse(this)">비밀번호 변경하기<img alt="pointer" id="pointer" src="/getdrive/resources/images/pointer.png"></summary>
 			<div markdown="1" class="subzone">
-				<label class="subtitle">현재 비밀번호</label><br>
-				<input type="Password" class="inputText" id="nowPwd" name="nowPwd" placeholder="현재 비밀번호 입력" required><br>
-				<div class="terms" id="fail" style="display: none;color: red">현재 비밀번호와 일치하지 않습니다.</div>
+				<form method="post" action="pwdchk2.do">
+				<label class="subtitle">현재 비밀번호</label>
+				<div id="pwd_div">
+				<input type="Password" class="inputText" id="nowPwd" name=nowPwd placeholder="현재 비밀번호 입력" required><br>
+				<button id="pwdchkbutton" type="submit">비밀번호 확인</button>
+				</div>
+				<div class="pwdchk" id="success" style="display: none; color: #6DBFF2">비밀번호가 일치합니다.</div>
+				<div class="pwdchk" id="fail" style="display: none;color: red">비밀번호가 일치하지 않습니다.</div>
+				</form>
+				<form action="passwordChange.do" method="post" >
 				<label class="subtitle">새 비밀번호</label><br>
 				<p id="comment">비밀번호는 8~20자 영문, 숫자, 특수문자로 입력하세요</p>
 				<input type="Password" class="inputText" name="pwd" id="userPwd" placeholder="새 비밀번호 입력" ><br>
@@ -337,17 +610,18 @@ function pwdCheck() {
              			<div class="terms" id="terms" style="display: none;color: red" >비밀번호 입력 조건과 일치하지 않습니다</div>
                			<div class="terms" id="mismatch" style="display: none; color: red">비밀번호가 일치하지 않습니다</div>
                			<div class="terms" id="match" style="display: none; color: #6DBFF2">비밀번호가 일치합니다.</div>
-             	<button id="passwordSettingButton" class="commonButton" type="submit">비밀번호 변경</button>
+             		<button id="passwordSettingButton" class="commonButton" type="submit">비밀번호 변경</button>
+             	</form>
              	<br>
 			</div>
 		</details>
 	</form>
 	</div>
-	<div id="teamQuit" class="settingZone">
-	<form action="teamQuit.do">
+	<div id="teamQuit" class="settingZone" style="display: none;">
+	<form action="dtuser.do">
 		<details>
 		<summary id="teamQuitTitle" class="settingTitle"  onclick="collapse(this)">팀 탈퇴<img alt="pointer" id="pointer" src="/getdrive/resources/images/pointer.png"></summary>
-			<div markdown="1" class="subzone"> 
+			<div markdown="1" class="subzone" > 
 				<div class="commentzone"> 
 					<li>이 팀을 탈퇴하면 더 이상 이 팀에 남겨진 메시지 또는 파일에 접근할 수 없습니다.</li><br>
 					<li>또한 현재 팀 멤버들은 사용자님이 남긴 메시지 또는 파일에 계속해서 접근할 수 있습니다.</li><br>
@@ -360,12 +634,20 @@ function pwdCheck() {
 	</form>
 	</div>
 	<div id="accountDelete" class="settingZone">
-	<form action="accountDelete.do">
+	<form>
 		<details>
-		<summary id="accuntQuitTitle" class="settingTitle"  onclick="collapse(this)">계정삭제<img alt="pointer" id="pointer" src="/getdrive/resources/images/pointer.png"></summary>
-			<div markdown="1" class="subzone">     
-			<label class="subtitle">현재 비밀번호</label><br>
-				<input type="Password" class="inputText" id="nowPwd" name="nowPwd" placeholder="현재 비밀번호 입력" required><br>
+		<summary id="passwordSettingTitle" class="settingTitle"  onclick="collapse(this)">계정탈퇴하기<img alt="pointer" id="pointer" src="/getdrive/resources/images/pointer.png"></summary>
+			<div markdown="1" class="subzone">
+			<form method="post" action="pwdchk3.do">
+				<label class="subtitle">현재 비밀번호</label>
+				<div id="pwd_div">
+				<input type="Password" class="inputText" id="nowPwd3" name=nowPwd3 placeholder="현재 비밀번호 입력" required><br>
+				<button id="pwdchkbutton" type="submit">비밀번호 확인</button>
+				</div>
+				<div class="pwdchk" id="success3" style="display: none; color: #6DBFF2">비밀번호가 일치합니다.</div>
+				<div class="pwdchk" id="fail3" style="display: none;color: red">비밀번호가 일치하지 않습니다.</div>
+				</form>
+				<form action="mdel.do"  method="post">
 				<div class="commentzone">
 					<li>Classgetdrive 계정을 삭제하면 참여 중인 모든 팀에서 탈퇴됩니다.</li><br>
 					<li>Classgetdrive 내에서 작성한 메시지와 파일은 자동 삭제되지 않으며, 팀 멤버들은 사용자님의 메시지와 파일에 계속해서 접근할 수 있습니다.</li><br>
@@ -377,12 +659,18 @@ function pwdCheck() {
 						<label for="chk"></label>
 					</li>
 					<br>
-				<button id="accountDeleteButton" class="commonButton" type="submit">계정 삭제하기</button>
+				<button onclick="memberDelete();" id="accountDeleteButton" class="commonButton" type="submit" disabled=true>계정 삭제하기</button>
+				</form>
 				<br>
 			</div>
 		</details>
 	</form>
 	</div>
+</div>
+</div>
+</div>
+<div id="footer">
+	<c:import url="/WEB-INF/views/common/mainFooter.jsp"></c:import>
 </div>
 </body>
 </html>

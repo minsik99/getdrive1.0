@@ -5,57 +5,68 @@ public class CommonCL {
 	
 	private int year;
 	private int month;
-	private int calendarTid;
+	private int day;
+	private int tNo;
+	private int accountNo;
 	
-	
-	public CommonCL(int year, int month, int calendarTid) {
-		super();
-		this.year = year;
-		this.month = month;
-		this.calendarTid = calendarTid;
-	}
-
-
 	public CommonCL() {
 		super();
 	}
 
+	public CommonCL(int year, int month, int day, int tNo, int accountNo) {
+		super();
+		this.year = year;
+		this.month = month;
+		this.day = day;
+		this.tNo = tNo;
+		this.accountNo = accountNo;
+	}
 
 	public int getYear() {
 		return year;
 	}
 
+	public int getAccountNo() {
+		return accountNo;
+	}
+
+	public void setAccountNo(int accountNo) {
+		this.accountNo = accountNo;
+	}
 
 	public void setYear(int year) {
 		this.year = year;
 	}
 
-
 	public int getMonth() {
 		return month;
 	}
-
 
 	public void setMonth(int month) {
 		this.month = month;
 	}
 
-
-	public int getCalendarTid() {
-		return calendarTid;
+	public int getDay() {
+		return day;
 	}
 
-
-	public void setCalendarTid(int calendarTid) {
-		this.calendarTid = calendarTid;
+	public void setDay(int day) {
+		this.day = day;
 	}
 
+	public int gettNo() {
+		return tNo;
+	}
+
+	public void settNo(int tNo) {
+		this.tNo = tNo;
+	}
 
 	@Override
 	public String toString() {
-		return "CommonCL [year=" + year + ", month=" + month + ", calendarTid=" + calendarTid + "]";
+		return "CommonCL [year=" + year + ", month=" + month + ", day=" + day + ", tNo=" + tNo + ", accountNo="
+				+ accountNo + "]";
 	}
 
-	
 	
 }

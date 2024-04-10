@@ -1,8 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
+ <c:set var="tNo" value="${param.tNo}" />
+ 
 <!DOCTYPE html>
 <html>
 <head>
@@ -86,12 +87,20 @@ input[type="submit"]:hover, input[type="button"]:hover {
 
 			<div class="board-box_primary">
 
-				<form id="writeForm" action="binsert.do" method="post"
-					enctype="multipart/form-data">
-					<input type="text" name="btId" value=${ tNo }>	<!-- 팀코드 -->
-					<input type="text" name="bCruid" value=${ loginMember.accountNo }>	<!-- 맴버넘버 -->
-					<input type="text" name="bName" value=${ loginMember.name }>	<!-- 맴버이름 -->
-					<input type="text" name="bId" value=${ loginMember.email }>		<!-- 맴버이메일 -->
+				<form id="writeForm" action="binsert.do" method="post" enctype="multipart/form-data">
+					<!-- 맴버에서 값 받아서 넘겨줄 세션 팀코드, 맴버넘버, 맴버이름, 맴버아이디(이메일) -->
+					
+					<!-- 맴버 고유번호랑 게시판 작성자의 고유번호랑 매칭 -->
+					<input type="hidden" name="bCruid" value="${ loginMember.accountNo}">
+					<!-- 맴버 이름이랑 게시판 작성자의 이름이랑 매치 -->
+					<input type="hidden" name="bName" value="${ loginMember.name}">
+					<!-- 멤버 아이디 값이랑 게시판 작성자 아이디랑 매칭 -->
+					<input type="hidden" name="bId" value="${ loginMember.email }">
+			
+					
+					<!-- 팀고유번호 매칭 -->
+					<input type="hidden" name="btId" value="${ tNo }">
+
 					<div class="text_box" class="form-group">
 						<h2 align="center">게시글 작성</h2>
 
@@ -116,15 +125,16 @@ input[type="submit"]:hover, input[type="button"]:hover {
 							</div>
 
 							<c:url var="bl" value="bmain.do">
-								<c:param name="page" value="1" />
+								<c:param name="page" value="1" />		
+								<c:param name="tNo" value="${ tNo }" />					
 							</c:url>
+							
 
 						</div>
 
 						<div id="submit" align="center">
-							<input type="submit" value="글등록하기"> <input type="button"
-								value="목록"
-								onclick="javascript:location.href='${ bl }'; return false;">
+							<input type="submit" value="글등록하기">
+							<input type="button" value="목록" onclick="javascript:location.href='${ bl }'; return false;">
 						</div>
 					</div>
 				</form>

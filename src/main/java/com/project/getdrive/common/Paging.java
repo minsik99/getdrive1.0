@@ -12,17 +12,41 @@ public class Paging implements java.io.Serializable {
 	private int startPage;	//페이지 그룹의 시작값
 	private int endPage;	//페이지 그룹의 끝값
 	private String urlMapping;  //페이지 숫자 클릭시 요청할 url 저장용
+	private int tNo; //세션 처리용 tNo
 	
-	//기본생성자 없음
-	
-	//매개변수 있는 생성자
-	public Paging(int listCount, int currentPage, int limit, String urlMapping) {
+	public Paging(int listCount, int currentPage, int limit, String urlMapping, int tNo) {
+		super();
 		this.listCount = listCount;
-		this.currentPage = currentPage;
 		this.limit = limit;
+		this.currentPage = currentPage;
 		this.urlMapping = urlMapping;
+		this.tNo = tNo;
 	}
 	
+	public Paging(int listCount, int currentPage, int limit, String urlMapping) {
+		super();
+		this.listCount = listCount;
+		this.limit = limit;
+		this.currentPage = currentPage;
+		this.urlMapping = urlMapping;
+	}	
+	
+	
+	public Paging(int startRow, int endRow, int listCount, int limit, int currentPage, int maxPage, int startPage,
+			int endPage, String urlMapping, int tNo) {
+		super();
+		this.startRow = startRow;
+		this.endRow = endRow;
+		this.listCount = listCount;
+		this.limit = limit;
+		this.currentPage = currentPage;
+		this.maxPage = maxPage;
+		this.startPage = startPage;
+		this.endPage = endPage;
+		this.urlMapping = urlMapping;
+		this.tNo = tNo;
+	}
+
 	//페이지 계산 메소드
 	public void calculate() {
 		//총 페이지수 계산 : 
@@ -126,12 +150,20 @@ public class Paging implements java.io.Serializable {
 		return serialVersionUID;
 	}
 
-	//toString overriding
+	public int getTNo() {
+		return tNo;
+	}
+
+	public void setTNo(int tNo) {
+		this.tNo = tNo;
+	}
+
 	@Override
 	public String toString() {
 		return "Paging [startRow=" + startRow + ", endRow=" + endRow + ", listCount=" + listCount + ", limit=" + limit
 				+ ", currentPage=" + currentPage + ", maxPage=" + maxPage + ", startPage=" + startPage + ", endPage="
-				+ endPage + ", urlMapping=" + urlMapping + "]";
-	}	
+				+ endPage + ", urlMapping=" + urlMapping + ", tNo=" + tNo + "]";
+	}
+
 	
 }

@@ -28,12 +28,11 @@ public class SearchContoller {
 	@RequestMapping(value="searchList.do", method= {RequestMethod.POST, RequestMethod.GET}) 
 	public ModelAndView boradSearchTitleMethod(
 		@RequestParam(name="page", required=false) String page,
-		@RequestParam("keyword") String keyword,		
+		@RequestParam("keyword") String keyword,
+		@RequestParam("tNo") int tNo,
 		@RequestParam(name = "limit", required=false) String slimit,		
-		ModelAndView mv ) {
-		
-		logger.info("#### searchList.do ");		
-		
+		ModelAndView mv ) {		
+	
 		// (페이징) 출력할 페이지 지정
 		int currentPage = 1;
 		if(page != null) {
@@ -46,11 +45,16 @@ public class SearchContoller {
 			limit = Integer.parseInt( slimit );
 		}	
 		
+		CommonSch commonSch1 = new CommonSch();	
+		commonSch1.setKeyword(keyword);
+		commonSch1.settNo(tNo);
+		
 		// (페이징) 총 페이지 수 계산을 위한 전체 목록 갯수 조회
-		int listCount = searchService.selectSearchCount(keyword);
+		int listCount = searchService.selectSearchCount(commonSch1);
+
 		
 		// (페이징) 메소드 호출 및 페이징 계산 
-		Paging paging = new Paging(listCount, currentPage, limit, "searchList.do");
+		Paging paging = new Paging(listCount, currentPage, limit, "searchList.do", tNo);
 		paging.calculate();		
  
 		// 한 페이지에 출력할 검색 결과 적용된 목록 조회
@@ -58,6 +62,7 @@ public class SearchContoller {
 		commonSch.setStartRow(paging.getStartRow());
 		commonSch.setEndRow(paging.getEndRow());		
 		commonSch.setKeyword(keyword);
+		commonSch.settNo(tNo);
 				
 		ArrayList<Search> list = searchService.selectSearch(commonSch);
 		
@@ -67,7 +72,8 @@ public class SearchContoller {
 			mv.addObject("paging", paging);
 			mv.addObject("currentPage", currentPage);
 			mv.addObject("limit", limit);
-			mv.addObject("keyword", keyword);	
+			mv.addObject("keyword", keyword);
+			mv.addObject("listCount", listCount);
 			
 			mv.setViewName("search/searchList");
 		} else {

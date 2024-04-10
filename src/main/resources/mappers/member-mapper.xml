@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE mapper PUBLIC
 "-//mybatis.org//DTD Mapper 3.0//EN"
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+"http://www.mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="memberMapper">
 
 	<resultMap id="resultMember" type="Member">
@@ -34,6 +34,11 @@
 		where M_EMAIL = #{ email }
 	</select>
 	
+	<select id="seletAccountNoEmail" parameterType="string" resultType="_int">
+		select * from TB_MEMBER 
+		where M_EMAIL = #{ email }
+	</select>	
+	
 	<!-- 회원 가입 쿼리 -->
 	<insert id="register" parameterType="Member">
 		INSERT INTO TB_MEMBER(M_NO, M_NAME, M_EMAIL, M_PASSWD, M_EDATE, M_ODATE)
@@ -63,8 +68,38 @@
 		INSERT INTO TB_MEMBER(M_NO, M_NAME, M_EMAIL, M_PASSWD, M_EDATE, M_ODATE)
 		VALUES(M_SEQ.NEXTVAL, #{ name }, #{ email }, NULL , SYSDATE, NULL)
 	</insert>
-
+	
+	<!-- 비밀번호 일치 확인 쿼리 -->
+	<select id="selectCheckPwd" parameterType="String" resultMap="resultMember">
+		select count(M_PASSWD) from TB_MEMBER where M_PASSWD = #{ pwd }
+	</select>
+	
+	<!-- 회원정보 수정 업데이트 쿼리 -->
+	<update id="updateMember" parameterType="Member">
+		update TB_MEMBER 
+		set M_PASSWD = #{ pwd }
+		where M_NO = #{ accountNo }
+	</update>
+	
+	<!-- 탈퇴일 넣는 쿼리 -->
+	<!-- <update id="deleteMember" parameterType="Member">
+		update TB_MEMBER 
+		set M_ODATE = SYSDATE
+		where M_EMAIL = #{ email } 
+	</update> -->
+	
+	<!-- 계정삭제쿼리 -->
+	<delete id="deleteMember" parameterType="string">
+		delete from TB_MEMBER where M_EMAIL = #{ email }
+	</delete>
+	
+	<!-- 임시비밀번호발급 쿼리 -->
+	<update id="updatePw" >
+		update TB_MEMBER set M_PASSWD = #{pwd} where M_EMAIL = #{email}
+	</update>
 </mapper>
+
+
 
 
 

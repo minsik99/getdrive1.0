@@ -151,12 +151,12 @@ $(function(){
 				// console.log(json.list[i].tno + ", ${ tNo }, ${ tno }");
 				
 				if (json.list[i].teamno == '${ tNo }' ) {
-					values += "<option value='teammain.do?tNo="+ json.list[i].teamno
+					values += "<option style='height:30px;' value='teammain.do?tNo="+ json.list[i].teamno
 					+"' selected>"
 					+ decodeURIComponent(json.list[i].teamname).replace(/\+/gi, " ") 
 					+ "</option>";					
 				} else {
-					values += "<option value='teammain.do?tNo="+ json.list[i].teamno
+					values += "<option style='height:30px;' value='teammain.do?tNo="+ json.list[i].teamno
 					+"'>"
 					+ decodeURIComponent(json.list[i].teamname).replace(/\+/gi, " ") 
 					+ "</option>";					
@@ -181,7 +181,7 @@ $(function(){
 	<!-- 팀 목록  -->
 	<b>My Team List</b>
 	<div style="width:100%; align:center">		
-		<select id="teamSelect" onchange="window.open(value,'_self');">
+		<select id="teamSelect" onchange="window.open(value,'_self');" style="width: 150px; height: 30px; background-color: #FFFFFF; color: black; border: 2px solid #6DBFF2; padding: 5px; border-radius: 5px;" >
 		</select>	
 	</div>	
 	<hr>	

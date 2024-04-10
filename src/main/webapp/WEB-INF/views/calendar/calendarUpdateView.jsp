@@ -95,85 +95,109 @@ $(function() {
   });
 </script>
 <body>
-<h1 align="center">수정</h1>
+<div id="container">
 
-<form action="clupdate.do" method="post">
-<input type="hidden" name="calendarCRUid" value =${ loginMember.accountNo }>
-<input type="hidden" name="calendarTid" value =${ tNo }>
-<input type="hidden" name="calendarNo" value="${ calendar.calendarNo }">
-<input type="hidden" name="year"  id ="year" value="${ calendar.year }" >
-<input type="hidden" name="month" id="month" value= "${ calendar.month }">
-<input type="hidden" name="day" id="day" value= "${ calendar.day }">
+ <div id="jb-header">      
+<c:import url="/WEB-INF/views/common/teamtop.jsp" />        
+ </div>
+ 
+ <div id="sidebar">
+<c:import url="/WEB-INF/views/common/teamleft.jsp" />
+ </div>
+ 
+ <div id="content">
+		
+		
+		
+		<h1 align="center">수정</h1>
+		
+		<form action="clupdate.do" method="post">
+		<input type="hidden" name="calendarCRUid" value =${ loginMember.accountNo }>
+		<input type="hidden" name="calendarTid" value =${ tNo }>
+		<input type="hidden" name="calendarNo" value="${ calendar.calendarNo }">
+		<input type="hidden" name="year"  id ="year" value="${ calendar.year }" >
+		<input type="hidden" name="month" id="month" value= "${ calendar.month }">
+		<input type="hidden" name="day" id="day" value= "${ calendar.day }">
+		<input type="hidden" name="calendarCheck" value="${ calendar.calendarCheck }">
+		
+		
+		<table align="center" width="500" border="1" cellspacing="0" cellpadding="5">
+		
+			<tr> 
+				<th style="background-color: #6DBFF2;">날짜</th>
+				<td style="background-color: #6DBFF2;">
+				<input type="date" name="calendarDate" id="calendarDate" value="${ calendar.calendarDate }">
+				</td>
+			</tr>
+			
+			<tr><!-- 숫자는 num -->
+				<th style="background-color: #6DBFF2;">시작시간</th>
+				<td style="background-color: #6DBFF2;">
+				<input type="number" name="calendarStart" value="${ calendar.calendarStart }" min="0" max="24"></td>
+			</tr>
+			
+			<tr>
+				<th style="background-color: #6DBFF2;">종료시간</th>
+				<td style="background-color: #6DBFF2;">
+				 <input type="number" name="calendarEnd" value="${ calendar.calendarEnd }" min="0" max="24"> </td>
+			</tr>
+<!-- 			
+			<tr>
+			<td colspan="2" align="center" style="background-color: #6DBFF2;" ><a href="javascript:void(0);" style="color: #000000;" onclick="openLayerWindow();">장소설정</a>
+				<script>
+				function openLayerWindow() {
+				  window.open("${pageContext.servletContext.contextPath}/clmap.do", "지도창", "width=400, height=400, left=100, top=100");
+				}
+				</script></td>
+			 </tr>
+ -->			
+			<tr>
+				<th style="background-color: #6DBFF2;">제 목</th>
+				<td>
+				 <input type="text" name="calendarTitle" size="50" value="${ calendar.calendarTitle }"></td>
+			</tr>
+			
+			<tr>
+				<th style="background-color: #6DBFF2;">작성자</th>
+				<td>
+					<input type="text" name="calendarCRUid" readonly 
+					value="${ sessionScope.loginMember.name }">
+				</td>
+			</tr>
+			
+			<tr>
+		   	 <th style="background-color: #6DBFF2;">내 용</th>
+		   	 <td>
+		        <textarea name="calendarContent" style="width: 400px; height: 200px; resize: none;">${ calendar.calendarContent }</textarea>
+		   	 </td>
+			</tr>
+		<!-- 
+		<tr>
+			<th colspan="2" style="color: black;">
+				<input type="radio" name="calendarCheck" value="Y" checked>공개 &nbsp; 
+				<input type="radio" name="calendarCheck" value="N">비공개</th></tr>
+		 -->
+			<tr>
+				<th colspan="2">
+					<input type="submit" value="수정하기" style="color: white; background-color: #6DBFF2"> &nbsp; 
+					<input type="reset" value="수정취소" onclick="requestupdatecancel(); return false;" style="color: white; background-color: #6DBFF2"> &nbsp;
+					<input type="button" value="이전페이지로 이동" 
+					onclick="javascript:history.go(-1); return false;" style="color: white; background-color: #6DBFF2"> &nbsp;
+					<input type="button" value="달력" 
+					onclick="javascript:location.href='calendar.do?tNo=${ tNo }';  return false;" style="color: white; background-color: #6DBFF2">
+				</th>		
+			</tr>
+		</table>
+		</form>	
+		
 
-
-
-<table align="center" width="500" border="1" cellspacing="0" cellpadding="5">
-
-	<tr> 
-		<th style="background-color: #6DBFF2;">날짜</th>
-		<td style="background-color: #6DBFF2;">
-		<input type="date" name="calendarDate" id="calendarDate" value="${ calendar.calendarDate }">
-		</td>
-	</tr>
+	</div>
 	
-	<tr><!-- 숫자는 num -->
-		<th style="background-color: #6DBFF2;">시작시간</th>
-		<td style="background-color: #6DBFF2;">
-		<input type="number" name="calendarStart" value="${ calendar.calendarStart }" min="0" max="24"></td>
-	</tr>
-	
-	<tr>
-		<th style="background-color: #6DBFF2;">종료시간</th>
-		<td style="background-color: #6DBFF2;">
-		 <input type="number" name="calendarEnd" value="${ calendar.calendarEnd }" min="0" max="24"> </td>
-	</tr>
-	
-	<tr>
-	<td colspan="2" align="center" style="background-color: #6DBFF2;" ><a href="javascript:void(0);" style="color: #000000;" onclick="openLayerWindow();">장소설정</a>
-		<script>
-		function openLayerWindow() {
-		  window.open("${pageContext.servletContext.contextPath}/clmap.do", "지도창", "width=400, height=400, left=100, top=100");
-		}
-		</script></td>
-	 </tr>
-	
-	<tr>
-		<th style="background-color: #6DBFF2;">제 목</th>
-		<td>
-		 <input type="text" name="calendarTitle" size="50" value="${ calendar.calendarTitle }"></td>
-	</tr>
-	
-	<tr>
-		<th style="background-color: #6DBFF2;">작성자</th>
-		<td>
-			<input type="text" name="calendarCRUid" readonly 
-			value="${ sessionScope.loginMember.name }">
-		</td>
-	</tr>
-	
-	<tr>
-   	 <th style="background-color: #6DBFF2;">내 용</th>
-   	 <td>
-        <textarea name="calendarContent" style="width: 400px; height: 200px; resize: none;">${ calendar.calendarContent }</textarea>
-   	 </td>
-	</tr>
+	<div id="footer">
+    <c:import url="/WEB-INF/views/common/teamfooter.jsp" />
+  </div>
 
-<tr>
-	<th colspan="2" style="color: black;">
-		<input type="radio" name="calendarCheck" value="Y" checked>공개 &nbsp; 
-		<input type="radio" name="calendarCheck" value="N">비공개</th></tr>
-
-	<tr>
-		<th colspan="2">
-			<input type="submit" value="수정하기" style="color: white; background-color: #6DBFF2"> &nbsp; 
-			<input type="reset" value="수정취소" onclick="requestupdatecancel(); return false;" style="color: white; background-color: #6DBFF2"> &nbsp;
-			<input type="button" value="이전페이지로 이동" 
-			onclick="javascript:history.go(-1); return false;" style="color: white; background-color: #6DBFF2"> &nbsp;
-			<input type="button" value="달력" 
-			onclick="javascript:location.href='calendar.do';  return false;" style="color: white; background-color: #6DBFF2">
-		</th>		
-	</tr>
-</table>
-</form>	
+</div>
+	
 </body>
 </html>	

@@ -38,23 +38,34 @@ public class BoardController {
 		return "board/boardWrite";
 	}
 	
-	// 원글 게시글 수정 페이지 불러오기 메서드
+	// 원글 게시글 수정 페이지로 이동 처리용
 	@RequestMapping("bupdate.do")
-	public String boardUpdateMethod(@RequestParam("bNo") int bNo, Model model) {
+	public String boardUpdateMethod(
+			@RequestParam("bNo") int bNo,
+			@RequestParam("page") int currentPage, Model model) {
 		
+		//수정 페이지에 전달해서 출력할 board 정보 조회함
 		Board board = boardService.selectBoard(bNo);
-		model.addAttribute("board", board);
 		
+		if(board != null) {
+			model.addAttribute("board", board);
+			model.addAttribute("page", currentPage);
+			
 			return "board/boardUpdate";
+		}else {
+			model.addAttribute("message", bNo + "번 게시글 페이지 이동 실패");
+			return "common/error";
+		}
 	}
 	
-	// 원글 게시글 수정 페이지 
+	// 원글 게시글 수정처리용
 	@RequestMapping(value="boriginupdate.do", method=RequestMethod.POST)
 	public String boardOriginUpdate(
 			Board board, HttpServletRequest request,
 			@RequestParam(name="page", required=false) String page,
 			@RequestParam(name="deleteFlag", required=false) String delFlag,
-			@RequestParam(name="upfile", required=false) MultipartFile mfile, Model model) {
+			@RequestParam(name="upfile", required=false) MultipartFile mfile,
+			Model model) {
 		logger.info("boriginupdate.do: " + board);
 		
 		int currentPage = 1;
@@ -98,7 +109,7 @@ public class BoardController {
 				} catch (Exception e) {
 					e.printStackTrace()	;
 					model.addAttribute("message", "첨부 파일 저장 실패!");
-					return "common/error";
+					return "board/boardMain";
 				}
 			} //파일명 바꾸기
 			//board에 첨부파일 정보 저장 처리
@@ -111,23 +122,19 @@ public class BoardController {
 			model.addAttribute("bNo", board.getbNo());
 			model.addAttribute("page", currentPage);
 			
-			return"redirect:bdetail.do";
+			return"redirect:bdetail.do?tNo=" + board.getBtId();
 			
 		}else {
 			model.addAttribute("message", board.getbNo() + "번 글 수정 실패입니다.");
-			return "common/error";
+			return "redirect:bdetail.do";
 		}
 	}
 	
 	//새 게시글 등록 페이지 요청 처리용 (첨부파일 업로드 기능 추가)
 	@RequestMapping(value="binsert.do", method=RequestMethod.POST)
-	public String boardInsertMethod(
-		Board board, 
-		Model model, 
-		HttpServletRequest request,
-		@RequestParam(name="upfile", required=false) MultipartFile mfile) {
-		
-		logger.info("##### binsert.do : " + board);
+	public String boardInsertMethod(Board board, Model model, HttpServletRequest request,
+			@RequestParam(name="upfile", required=false) MultipartFile mfile) {
+		logger.info("binsert.do : " + board);
 		
 		//게시글 첨부파일 저장용 폴더 지정 : 톰캣(WAS)이 구동하고 있는 애플리케이션 프로젝트 안의 폴더 지정
 		//el 절대경로 표기인 ${ pageContext.servletContext.contextPage } 와 같은 의미의 코드임
@@ -162,8 +169,9 @@ public class BoardController {
 		}//첨부파일 있을 때
 		
 		if(boardService.insertOriginBoard(board) > 0) {
+			
 			//게시글 등록 성공시 목록 보기 페이지로 이동
-			return "redirect:bmain.do";
+			return "redirect:bmain.do?tNo=" + board.getBtId();
 		}else {
 			model.addAttribute("message", "새 게시글 등록 실패!!!!");
 			return "common/error";
@@ -176,6 +184,7 @@ public class BoardController {
 	public String boardMain(
 			@RequestParam(name="page", required=false) String page,
 			@RequestParam(name="limit", required=false) String slimit,
+			@RequestParam("tNo") int btId,
 			 Model model) {
 		
 		int currentPage = 1;
@@ -190,12 +199,14 @@ public class BoardController {
 		}
 		
 		//총 페이지수 계산을 위해 전체 갯수 조회해 옴
-		int listCount = boardService.selectListCount();
+		int listCount = boardService.selectListCount(btId);
+		
 		//페이징 계산 처리하고 실행하기
-		Paging paging = new Paging(listCount, currentPage, limit, "bmain.do");
+		Paging paging = new Paging(listCount, currentPage, limit, "bmain.do", btId);
 		paging.calculate();
 		paging.getStartRow();
 		paging.getEndRow();
+		
 		//출력할 페이지에 대한 목록 조회
 		ArrayList<Board> list= boardService.selectList(paging);
 			
@@ -206,6 +217,7 @@ public class BoardController {
 			model.addAttribute("paging", paging);
 			model.addAttribute("currentPage", currentPage);
 			model.addAttribute("limit", limit);
+			model.addAttribute("tNo", btId);
 			
 			return "board/boardMain";
 		}else {
@@ -221,6 +233,7 @@ public class BoardController {
 		@RequestParam("keyword") String keyword,
 		@RequestParam(name="limit", required=false) String slimit,
 		@RequestParam(name="page", required=false) String page,
+		@RequestParam("tNo") int btId,
 		ModelAndView mv) {
 		
 		//검색 결과에 대한 페이징 처리를 위한 페이지 지정
@@ -238,7 +251,7 @@ public class BoardController {
 		int listCount = boardService.selectSearchTitleCount(keyword);
 		
 		//뷰 페이지에서 사용할 페이징 관련 값들 계산 처리
-		Paging paging= new Paging(listCount, currentPage, limit, "bsearchTitle.do");
+		Paging paging= new Paging(listCount, currentPage, limit, "bsearchTitle.do", btId);
 		paging.calculate();
 		
 		//한 페이지에 출력할 검색 결과 적용된 목록 조회
@@ -257,11 +270,12 @@ public class BoardController {
 			mv.addObject("action", action);
 			mv.addObject("keyword", keyword);
 			mv.addObject("limit", limit);
+			mv.addObject("tNo", btId);
 			
 			mv.setViewName("board/boardMain");
 		}else {
 			mv.addObject("message", action + "에 대한 " + keyword + "검색 결과가 존재하지 않습니다"	);
-			mv.setViewName("common/error");
+			mv.setViewName("board/boardMain");
 		}
 		return mv;
 	}
@@ -273,6 +287,7 @@ public class BoardController {
 			@RequestParam("keyword") String keyword,
 			@RequestParam(name="limit", required=false) String slimit,
 			@RequestParam(name="page", required=false) String page,
+			@RequestParam("tNo") int btId,
 			ModelAndView mv) {
 		
 		//검색 결과에 대한 페이징 처리를 위한 페이지 지정
@@ -280,7 +295,7 @@ public class BoardController {
 		if(page != null) {
 			currentPage = Integer.parseInt(page);
 		}
-		
+
 		int limit = 5;
 		if(slimit != null) {
 			limit = Integer.parseInt(slimit);
@@ -290,7 +305,7 @@ public class BoardController {
 		int listCount = boardService.selectSearchWriterCount(keyword);
 		
 		//뷰 페이지에 사용팔 페이징 관련 값들 계산 처리함
-		Paging paging = new Paging(listCount, currentPage, limit, "bsearchWriter.do");
+		Paging paging = new Paging(listCount, currentPage, limit, "bsearchWriter.do", btId);
 		paging.calculate();
 		
 		//한 페이지에 출력할 검색 결과 적용된 목록 조회
@@ -310,24 +325,26 @@ public class BoardController {
 			mv.addObject("action", action);
 			mv.addObject("keyword", keyword);
 			mv.addObject("limit", limit);
+			mv.addObject("tNo", btId);
 			
 			mv.setViewName("board/boardMain");
 		}else {
 			mv.addObject("message",
 					action + "에 대한 " + keyword + "검색 결고가 존재하지 않습니다.");
-			mv.setViewName("common/error");
+			mv.setViewName("board/boardMain");
 		}
 		
 		return mv;
 	}
 	
-	//게시글 작성날짜로 검색
+	//게시글 등록날짜로 검색
 	@RequestMapping(value="bsearchDate.do", method= {RequestMethod.POST, RequestMethod.GET})
 	public ModelAndView boardSearchDateMethod(
 			SearchDate searchDate,
 			@RequestParam("action") String action,
 			@RequestParam(name="limit", required=false) String slimit,
 			@RequestParam(name="page", required=false) String page,
+			@RequestParam("tNo") int btId,
 			ModelAndView	 mv) {
 		
 		//검색결과에 대한 페이징 처리를 위한 페이지 지정
@@ -345,7 +362,7 @@ public class BoardController {
 		int listCount = boardService.selectSearchDateCount(searchDate);
 		
 		//뷰 페이지에 사용할 페이징 관련 값들 계산 처리
-		Paging paging = new Paging(listCount, currentPage, limit, "bsearchDate.do");
+		Paging paging = new Paging(listCount, currentPage, limit, "bsearchDate.do", btId);
 		paging.calculate();
 		
 		//한 페이지에 출력할 검색 결과 적용된 목록 조회
@@ -354,6 +371,7 @@ public class BoardController {
 		search.setEndRow(paging.getEndRow());
 		search.setBegin(searchDate.getBegin());
 		search.setEnd(searchDate.getEnd());
+		search.settNo(btId);
 		
 		logger.info("bsearchDate.do" + searchDate);
 		
@@ -366,6 +384,7 @@ public class BoardController {
 			mv.addObject("currentPage", currentPage);
 			mv.addObject("action", action);
 			mv.addObject("limit", limit);
+			mv.addObject("tNo", btId);
 			mv.addObject("begin", searchDate.getBegin());
 			mv.addObject("end", searchDate.getEnd());
 			
@@ -374,7 +393,7 @@ public class BoardController {
 			mv.addObject("message",
 					action + "에 대한" + searchDate.getBegin() + "부터" + searchDate.getEnd() +
 					"기간 사이에 등록된 게시글 검색 결과가 존재하지 않습니다.");
-			mv.setViewName("common/error");
+			mv.setViewName("board/boardMain");
 		}
 		
 		return mv;
@@ -408,12 +427,16 @@ public class BoardController {
 	}
 	
 	//원글 삭제하기 페이지
-	@RequestMapping("bdelete.do")
-	public String boardDeleteMethod(Board board, Model model, HttpServletRequest request) {
-		
+	@RequestMapping(value="bdelete.do", method= {RequestMethod.POST, RequestMethod.GET})
+	public String boardDeleteMethod(
+			Board board, 
+			Model model, 
+			HttpServletRequest request,
+			@RequestParam("btId") String tNo) {
+				
 		if(boardService.deleteBoard(board) > 0) {
 			
-			return"redirect:bmain.do";
+			return"redirect:bmain.do?tNo=" + tNo;
 		}else {
 			model.addAttribute("message", board.getbNo() + "번 게시글 삭제 실패입니다.");
 			return "common/error";

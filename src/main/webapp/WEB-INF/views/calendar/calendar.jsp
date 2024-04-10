@@ -99,7 +99,7 @@
 				values = "";			
 				for(var i in json.list){
 																//상세보기
-					values = "&middot; <a href='cldetail.do?clnum=" + json.list[i].clnum 
+					values = "&middot; <a href='cldetail.do?tno=<%=tNo%>&year=<%=year%>&month=<%=month+1%>&clnum=" + json.list[i].clnum 
 							+ "''>" + decodeURIComponent(json.list[i].cltitle).replace(/\+/gi, " ") 
 							+ "</a><br>";
 		
@@ -133,13 +133,13 @@
 <body>				
 <div id="container">
 
- <div id="jb-header">      
-<c:import url="/WEB-INF/views/common/teamtop.jsp" />        
- </div>
+<div id="jb-header">      
+	<c:import url="/WEB-INF/views/common/teamtop.jsp" />        
+</div>
  
- <div id="sidebar">
-<c:import url="/WEB-INF/views/common/teamleft.jsp" />
- </div>
+<div id="sidebar">
+	<c:import url="/WEB-INF/views/common/teamleft.jsp" />
+</div>
  
  <div id="content">
 
@@ -148,16 +148,16 @@
 			<div class="container mt-3">
 				<div class="mt-3 mb-3 p-3 d-flex justify-content-between">
 					<span> <a class="btn btn-outline-dark btn-sm"
-						href="calendar.do?year=<%=year%>&month=<%=month-1%>">[이전달]</a>
+						href="calendar.do?tNo=<%=tNo%>&year=<%=year%>&month=<%=month-1%>">[이전달]</a>
 					</span> <span class="fw-bold fs-3"><%=year%>년 <%=month+1%>월</span> <span>
 						<a class="btn btn-outline-dark btn-sm"
-						href="calendar.do?year=<%=year%>&month=<%=month+1%>"> [다음달] </a>
+						href="calendar.do?tNo=<%=tNo%>&year=<%=year%>&month=<%=month+1%>"> [다음달] </a>
 					</span>
 				</div>
 				<div>
 							    
 					<table class="table text-left table-bordered">
-						<tr class="table-light text-center fs-5 tr-h">
+						<tr class="table-light text-center fs-5 tr-h" style="cursor:default;">
 							<th class="text-danger">일</th>
 							<th>월</th>
 							<th>화</th>
@@ -175,18 +175,18 @@
 										if(i>startMoveCnt && i<=startMoveCnt+lastDate) {
 											if(i%7 == 0) { //토요일 파란날 표시
 									%>
-												<span class="text-primary" onclick="javascript:location.href='clinsertform.do?year=<%=year%>&month=<%=month+1%>&day=<%=i-startMoveCnt%>';  return false;"><%=i-startMoveCnt%></span>
+												<span class="text-primary" onclick="javascript:location.href='clinsertform.do?tNo=<%=tNo%>&year=<%=year%>&month=<%=month+1%>&day=<%=i-startMoveCnt%>';  return false;"><%=i-startMoveCnt%></span>
 												<div id="clnum<%=i-startMoveCnt%>"   style="border: 1px solid white;"></div>
 									<%			
 											} else if(i%7 == 1) { //일요일 빨간날 표시
 									%>
-												<span class="text-danger" onclick="javascript:location.href='clinsertform.do?year=<%=year%>&month=<%=month+1%>&day=<%=i-startMoveCnt%>';  return false;"><%=i-startMoveCnt%></span>
+												<span class="text-danger" onclick="javascript:location.href='clinsertform.do?tNo=<%=tNo%>&year=<%=year%>&month=<%=month+1%>&day=<%=i-startMoveCnt%>';  return false;"><%=i-startMoveCnt%></span>
 												<div id="clnum<%=i-startMoveCnt%>"   style="border: 1px solid white;"></div>
 									<%																
 											}else { //평일 표시			
 												
 									%>
-									<span class="clickable-span" onclick="javascript:location.href='clinsertform.do?year=<%=year%>&month=<%=month+1%>&day=<%=i-startMoveCnt%>';  return false;"><%=i-startMoveCnt%></span>
+									<span class="clickable-span" onclick="javascript:location.href='clinsertform.do?tNo=<%=tNo%>&year=<%=year%>&month=<%=month+1%>&day=<%=i-startMoveCnt%>';  return false;"><%=i-startMoveCnt%></span>
 										
 												
 												<div id="clnum<%=i-startMoveCnt%>"   style="border: 1px solid white;"></div>
@@ -214,7 +214,7 @@
 					</table>
 				</div>
 			</div>
-			</div>
+	</div>
 	
 	<div id="footer">
     <c:import url="/WEB-INF/views/common/teamfooter.jsp" />
