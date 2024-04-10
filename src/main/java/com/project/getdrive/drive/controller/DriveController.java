@@ -83,6 +83,7 @@ public class DriveController {
 		if(result > 0) {
 			// 네이버 버킷에 담을 고유 이름
 			aws.createBucket("team"+tNo+"drive-"+count);
+			aws.makeBucketPublic("team"+tNo+"drive-"+count);
 			return "redirect:dmain.do";
 		} else {
 			model.addAttribute("message", "드라이브 생성 실패");

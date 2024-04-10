@@ -110,7 +110,7 @@
 <script type="text/javascript" src="/getdrive/resources/js/jquery-3.7.0.min.js"></script>
 <script type="text/javascript">
     $(function(){
-        
+
          // 새 드라이브 생성 모달창
         $('#add').click(function() {
             $('#modalContainer').removeClass('hidden');
@@ -131,6 +131,7 @@
         	history.back();
         });
     });
+    
     
 </script>
 </head>
