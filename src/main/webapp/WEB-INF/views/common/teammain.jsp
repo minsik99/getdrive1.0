@@ -7,7 +7,7 @@
 <html lang="ko">
 <head> 
 <title> teammain </title>
-<body>
+<body id="teamMainBody">
 
 <div id="container">
 
