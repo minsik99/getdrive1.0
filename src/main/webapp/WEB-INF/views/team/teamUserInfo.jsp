@@ -5,21 +5,47 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title></title>
+<title>teamUserInfo</title>
 <style>
-	header {
-		text-align: center;
-	}
+
+#full {
+	width: 100%;
+	height: 100%;
+}
+
+#header {
+	width: 100%;
+	height: 100px;
+}
+
+header {
+	border:0px solid;	
+	text-align: center;
+}
 	
-	section {
-		display: flex;
-	}
+section {
+	border:0x solid;	
+	align:center;
+	display: flex;
+	text-align: center;
+	
+	justify-content: center; /* 수평 가운데 정렬 */
+	/* align-items: center; /* 수직 가운데 정렬 */ */
+}
 	
 	aside {
-		margin-top: 6rem;
-		width: 10vw;
+		border:0px solid;
+		margin-top: 10px;
+		width: 250px;
 		text-align: center;
 	}
+	
+.wrapper {
+	border:0px solid;
+	margin-top: 10px;
+	width: 700px;
+	text-algin: center;
+}		
 	
 	a {
 		text-decoration: none;
@@ -50,12 +76,15 @@
 	}
 	
 	.wrapper {
-		width: 90vw;
+		border:0px solid;
+		margin-top: 10px;
+		width: 700px;
 		text-algin: center;
 	}
 	
 	.section_header {
 		display: flex;
+		display: flex;		
 		justify-content: space-between;
 	}
 	
@@ -137,7 +166,7 @@
 	    			   tno: tNo},
 	    		success: function(){
 	    			alert("성공적으로 팀원이 추가되었습니다.");
-	    			location.href = "tinfo.do?tNo=" + tNo;
+	    			location.href = "tuinfo.do?tNo=" + tNo;
 	    		},
 	    		error: function(errorData){
 	    			console.log("Error : " + errorData);
@@ -164,77 +193,93 @@
 </script>
 </head>
 <body>
-<c:import url="/WEB-INF/views/common/mainTopbar.jsp" />
-<hr>
-<!-- 헤더 영역 -->
-<header>
-	<h2>${ team.tName }</h2>
-</header>
-<hr>
-<section>
-	<!-- 사이드 메뉴 -->
-	<aside>
-		<div id="member_btn">
-			<span>멤버 정보</span>
-		</div>
-		<div id="team_btn">
-			<span>팀 탈퇴</span>
-		</div>
-	</aside>
-	<div class="wrapper">
-		<h2>멤버 정보</h2>
-		<div class="section_header">
-			<div class="span"><span>참여 중인 멤버</span></div>
-			<div class="search">
-				<input name="tuName" placeholder="멤버 이름">
-				<img>
-			</div>
-		</div>
-		<hr>
-		<table>
-		<c:forEach items="${ teamUser }" var="tulist">
-			<tr>
-				<td>
-					<div class="member">
-						<div class="profile">
-							<span>${ tulist.tuEmail }</span>&nbsp;
-						</div>
-						<!-- 팀장이라면 팀장으로 팀원이라면 팀원으로 출력되고, 버튼 노출 -->
-						<c:if test="${ tulist.tuLeader eq 'Y' }">
-							<div class="auth">
-								<span>팀장</span>
-							</div>
-						</c:if>
-						<c:if test="${ tulist.tuLeader eq 'N' }">
-							<div class="auth">
-								<span>팀원</span>
-							</div>
-						</c:if>
-					</div>
-				</td>
-			</tr>
-		</c:forEach>
-			<tr>
-				<td>
-					<div id="invite"><span>팀원 추가</span></div>
-				</td>
-			</tr>
-		</table>
+
+<div id="full">
+	<div id="header">
+		<c:import url="/WEB-INF/views/common/mainTopbar.jsp"></c:import>
 	</div>
-</section>
-<!-- 초대 모달 창 -->
-<div id="tuInvite" class="hidden">
-  <div id="tuInviteModal">
-    <h3>팀원 초대</h3>
-    <p></p>
-    <div>
-    	<p>이메일 발송</p>
-    	<input type="email" id="email">
-    	<input type="hidden" id="tno" value="${ team.tNo }"><br>
-    	<button id="tuInviteCloseButton">취소</button>
-    	<button id="inviteUserBtn">확인</button>
-    </div>
-  </div>
-</div>
+	
+			
+		<hr>
+		
+		<!-- 헤더 영역 -->
+		<header>
+			<h2>${ team.tName }</h2>
+		</header>
+		<hr>
+		
+		<section>
+			<!-- 사이드 메뉴 -->
+			<aside>
+				<div id="member_btn">
+					<span>멤버 정보</span>
+				</div>
+				<div id="team_btn">
+					<span>팀 탈퇴</span>
+				</div>
+			</aside>
+			
+			<div class="wrapper">
+				<h2>멤버 정보</h2>
+				<div class="section_header">
+					<div class="span"><span>참여 중인 멤버</span></div>
+				</div>
+				<hr>
+				<table>
+				<c:forEach items="${ teamUser }" var="tulist">
+					<tr>
+						<td>
+							<div class="member">
+								<div class="profile">
+									<span>${ tulist.tuEmail }</span>&nbsp;
+								</div>
+								<!-- 팀장이라면 팀장으로 팀원이라면 팀원으로 출력되고, 버튼 노출 -->
+								<c:if test="${ tulist.tuLeader eq 'Y' }">
+									<div class="auth">
+										<span>팀장</span>
+									</div>
+								</c:if>
+								<c:if test="${ tulist.tuLeader eq 'N' }">
+									<div class="auth">
+										<span>팀원</span>
+									</div>
+								</c:if>
+							</div>
+						</td>
+					</tr>
+					<tr><td><hr></td></tr>
+				</c:forEach>
+					<tr>
+						<td>
+							<div id="invite"><span>팀원 추가</span></div>
+						</td>
+					</tr>
+				</table>
+			</div>
+		</section>
+		<!-- 초대 모달 창 -->
+		<div id="tuInvite" class="hidden">
+		  <div id="tuInviteModal">
+		    <h3>팀원 초대</h3>
+		    <p></p>
+		    <div>
+		    	<p>이메일 발송</p>
+		    	<input type="email" id="email">
+		    	<input type="hidden" id="tno" value="${ team.tNo }"><br>
+		    	<button id="tuInviteCloseButton">취소</button>
+		    	<button id="inviteUserBtn">확인</button>
+		    </div>
+		  </div>
+		</div>
+	
+	<br><bR>
+	<hr>
+	
+	<div id="footer">
+		<c:import url="/WEB-INF/views/common/mainFooter.jsp"></c:import>
+	</div>	
+	
+</div>		
+		
 </body>
 </html>

@@ -19,10 +19,12 @@
 		<typeAlias type="com.project.getdrive.team.common.TeamCreator" alias="TeamCreator" />
 		<!-- 팀 유저 -->
 		<typeAlias type="com.project.getdrive.teamuser.model.vo.TeamUser" alias="TeamUser" />
+		<typeAlias type="com.project.getdrive.team.common.Invit" alias="Invit" />	
 		<!-- 통합 검색 -->
 		<typeAlias type="com.project.getdrive.search.model.vo.Search" alias="Search" />	
 		<typeAlias type="com.project.getdrive.common.CommonSch" alias="CommonSch" />	
 		<typeAlias type="com.project.getdrive.common.Paging" alias="Paging" />	
+		<typeAlias type="com.project.getdrive.common.AlarmSch" alias="AlarmSch" />
 		<!-- 드라이브 -->
 		<typeAlias type="com.project.getdrive.drive.model.vo.Drive" alias="Drive" />
 		<!-- 폴더 -->

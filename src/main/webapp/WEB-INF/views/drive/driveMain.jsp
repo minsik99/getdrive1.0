@@ -191,9 +191,11 @@
 		        <img id="arrow" src="/getdrive/resources/images/chevron_left.png" style="width:30px;" >
 		        <h2>드라이브</h2>
 		    </div>
+		    <!-- 
 		    <div>
 		        <input id="search" placeholder="파일 검색">
 		    </div>
+		     -->
 		</header>
 			  
 	    <div class="wrapper">

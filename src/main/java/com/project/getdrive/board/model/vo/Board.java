@@ -14,7 +14,7 @@ public class Board implements java.io.Serializable {
 	private Date bcDate;
 	private Date buDate;
 	private int bctId;
-	private int btId;
+	private int tNo;
 	private String bOriginFileName;
 	private String bRenameFileName;
 	
@@ -23,7 +23,7 @@ public class Board implements java.io.Serializable {
 	}
 
 	public Board(int bNo, String bTitle, String bContent, int bCruid, String bName, String bId, Date bcDate,
-			Date buDate, int bctId, int btId, String bOriginFileName, String bRenameFileName) {
+			Date buDate, int bctId, int tNo, String bOriginFileName, String bRenameFileName) {
 		super();
 		this.bNo = bNo;
 		this.bTitle = bTitle;
@@ -34,7 +34,7 @@ public class Board implements java.io.Serializable {
 		this.bcDate = bcDate;
 		this.buDate = buDate;
 		this.bctId = bctId;
-		this.btId = btId;
+		this.tNo = tNo;
 		this.bOriginFileName = bOriginFileName;
 		this.bRenameFileName = bRenameFileName;
 	}
@@ -113,12 +113,12 @@ public class Board implements java.io.Serializable {
 		this.bctId = bctId;
 	}
 
-	public int getBtId() {
-		return btId;
+	public int getTNo() {
+		return tNo;
 	}
 
-	public void setBtId(int btId) {
-		this.btId = btId;
+	public void setTNo(int tNo) {
+		this.tNo = tNo;
 	}
 
 	public static long getSerialversionuid() {
@@ -144,9 +144,11 @@ public class Board implements java.io.Serializable {
 	@Override
 	public String toString() {
 		return "Board [bNo=" + bNo + ", bTitle=" + bTitle + ", bContent=" + bContent + ", bCruid=" + bCruid + ", bName="
-				+ bName + ", bId=" + bId + ", bcDate=" + bcDate + ", buDate=" + buDate + ", bctId=" + bctId + ", btId="
-				+ btId + ", bOriginFileName=" + bOriginFileName + ", bRenameFileName=" + bRenameFileName + "]";
+				+ bName + ", bId=" + bId + ", bcDate=" + bcDate + ", buDate=" + buDate + ", bctId=" + bctId + ", tNo="
+				+ tNo + ", bOriginFileName=" + bOriginFileName + ", bRenameFileName=" + bRenameFileName + "]";
 	}
+
+
 
 
 }

@@ -5,11 +5,10 @@
     
     <!--  목록으로 이동 처리 -->
 <c:url var="blist" value="bmain.do">
-	<c:param name="tNo" value="${ board.btId }" />
+	<c:param name="tNo" value="${ tNo }" />
 </c:url>
-    
-    
-    <c:set var="currentPage" value="${ requestScope.page }" />
+        
+<c:set var="currentPage" value="${ requestScope.page }" />
    
     
 <!DOCTYPE html>
@@ -71,7 +70,7 @@ textarea {
     text-align: right;
 }
 
-input[type="submit"],
+input[type="submit"],input[type="reset"],
 input[type="button"] {
     padding: 10px 20px;
     background-color: #007bff;
@@ -125,7 +124,7 @@ function moveListPage(){
 			<input type="hidden" name="page" value="${ currentPage }">
 			<input type="hidden" name="bOriginFileName"value="${ board.bOriginFileName }">
 			<input type="hidden" name="bRenameFileName"value="${ board.bRenameFileName }">
-			<input type="hidden" name="btId" value="${ board.btId }">
+			<input type="hidden" name="tNo" value="${ tNo }">
 			
 			<div class="board-box_primary">
 			
@@ -174,7 +173,7 @@ function moveListPage(){
 				
 					<div class="pull-right">
 						<input type="submit" value="수정하기"> &nbsp;
-						<input type="button" value="수정취소" onclick="javascript:history.go(-1); return false;">
+						<input type="reset" value="수정취소">
 						<input type="button" value="목록" onclick="moveListPage(); return false;">
 					</div>		
 			</div>

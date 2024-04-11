@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.project.getdrive.common.AlarmSch;
 import com.project.getdrive.common.CommonSch;
 import com.project.getdrive.search.model.vo.Search;
 
@@ -25,8 +26,8 @@ public class SearchDao {
 		return (ArrayList<Search>)list;
 	}
 
-	public ArrayList<Search> selectAlarmList(int accountNo) {
-		List<Search> list = sqlSessionTemplate.selectList("searchMapper.selectAlarmList", accountNo);
+	public ArrayList<Search> selectAlarmList(AlarmSch alarmSch) {
+		List<Search> list = sqlSessionTemplate.selectList("searchMapper.selectAlarmList", alarmSch);
 		return (ArrayList<Search>)list;
 	}
 

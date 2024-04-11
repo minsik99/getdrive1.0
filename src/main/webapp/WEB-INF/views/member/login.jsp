@@ -154,21 +154,12 @@ fieldset, img {
 	color: #999999;
 }
 
-#google {
-	margin: 10px;
-	width: 40px;
-}
-
 #kakao {
 	margin: 10px;
 	width: 300px;
 	cursor: pointer;
 }
 
-#naver {
-	margin: 10px;
-	width: 40px;
-}
 
 .join_button {
 	background: #6DBFF2;
@@ -218,42 +209,6 @@ function getPasswordFindPage(){
 </script>
 <script src="/getdrive/resources/js/kakao.min.js"></script>
 <script>
-	//발급받은 키 중 javascript키를 사용해준다.
-	
-	//카카오로그인
-	/* function kakaoLogin() {
-    Kakao.Auth.login({
-    	scope: 'profile_nickname,account_email',
-        success: function(authObj) {  
-        	console.log(authObj);
-            Kakao.API.request({
-                url: '/v2/user/me',
-                success: res => {
-                	const id = res.id;
-                    const email = res.kakao_account.email;
-                    const name = res.properties.nickname;
-                    
-                    console.log(id);
-                    console.log(email);
-                    console.log(name);
-                    
-                    $('#kakaoEmail').val(email);
-                    $('#kakaoName').val(name);
-                    $('#kakaoId').val(id);
-
-                
-               
-					},
-					fail : function(error) {
-						console.log("Kakao API 요청 실패: " + error);
-					}
-				});
-			},
-			fail : function(error) {
-				console.log("Kakao 로그인 실패: " + error);
-			}
-		});
-	} */
 	Kakao.init('4d2b700f21f5db14e8df9701c31eef5e');
 	console.log(Kakao.isInitialized()); // sdk초기화여부판단
 	//로그인 후 정보 받기
@@ -272,7 +227,7 @@ function getPasswordFindPage(){
                     //location.href="datatest.do?" + "id=" + response.id + "&" + "nickname=" + response.properties.nickname;
                     $.get("kakao_register.do?" + "id=" + response.id + "&" + "nickname=" + response.properties.nickname + "&" + "email=" + response.kakao_account.email)
                     console.log("kakao_register.do?" + "id=" + response.id + "&" + "nickname=" + response.properties.nickname + "&" + "email=" + response.kakao_account.email);
-                    window.location.href = "mainPage.do";
+                    window.location.href = "kakaoLogin.do";
 					},
 					fail : function(error) {
 						console.log("Kakao API 요청 실패: " + error);

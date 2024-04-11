@@ -43,7 +43,7 @@
     }
     
    /* 내용영역 */
-   textarea {
+textarea {
    resize: none;
    width: 93%;
    height: calc(5 * 5em);
@@ -51,7 +51,33 @@
    border: 1px solid #000;
    border-radius: 7px;
    /* margin-bottom: 1px; */
-   }    
+ }    
+ 
+ 
+
+   /* 모달 CSS */
+   #deleteModal {
+       display: none; /* 기본적으로 숨김 */
+       position: fixed; /* 고정 위치 */
+       z-index: 1; /* 최상위에 배치 */
+       left: 0;
+       top: 0;
+       width: 100%;
+       height: 100%;
+       overflow: auto; /* 필요한 경우 스크롤 가능 */
+       background-color: rgba(0, 0, 0, 0.4); /* 투명한 검은색 배경 */
+   }
+   
+   /* 모달 내용 */
+   #modal-mt {
+       background-color: #fefefe;
+       margin: 15% auto; /* 화면 상단에서 15% 떨어진 위치에 중앙 정렬 */
+       padding: 20px;
+       border: 1px solid #888;
+       width: 40%; /* 화면 크기에 따라 조절 가능 */
+       border-radius: 5px;
+       box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+   } 
 </style>
 
 <%-- 아래의 자바스크립트 함수에서 사용하는 url 요청 처리를 별도로 변수화 시킴 --%>
@@ -69,12 +95,23 @@
 <script type="text/javascript">
 //게시글(원글, 댓글) 수정 페이지로 이동 처리 함수
 function moveUpdatePage(){
-	location.href = "${ mup }";
+   location.href = "${ mup }";
 }
 
 //게시글(원글, 댓글) 삭제 요청 함수
-function requestDelete(){
-	location.href = "${ mdel }";
+function showDeleteModal() {
+    var modal = document.getElementById("deleteModal");
+    modal.style.display = "block";
+}
+
+function hideDeleteModal() {
+    var modal = document.getElementById("deleteModal");
+    modal.style.display = "none";
+}
+
+function confirmDelete() {
+    location.href = "${ mdel }";
+    hideDeleteModal();
 }
 </script>
 </head>
@@ -91,11 +128,12 @@ function requestDelete(){
 	<c:import url="/WEB-INF/views/common/teamleft.jsp" />
   </div>
   
-	  <div id="content">
+  <div id="content">
 	
 	<hr>
 	<h2 align="center">${ meeting.mtId } 번 회의록 상세보기</h2>
 	<br>
+	
 	<table id=meetingdetail align="center" width="500" border="1" cellspacing="5" >
 	    <tr>
 	        <th>제 목</th>
@@ -137,19 +175,31 @@ function requestDelete(){
 	    </tr>
 	    <tr>
 	    </tr>
+	    
 	    <tr>
 		    <%-- 로그인한 경우 : 본인 글 상세보기 일때는 수정페이지로 이동과 삭제 버튼 표시함 --%>
 		    <td colspan="4" style="text-align: center;">
 	        <c:if test="${ !empty loginMember }">
 	            <c:if test="${ loginMember.name eq meeting.mtWriter }">
 	                <button style="display: inline-block; margin-right: 10px;" onclick="moveUpdatePage(); return false;">수정페이지로 이동</button>
-	                <button style="display: inline-block; margin-right: 10px;" onclick="requestDelete(); return false;">글삭제</button>
+	                <button style="display: inline-block; margin-right: 10px;" onclick="showDeleteModal(); return false;">글삭제</button>
 	            </c:if>
 	        </c:if>
 	        <button style="display: inline-block;" onclick="javascript:history.go(-1);">목록</button>
 	    	</td>
 		</tr>
 	</table>
+
+		   <!-- 모달 창 -->
+		   <div id="deleteModal">
+			     <!-- 모달 내용 -->
+			     <div id="modal-mt">
+			       <p>이 글을 삭제하시겠습니까? 삭제하시면 복구할 수 없습니다. </p>
+			       <button onclick="confirmDelete();">확인</button>
+			       <button onclick="hideDeleteModal();">취소</button>
+			     </div>
+		   </div>
+
 
   </div>
 

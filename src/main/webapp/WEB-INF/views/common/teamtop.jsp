@@ -11,9 +11,10 @@
 <script type="text/javascript">
 $(function(){	
  
+	/*
 	// 팀 메인 > 상단 > 알림 갯수 - HomeController 
 	$.ajax({
-		url: "alarmCountList.do?tno=${ tNo }",
+		url: "alarmCountList.do?tno=${ tNo }&mNo=${ loginMember.accountNo }",
 		type: "post",
 		dataType: "json",
 		success: function(data){
@@ -53,6 +54,8 @@ $(function(){
 		}
 		
 	});  //ajax
+
+	*/	
 	
 	$(document).ready(function(){
 		$("#openDivImg").click(function(){
@@ -61,10 +64,13 @@ $(function(){
 		});
 	});
 	
+
 	
 });  //document ready	
 
 </script>
+	
+	
 	
 <style type="text/css">
 
@@ -125,7 +131,7 @@ body {
 .clickDown-content{
   display : none;
   position : absolute;
-  z-index : 1;
+  z-index : 99;
   font-weight: 400;
   background-color: #9BD1F2;
   min-width : 200px;
@@ -270,32 +276,32 @@ function logout(){
 		세션정보 (loginMember) : 
 			번호(accountNo) ${ loginMember.accountNo } | 
 			이메일(email) : ${ loginMember.email } |
-			이름(name) : ${ loginMember.name } |
-			가입일(cdate) : ${ loginMember.cdate } <br>
+			이름(name) : ${ loginMember.name } <br>
 		팀코드(tNo) : ${ tNo }
 	</div>	
 
 	 
 <table id="headerTable">
-<tr><th width=230 align=left>
-	<a href="/getdrive/"><img id="logo" alt="getdrive"src="/getdrive/resources/images/logo.png"></a></th>
-	<th width=380>	
+<tr><td width=230 align=left>
+	<a href="/getdrive/"><img id="logo" alt="getdrive"src="/getdrive/resources/images/logo.png"></a></td>
+	<td width=380>	
 		<form id="searchForm" action="searchList.do" method="post">
 			<input type="hidden" name="limit" value="10">
 			<input type="hidden" name="tNo" value="${ tNo }">	
 			<input type="search" name="keyword" value="${ keyword }"> &nbsp;
 			<input type="submit" style="width:100px;" value="통합검색">
 		</form>
-		</th>	
-	<th align="right">
+		</td>	
+	<td align="right">
 		
-		<table style="border:0px solid;width:100%">
+		<table id="myTable" style="border:0px solid;width:100%">
 		<tr valign=middle>
 			<Td align="right">
 				<!-- 알람 -->
 				<div id="alarmCount"></div>
 			</Td>
 			<td align="right" width="10">
+				
 				<!-- 내계정관리/로그아웃 -->
 				<c:if test="${ !empty sessionScope.loginMember }">
 					<div class="dropdown">
@@ -307,14 +313,13 @@ function logout(){
 				        <a id="a1" onclick="moveAccountSetting();"><img id="setting" alt="setting" src="/getdrive/resources/images/setting.png">계정설정</a>
 				        <a id="a2" onclick="logout(); kakaoLogout();"><img id="logout" alt="logout" src="/getdrive/resources/images/logout.png">로그아웃</a>
 				      </div>
-				    </div>
-				    
-			    </c:if>   
+				    </div>				    
+			    </c:if>  
+			     
 	    	</td>
 	    </tr>
-	    </table>		
-	    
-	</th>
+	    </table>
+	</td>
 </tr>	
 </table>
 

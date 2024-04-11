@@ -38,8 +38,7 @@
 		## 수신받는 정보 ## <br>
 		<!--  로그인세션정보(loginMember) : ${ loginMember } -->
 		로그인세션정보 (loginMember) : 고유번호(accountNo) ${ loginMember.accountNo } |
-		이메일(email) : ${ loginMember.email } | 이름(name) : ${ loginMember.name }
-		| 가입일(cdate) : ${ loginMember.cdate }
+		이메일(email) : ${ loginMember.email } | 이름(name) : ${ loginMember.name }		
 	</div>
 
 </body>

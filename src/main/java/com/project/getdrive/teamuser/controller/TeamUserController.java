@@ -1,8 +1,11 @@
 package com.project.getdrive.teamuser.controller;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.project.getdrive.member.model.vo.Member;
-import com.project.getdrive.team.common.TeamCreator;
+import com.project.getdrive.team.common.Invit;
 import com.project.getdrive.team.model.service.TeamService;
 import com.project.getdrive.team.model.vo.Team;
 import com.project.getdrive.teamuser.model.service.TeamUserService;
@@ -65,28 +68,52 @@ public class TeamUserController {
 
 	// 팀원 추가 
 	@RequestMapping(value="ituser.do", method=RequestMethod.POST)
-	public String insertTeamUser(Model model,
+	public void insertTeamUser(Model model,
 			@RequestParam("tno") int tNo,
-			@RequestParam("email") String email) {
+			@RequestParam("email") String email,
+			HttpServletResponse response) throws IOException {
 		
 		// 2024.04.08 kimyh 이메일로 기존회원의 mno 구하기
+		// 2024.04.10 minsik 기능 추가
 		
-		// 회원정보가 있으면
+		// 기존 회원의 고유번호 구하기
+		Member user = teamUserService.selectMemberNo(email);		
 		
+		// 회원정보가 있으면 팀원 추가
+		TeamUser teamUser = null;
+		
+		Invit invit = new Invit();
+		invit.setAccountNo(user.getAccountNo());
+		invit.settNo(tNo);
+		
+		
+		// 이미 가입된 멤버를 초대했는지 확인 여부
+		int inviteChk = teamUserService.checkInvitation(invit);
+		
+		int result = 0;
+		
+		// 이미 가입된 맴버가 아니라면, 가입싴
+		if(inviteChk == 0 ) {
+			teamUser = new TeamUser();
+			teamUser.setTuTID(tNo);
+			teamUser.setTuMID(user.getAccountNo());
+			teamUser.setTuEmail(email);
+			
+			// insert
+			result = teamUserService.insertTeamUser(teamUser);
+		}
+		
+
 		// 회원정보가 없으면 초대하는 대상자가 회원가입 안내 후 이용하도록 메세지 발생
-		
-		// 팀 고유번호, 팀원번호, 이메일 값을 동시에 보내기 위해 team/common의 TeamCreator 객체를 사용
-		// TeamCreator teamCreator = new TeamCreator(mNo, tNo, email);
-		TeamCreator teamCreator = new TeamCreator(tNo, email);
-		
-		int result = teamUserService.insertTeamUser(teamCreator);
+		PrintWriter out = response.getWriter();
 		
 		if(result > 0) {
-			return "team/teamInfo";
+			out.append("success");
 		} else {
-			model.addAttribute("message", "팀원 추가 실패");
-			return "common/error";
+			out.append("failed");
 		}
+		out.flush();
+		out.close();
 	}
 	
 	// 초대된 팀으로 팀원 가입

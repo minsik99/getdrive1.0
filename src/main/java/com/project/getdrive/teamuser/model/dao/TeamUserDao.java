@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.project.getdrive.member.model.vo.Member;
-import com.project.getdrive.team.common.TeamCreator;
+import com.project.getdrive.team.common.Invit;
 import com.project.getdrive.team.model.vo.Team;
 import com.project.getdrive.teamuser.model.vo.TeamUser;
 
@@ -31,8 +31,9 @@ public class TeamUserDao {
 		return (ArrayList<TeamUser>) list;
 	}
 
-	public int insertTeamUser(TeamCreator teamCreator) {
-		return sqlSessionTemplate.insert("teamUserMapper.insertTeamUser", teamCreator);
+	// 2024.04.10 minsik 기능 추가
+	public int insertTeamUser(TeamUser teamUser) {
+		return sqlSessionTemplate.insert("teamUserMapper.insertTeamUser", teamUser);
 	}
 
 	public int updateInvitedTeams(TeamUser teamUser) {
@@ -49,5 +50,14 @@ public class TeamUserDao {
 
 	public int upgradeAuth(Team teamUser) {
 		return sqlSessionTemplate.update("teamUserMapper.upgradeAuth", teamUser);
+	}
+
+	// 2024.04.10 minsik 기능 추가
+	public Member selectMemberNo(String email) {
+		return sqlSessionTemplate.selectOne("teamUserMapper.selectMemberNo", email);
+	}
+
+	public int checkInvitation(Invit invit) {
+		return sqlSessionTemplate.selectOne("teamUserMapper.checkInvitation", invit);
 	}
 }

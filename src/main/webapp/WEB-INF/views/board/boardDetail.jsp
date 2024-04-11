@@ -7,19 +7,6 @@
 <head>
 <meta charset="UTF-8">
 <title>detail</title>
-
-<!-- 삭제 처리  -->
-<c:url var="bdel" value="bdelete.do">
-	<c:param name="bNo" value="${ board.bNo }" />
-	<c:param name="btId" value="${ board.btId }" />
-</c:url>
-
-<!--  목록으로 이동 처리 -->
-<c:url var="blist" value="bmain.do">
-	<c:param name="tNo" value="${ board.btId }" />
-</c:url>
-
-
 <style type="text/css">
 
 
@@ -111,10 +98,91 @@ h1 {
     margin-bottom: 5px;
 }
 
+   /* 내용영역 */
+textarea {
+   resize: none;
+   width: 93%;
+   height: calc(5 * 5em);
+   padding: 10px 10px;
+   border: 1px solid #000;
+   border-radius: 7px;
+   /* margin-bottom: 1px; */
+ } 
 
+
+	#meetingdetail {
+        width: 100%;
+        margin: 0 auto;
+        border-collapse: collapse;
+    }
+
+    #meetingdetail th, #meetingdetail td {
+        padding: 8px;
+        border: 1px solid #dddddd;
+        text-align: center;
+        width: 25%; 
+    }
+    
+    /* 테이블 컬럼 배경색 적용 : 밝은 회색 */
+    #meetingdetail th:first-child,
+    #meetingdetail th:nth-child(3) {
+        background-color: #f2f2f2; 
+        text-align: center;
+    }
+    
+    button {
+        background-color: #41AEF2; 
+        color: white;
+        border: none;
+        padding: 5px 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        font-weight: bold;
+        margin: 10px 4px;
+        cursor: pointer;
+    }   
+    
+/* 모달 CSS */
+.boardDelModal {
+    display: none; /* 기본적으로 숨김 */
+    position: fixed; /* 고정 위치 */
+    z-index: 1; /* 최상위에 배치 */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto; /* 필요한 경우 스크롤 가능 */
+    background-color: rgba(0, 0, 0, 0.4); /* 투명한 검은색 배경 */
+}
+
+/* 모달 내용 */
+.board-modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* 화면 상단에서 15% 떨어진 위치에 중앙 정렬 */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 250px; /* 화면 크기에 따라 조절 가능 */
+    border-radius: 5px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+}
 
 
 </style>
+
+
+<!-- 삭제 처리  -->
+<c:url var="bdel" value="bdelete.do">
+	<c:param name="bNo" value="${ board.bNo }" />
+	<c:param name="tNo" value="${ tNo }" />
+</c:url>
+
+<!--  목록으로 이동 처리 -->
+<c:url var="blist" value="bmain.do">
+	<c:param name="tNo" value="${ tNo }" />
+</c:url>
+
 
 <script type="text/javascript" src="/getdrive/resources/js/jquery-3.7.0.min.js"></script>
 <script type="text/javascript">	
@@ -125,12 +193,22 @@ function moveListPage(){
 
 //href 이나 a 태그 방식은 무조건 GET 방식이다.
 function moveUpdatePage(){
-	location.href="bupdate.do?page=${ currentPage }&bNo=${ board.bNo }";
+	location.href="bupdate.do?tNo=${ tNo }&page=${ currentPage }&bNo=${ board.bNo }";
 }
 
-function deletePage(){
-	//게시글 원글 삭제 요청 함수
-	location.href = "${ bdel }"
+function showDeleteModal() {
+    var modal = document.getElementById("boardDeleteModal");
+    modal.style.display = "block";
+}
+
+function hideDeleteModal() {
+    var modal = document.getElementById("boardDeleteModal");
+    modal.style.display = "none";
+}
+
+function confirmDelete() {
+    location.href = "${ bdel }";
+    hideDeleteModal();
 }
 
 </script>
@@ -148,67 +226,70 @@ function deletePage(){
   </div>
   
   <div id="content">
-  
-
-<h1 align="center"> ${ board.bNo } 번 게시글 상세보기</h1>
-
-<section>
-
-<div class="board-con-01">
 	
-	<div class="board-box_primary">
+		<hr>
+		<h2 align="center">${ board.bNo }  번 상세보기</h2>
+		<br>
 		
-		<div class="board-header with-border">			
-			<h3 class="board-title">글제목: ${ board.bTitle }</h3>
-		</div>
+		<table id=meetingdetail align="center" width="500" border="1" cellspacing="5" >
+		    <tr>
+		        <th>제 목</th>
+		        <td colspan="3">${ board.bTitle }</td>
+		    </tr>
+		    <tr>
+		        <th>작성자</th>
+		        <td>${ board.bName }</td>
+				<th>첨부파일</th>
+		        <td>				        
+					<c:if test="${ !empty board.bOriginFileName }">
+						<c:url var="bdown" value="bdown.do">
+							<c:param name="ofile" value="${ board.bOriginFileName }"/>
+							<c:param name="rfile" value="${ board.bRenameFileName }"/>
+						</c:url>
+						<a href="${ bdown }">${ board.bOriginFileName }</a>
+					</c:if>
+					<c:if test="${ empty board.bOriginFileName }">
+					&nbsp;
+					</c:if>								            
+		        </td>
+		    </tr>
+		    <tr>
+		        <th>등록날짜</th>
+		        <td><fmt:formatDate pattern="yyyy-MM-dd a HH:mm" value="${ board.bcDate }" /></td>
+		        <th>수정날짜</th>
+		        <td><fmt:formatDate pattern="yyyy-MM-dd a HH:mm" value="${ board.buDate }" /></td>
+		    </tr>
+		    <tr>
+		       <th>내 용</th>
+		      <td colspan="3"><textarea style="border:none;outline: none;" rows="3" cols="50" name="mtContent" readonly="readonly">${ board.bContent }</textarea></td>
+		    </tr>		   
+		    <tr>
+			    <%-- 로그인한 경우 : 본인 글 상세보기 일때는 수정페이지로 이동과 삭제 버튼 표시함 --%>
+			    <td colspan="4" style="text-align: center;">
+
+					<div class="board-footer" style="display: flex; justify-content: space-between;">
+						<div><button  class="btn btn-primary" onclick="javascript:history.go(-1); return false;">목록</button></div>
+						<div class="pull-right">
+							<button class="btn btn-primary" onclick="moveUpdatePage(); return false;"> 수정 </button>
+							<button class="btn btn-danger" onclick="showDeleteModal(); return false;"> 삭제 </button>
+						</div>
+					</div>				        
+		        
+		    	</td>
+			</tr>
+		</table>
 		
-		<div class="board-body" style="height: 400px">
-			내용: ${ board.bContent }
-		</div>
-		
-		<!-- 첨부파일 구간 -->
-		<div class="board-footer">
-			<th width="120"> 첨부파일 </th>
-				<c:if test="${ !empty board.bOriginFileName }">
-					<c:url var="bdown" value="bdown.do">
-						<c:param name="ofile" value="${ board.bOriginFileName }"/>
-						<c:param name="rfile" value="${ board.bRenameFileName }"/>
-					</c:url>
-					<a href="${ bdown }">${ board.bOriginFileName }</a>
-				</c:if>
-				<c:if test="${ empty board.bOriginFileName }">
-				&nbsp;
-				</c:if>
-				
-					<div class="user-block">
-						<img class="img-circle" src="/getdrive/resources/images/user.png"  alt="user image">
-						<span class="username">
-							<a href="#"> ${ board.bName }</a>
-						</span>
-						<span class="description"><fmt:formatDate pattern="yyyy-MM-dd a HH:mm" value="${ board.bcDate }" />
-					</div>
-			
-		</div>
-		
-		<div class="board-footer" style="display: flex; justify-content: space-between;">
-			
-			<div>	
-					<button  class="btn btn-primary" onclick="moveListPage(); return false;">목록</button>
+		<!-- 모달 창 -->
+		<div id="boardDeleteModal" class="boardDelModal">
+			<!-- 모달 내용 -->
+			<div class="board-modal-content">
+				<p>삭제 후 복구는 불가능합니다. &nbsp; <br>
+				정말 삭제하시겠습니까?</p>
+				<button onclick="confirmDelete();">확인</button>
+				<button onclick="hideDeleteModal();">취소</button>
 			</div>
-					<div class="pull-right">
-					<!-- 수정 버튼 form 으로 감싸주고 input 태그에 hidden 속성 넣어서 update로 넘겨주니 에러 사라짐 -->
-						<button class="btn btn-primary" onclick="moveUpdatePage(); return false;"> 수정 </button>
-						<button class="btn btn-danger" onclick="deletePage(); return false;"> 삭제 </button>
-					</div>
-		</div>
-	
 		</div>
 		
-	</div>
-	
-</section>
-
-
   </div>
 
   <div id="footer">

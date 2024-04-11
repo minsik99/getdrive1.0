@@ -2,6 +2,7 @@ package com.project.getdrive.search.model.service;
 
 import java.util.ArrayList;
 
+import com.project.getdrive.common.AlarmSch;
 import com.project.getdrive.common.CommonSch;
 import com.project.getdrive.search.model.vo.Search;
 
@@ -14,6 +15,6 @@ public interface SearchService {
 	ArrayList<Search> selectSearch(CommonSch commonSch);
 
 	// 알람
-	ArrayList<Search> selectAlarmList(int accountNo);
+	ArrayList<Search> selectAlarmList(AlarmSch alarmSch);
 
 }

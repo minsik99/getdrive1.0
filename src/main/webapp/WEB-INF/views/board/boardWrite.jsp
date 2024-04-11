@@ -81,6 +81,18 @@ input[type="submit"]:hover, input[type="button"]:hover {
 </head>
 <body>
 
+<div id="container">
+
+  <div id="jb-header">      
+	<c:import url="/WEB-INF/views/common/teamtop.jsp" />        
+  </div>
+  
+  <div id="sidebar">
+	<c:import url="/WEB-INF/views/common/teamleft.jsp" />
+  </div>
+  
+  <div id="content">
+
 	<section class="board-container">
 
 		<div class="board-container">
@@ -95,11 +107,9 @@ input[type="submit"]:hover, input[type="button"]:hover {
 					<!-- 맴버 이름이랑 게시판 작성자의 이름이랑 매치 -->
 					<input type="hidden" name="bName" value="${ loginMember.name}">
 					<!-- 멤버 아이디 값이랑 게시판 작성자 아이디랑 매칭 -->
-					<input type="hidden" name="bId" value="${ loginMember.email }">
-			
-					
+					<input type="hidden" name="bId" value="${ loginMember.email }">					
 					<!-- 팀고유번호 매칭 -->
-					<input type="hidden" name="btId" value="${ tNo }">
+					<input type="hidden" name="tNo" value="${ tNo }">
 
 					<div class="text_box" class="form-group">
 						<h2 align="center">게시글 작성</h2>
@@ -143,5 +153,15 @@ input[type="submit"]:hover, input[type="button"]:hover {
 			</div>
 		</div>
 	</section>
+	
+  </div>
+
+  <div id="footer">
+    <c:import url="/WEB-INF/views/common/teamfooter.jsp" />
+  </div>
+
+</div>
+
+	
 </body>
 </html>

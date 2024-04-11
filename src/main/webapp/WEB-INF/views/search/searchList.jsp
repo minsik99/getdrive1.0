@@ -116,6 +116,7 @@ function showWriteForm(){
 						[Meeting] 
 						<c:url var="bd" value="mdetail.do">
 							<c:param name="no" value="${ b.s_id }" />
+							<c:param name="tNo" value="${ tNo }" />
 						</c:url>
 						<a href="${ bd }">${ b.s_title }</a>
 					</c:if>
@@ -124,11 +125,11 @@ function showWriteForm(){
 						[Board] 
 						<c:url var="bd" value="bdetail.do">
 							<c:param name="bNo" value="${ b.s_id }" />
+							<c:param name="tNo" value="${ tNo }" />
 						</c:url>
 						<a href="${ bd }">${ b.s_title }</a>
 					</c:if>					
 				</td>
-				<td>${ b.s_cruid }</td>
 				<td>${ b.s_date }</td>				
 			</tr>
 			<tr align="left" height=50 valing="top">
