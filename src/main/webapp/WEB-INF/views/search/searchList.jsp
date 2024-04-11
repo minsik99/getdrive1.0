@@ -14,29 +14,39 @@
 <head>
 <meta charset="UTF-8">
 <title>searchList</title>
-<script type="text/javascript" src="/first/resources/js/jquery-3.7.0.min.js"></script>
+<script type="text/javascript" src="/getdrive/resources/js/jquery-3.7.0.min.js"></script>
 <script type="text/javascript">
-$(function(){
-	//input 태그의 name 이 item 의 값이 바뀌면(change) 작동되는 이벤트 핸들러 작성
-	$('input[name=item]').on('change', function(){
-		//여러 개의 태그 중에서 체크표시가 된 태그를 선택
-		$('input[name=item]').each(function(index){
-			//선택된 radio 순번대로 하나씩 checked 인지 확인함
-			if($(this).is(':checked')){
-				//체크 표시된 아이템에 대한 폼이 보여지게 처리함
-				$('form.sform').eq(index).css('display', 'block');
-			}else{
-				//체크 표시 안된 아이템의 폼은 안 보이게 처리함
-				$('form.sform').eq(index).css('display', 'none');
-			}
-		});  //each
-	});  //on
-});  //document ready
 
 function showWriteForm(){
 	//게시글 원글 쓰기 페이지로 이동 요청
 	location.href = "${ pageContext.servletContext.contextPath }/bwform.do";
 }
+
+$(document).ready(function() {
+    var keyword = "${ keyword }";
+    
+    $("#sContent").each(function() {
+        var text = $(this).text();
+        var keywordIndex = text.indexOf(keyword);
+
+        if (keywordIndex !== -1) {
+            var start = Math.max(0, keywordIndex - 10);
+            var end = Math.min(text.length, keywordIndex + keyword.length + 150);
+            var extractedText = text.substring(start, end);
+
+            $(this).text(extractedText);
+        }
+    });    
+    
+    var replacement = "<font color='red'>" + keyword + "</font>";
+
+    $("#sContent").html(function() {
+        return $(this).html().replace(keyword, replacement);
+    });
+});
+
+$("#sContent").contents().wrap('<span></span>');
+
 </script>
 
 <style type="text/css">
@@ -94,15 +104,11 @@ function showWriteForm(){
 	      
 
 	<div class="tool-loading-info with-search-txt ng-scope" ng-if="isShow()" ng-switch="" on="searchStatus.type" search-status="searchStatus" style="">
-	<!-- ngSwitchWhen: progress -->
-	<!-- ngSwitchWhen: keywordSearch -->
-	<div class="display-box ng-scope" ng-switch-when="keywordSearch" style="">
-	<p class="display-txt" translate="">
-	<b>${ keyword }</b> 에 대한 검색 결과가 <b>${ listCount }</b>건 있습니다.</p></div>
-	<!-- end ngSwitchWhen: -->
-	<!-- ngSwitchWhen: search -->
+		<div class="display-box ng-scope" ng-switch-when="keywordSearch" style="">
+			<p class="display-txt" translate="">
+			<b>${ keyword }</b> 에 대한 검색 결과가 <b>${ listCount }</b>건 있습니다.</p>
+		</div>
 	</div>
-	
 	
 	<%-- 조회된 게시글 목록 출력 --%>
 	<br>
@@ -113,7 +119,7 @@ function showWriteForm(){
 				<td align="left">					
 					<!-- Meeting -->
 					<c:if test="${ b.s_menu eq 'MT' }">
-						[Meeting] 
+						<b>[Meeting]</b> 
 						<c:url var="bd" value="mdetail.do">
 							<c:param name="no" value="${ b.s_id }" />
 							<c:param name="tNo" value="${ tNo }" />
@@ -122,18 +128,27 @@ function showWriteForm(){
 					</c:if>
 					<!-- Board -->
 					<c:if test="${ b.s_menu eq 'BD' }">
-						[Board] 
+						<b>[Board]</b>
 						<c:url var="bd" value="bdetail.do">
 							<c:param name="bNo" value="${ b.s_id }" />
 							<c:param name="tNo" value="${ tNo }" />
 						</c:url>
 						<a href="${ bd }">${ b.s_title }</a>
-					</c:if>					
+					</c:if>	
+					<!-- Calendar -->
+					<c:if test="${ b.s_menu eq 'CL' }">
+						<b>[Calendar]</b> 
+						<c:url var="bd" value="cldetail.do">
+							<c:param name="clnum" value="${ b.s_id }" />
+							<c:param name="tNo" value="${ tNo }" />
+						</c:url>
+						<a href="${ bd }">${ b.s_title }</a>
+					</c:if>	
 				</td>
 				<td>${ b.s_date }</td>				
 			</tr>
 			<tr align="left" height=50 valing="top">
-				<td colspan=6><a href="${ bd }">${ b.s_content }</a></td>				
+				<td colspan=6><div id="sContent"><a href="${ bd }">${ b.s_content }</a></div></td>				
 			</tr>
 			<tr>
 				<td colspan=6><hr></td>				

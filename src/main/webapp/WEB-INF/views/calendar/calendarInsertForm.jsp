@@ -108,7 +108,7 @@ $('#calendarDate').change(function() {
 <input type="hidden" name="day" id="day" value=${ day }>
 <input type="hidden" name="calendarCheck" value="Y">
 
-<table align="center" width="500" border="1" cellspacing="0" cellpadding="5">
+<table align="center" width="650" border="1" cellspacing="0" cellpadding="5">
 
 	<tr style= "height: 20PX"> 
 		<th style="background-color: #6DBFF2;">날짜</th>

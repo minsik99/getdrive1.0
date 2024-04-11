@@ -6,7 +6,7 @@
 <html lang="KO">
 <head>
 <meta charset="UTF-8">
-<title>main</title>
+<title>teammain</title>
 <script type="text/javascript" src="/getdrive/resources/js/jquery-3.7.0.min.js"></script>
 <script type="text/javascript">
 $(function(){	
@@ -71,19 +71,26 @@ $(function(){
 </script>
 	
 	
-	
 <style type="text/css">
 
-body {
-  margin: 0;
-  padding: 0;
+#teamMainBody {
+	margin: 0;
+	padding: 0;
+	border: 0px solid blue;		
 }
 
-
 #container {
-  width: 1100px;
-  margin: 0px auto;
-  padding: 20px;
+	border: 1px solid red;	
+	width: 1100px;
+	margin: 0px auto;
+	padding: 20px;
+}
+
+#teamCalContainer {
+	border: 1px solid red;	
+	width: 1100px;
+	margin: 0px auto;
+	padding: 20px;
 }
 
 #header {
@@ -100,6 +107,7 @@ body {
   border: 1px solid #bcbcbc;
 }
 
+/* 본문영역 - 공통 */
 #content {
   width: 800px;
   padding: 20px;
@@ -108,56 +116,74 @@ body {
   border: 1px solid #bcbcbc;
 }
 
+/* 본문영역 - 캘린더 */
+#teamCalContent {
+  width: 850px;
+  padding: 20px;
+  margin-bottom: 20px;
+  float: right;
+  border: 1px solid #bcbcbc;
+}
+
+
 #footer {
   clear: both;
   padding: 20px;
   border: 1px solid #bcbcbc;
 }
 
-#headerTable {
+/* 헤더영역 */
+#teamheaderTable {
+  	border: 0px solid red;	
 	width : 100% ;
 	height : 50px;
 	border : 10 px ;
-	background : white ;
-	
+	background : white ;	
 	border-collapse: collapse;
 }
 
-#alarmCount{
+#teamheaderTable td, #teamheaderTable th {
+  border: 0px solid black; 	/* 테이블 데이터와 헤더에 검은색 선 적용 */
+  padding: 0px; 			/* 내용과 선 사이의 여백 설정 */
+  background : white ;
+  height:80px;
+}
+
+/* 헤더영역 - 로고이미지 */
+#logo {
+	border:0px solid red;
+	width: 190px;
+	position: relative;
+	left: 20px;
+}
+
+/* 헤더영역 - 알람영역, 팀원아이콘 */
+#teamMyTable {
+	border:0px solid red;
+	width:100px;
+}
+
+/* 헤더영역 - 알람영역 */
+#teamAlarmCount{
+	border: 0px solid red;	
 	width : 50px ;
 	margin-top: 8px;
 }
 
+/* 헤더영역 - 팀원아이콘 */
 .clickDown-content{
-  display : none;
-  position : absolute;
-  z-index : 99;
-  font-weight: 400;
-  background-color: #9BD1F2;
-  min-width : 200px;
-  border-radius: 90px 500px 25px 25px / 0px 0px 25px 25px;
+	display : none;
+	position : absolute;
+	z-index : 1;
+	font-weight: 400;
+	background-color: #9BD1F2;
+	min-width : 200px;
+	border-radius: 90px 500px 25px 25px / 0px 0px 25px 25px;
 }
 
-</style>
-
-<style type="text/css">
-
-/* 2024.04.09 kimyh 계정영역  */
-#logo {
-	width: 190px;
-	position: relative;
-	left: 40px;
-}
-
-#logospace {
-	margin: 10px;
-	width: 180px;
-	cursor: pointer;
-	float: left;
-}
-
+/* 팀원 아이콘 영역  */
 .dropdown{
-	border:0px solid;
+	border:0px solid red;
 	cursor: pointer;
 	float: right;
 	text-align: center;
@@ -266,10 +292,9 @@ function logout(){
 	</script>
 </c:if> 
 
-<body>
-
+<body id="teamMainBody">
 	<%--2024.04.05 kimyh 세션확인용 삭제대상 --%>
-
+<%-- 
 	<div align="left">
 		## 수신받는 정보 ## <br>
 		<!--  로그인세션정보(loginMember) : ${ loginMember } --> 
@@ -279,12 +304,12 @@ function logout(){
 			이름(name) : ${ loginMember.name } <br>
 		팀코드(tNo) : ${ tNo }
 	</div>	
-
+ --%>
 	 
-<table id="headerTable">
-<tr><td width=230 align=left>
+<table id="teamheaderTable">
+<tr><td width=260 align=left>
 	<a href="/getdrive/"><img id="logo" alt="getdrive"src="/getdrive/resources/images/logo.png"></a></td>
-	<td width=380>	
+	<td>	
 		<form id="searchForm" action="searchList.do" method="post">
 			<input type="hidden" name="limit" value="10">
 			<input type="hidden" name="tNo" value="${ tNo }">	
@@ -292,13 +317,13 @@ function logout(){
 			<input type="submit" style="width:100px;" value="통합검색">
 		</form>
 		</td>	
-	<td align="right">
+	<td width=100 align="right">
 		
-		<table id="myTable" style="border:0px solid;width:100%">
+		<table id="teamMyTable">
 		<tr valign=middle>
 			<Td align="right">
 				<!-- 알람 -->
-				<div id="alarmCount"></div>
+				<div id="teamAlarmCount"></div>
 			</Td>
 			<td align="right" width="10">
 				
