@@ -266,12 +266,6 @@ input {
 		<div class="wrapper">		
 			<div class="section_header">
 				<div class="span"><h3>참여 중인 멤버</h3></div>
-				<!-- 
-				<div class="search">
-					<input name="tuName" placeholder="멤버 이름">
-					<img>
-				</div> 
-				-->
 			</div>
 			<hr>
 			

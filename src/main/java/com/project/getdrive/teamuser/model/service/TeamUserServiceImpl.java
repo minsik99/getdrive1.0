@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.project.getdrive.member.model.vo.Member;
-import com.project.getdrive.team.common.TeamCreator;
+import com.project.getdrive.team.common.Invit;
 import com.project.getdrive.team.model.vo.Team;
 import com.project.getdrive.teamuser.model.dao.TeamUserDao;
 import com.project.getdrive.teamuser.model.vo.TeamUser;
@@ -32,9 +32,10 @@ public class TeamUserServiceImpl implements TeamUserService{
 		return teamUserDao.selectMembers(tNo);
 	}
 
+	// 2024.04.10 minsik 기능 추가
 	@Override
-	public int insertTeamUser(TeamCreator teamCreator) {
-		return teamUserDao.insertTeamUser(teamCreator);
+	public int insertTeamUser(TeamUser teamUser) {
+		return teamUserDao.insertTeamUser(teamUser);
 	}
 
 	@Override
@@ -56,5 +57,17 @@ public class TeamUserServiceImpl implements TeamUserService{
 	public int upgradeAuth(Team teamUser) {
 		return teamUserDao.upgradeAuth(teamUser);
 	}
+
+	// 2024.04.10 minsik 기능 추가
+	@Override
+	public Member selectMemberNo(String email) {
+		return teamUserDao.selectMemberNo(email);
+	}
+
+	@Override
+	public int checkInvitation(Invit invit) {
+		return teamUserDao.checkInvitation(invit);
+	}
+
 
 }

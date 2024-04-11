@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.project.getdrive.common.AlarmSch;
 import com.project.getdrive.common.CommonSch;
 import com.project.getdrive.search.model.dao.SearchDao;
 import com.project.getdrive.search.model.vo.Search;
@@ -26,8 +27,8 @@ public class SearchServiceImpl implements SearchService {
 	}
 
 	@Override
-	public ArrayList<Search> selectAlarmList(int accountNo) {
-		return searchDao.selectAlarmList(accountNo);
+	public ArrayList<Search> selectAlarmList(AlarmSch alarmSch) {
+		return searchDao.selectAlarmList(alarmSch);
 	}
 
 }

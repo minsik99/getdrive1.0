@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.project.getdrive.common.AlarmSch;
 import com.project.getdrive.member.model.vo.Member;
 import com.project.getdrive.search.model.service.SearchService;
 import com.project.getdrive.search.model.vo.Search;
@@ -68,10 +69,11 @@ public class HomeController {
 	
 	// 2024.04.07 kimyh - 팀상단 알람 갯수 및 목록 출력 기능
 	@SuppressWarnings("unchecked")	
-	@RequestMapping(value="alarmCountList.do", method=RequestMethod.POST)
+	@RequestMapping(value="alarmCountList.do", method= {RequestMethod.GET, RequestMethod.POST})
 	@ResponseBody	
 	public String alarmCount(
-		HttpServletRequest request) throws UnsupportedEncodingException {
+			@RequestParam(name = "tNo", required = true) int tNo,
+			HttpServletRequest request) throws UnsupportedEncodingException {
 		
 		logger.info("##### alarmCountList.do ############");
 		
@@ -79,8 +81,12 @@ public class HomeController {
 		HttpSession session = request.getSession();
 		Member loginMember = (Member) session.getAttribute("loginMember");
 		
+		AlarmSch alarmSch = new AlarmSch();
+		alarmSch.setmNo(loginMember.getAccountNo());
+		alarmSch.settNo(tNo);		
+		
 		// 신규게시물
-		ArrayList<Search> list = searchService.selectAlarmList(loginMember.getAccountNo());
+		ArrayList<Search> list = searchService.selectAlarmList(alarmSch);
 		
 		JSONArray jarr = new JSONArray();		
 		

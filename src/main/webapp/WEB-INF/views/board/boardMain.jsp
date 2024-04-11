@@ -11,8 +11,6 @@
 
  <c:set var="tNo" value="${param.tNo}" />
 
-
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -303,11 +301,6 @@ $(function(){
 							        <input type="radio" name="item" id="writer">
 							        <label for="writer">작 성 자</label>
 							    </div>
-							    
-							    <div class="radio-option">
-							        <input type="radio" name="item" id="date">
-							        <label for="date">등록날짜</label>
-							    </div>	
 						</fieldset>	
 						<br>
 						
@@ -332,88 +325,74 @@ $(function(){
 							<input type="submit" value="검색">
 						</fieldset>
 						</form>
-						
-						 <!-- 등록날짜 검색 -->
-						<form id="dateform" class="sform" action="bsearchDate.do" method="post">
-							<input type="hidden" name="action" value="date">
-						<fieldset>
-							<legend>검색할 등록 날짜를 선택하시오.</legend>
-							<input type="text" name="tNo" value="${ tNo }">
-							<input type="date" name="begin"> ~ <input type="date" name="end"> &nbsp;
-							<input type="submit" value="검색">
-						</fieldset>
-						</form>
-				
 			</div>
 			
 		</div>
 	<!-- 여기까지 게시글 목록 타이틀 -->
-	
-	<!-- 목록 밑에 게시글 리스트 정렬 파트 -->
-	<div class="board-body" align="center">
-		<table class="table-bodered">
-			
-				<tbody>
-				<tr>	
-						<th style="width: 40px"> 번호 </th>
-						<th style="width: 150px">제목</th>
+		
+		<!-- 목록 밑에 게시글 리스트 정렬 파트 -->
+		<div class="board-body" align="center">
+			<table style="width:100%;">
+				
+					<tbody>
+					<tr>	
+						<th style="width: 40px:"> 번호 </th>
+						<th>제목</th>
 						<th style="width: 100px"> 작성자 </th>
-						<th style="width: 200px"> 내용 </th>
-						<th style="width: 60px"> 생성날짜 </th>	
+						<th style="width: 100px"> 등록일 </th>	
 						<th style="width:150px"> 첨부파일 </th>
-				</tr>
-				<!--  forEach 문으로 DB 리스트 불러오기 -->
-				<c:forEach items="${ list }" var="b" >
-				<tr>	
-				
-				<c:if test="${ !empty message }">
-					
-				</c:if>
-				
-					<td> ${ b.bNo} <!-- EL문으로 변경 ${ B_NO } --></td>
-					<!-- 밑에 문장은 JSTL url태그로 실행 -->
-					<c:url var="bdetail" value="bdetail.do">
-						<c:param name="bNo" value="${ b.bNo }" />
-						<c:param name="page" value="${ nowpage }" />
-					</c:url>
-					<td align="center"> ${ b.bTitle }</td><!-- EL문으로 변경 B_TITLE --> 
-					<td align="center"> ${ b.bName } ${b.btId}<!-- EL문으로 변경 B_NAME --></td>
-					<td align="center"> <a href="${ bdetail }">${ b.bContent }</a></td> <!-- EL문으로 변경 클릭하면 해당 페이지로 넘어가야함 B_CONTENT  -->
-					<td align="center"> ${ b.bcDate } <!-- EL문으로 변경 B_CDATE  --></td>
-					<td align="center">
-					
-					<c:if test="${ !empty b.bOriginFileName }">
-					${ b.bOriginFileName }
+					</tr>
+					<!--  forEach 문으로 DB 리스트 불러오기 -->
+					<c:forEach items="${ list }" var="b" >
+					<tr>						
+					<c:if test="${ !empty message }">
+						
 					</c:if>
-					<c:if test="${ empty b.bOriginFileName }">
-					&nbsp;
-					</c:if>
-					</td>
-				</tr>
-				</c:forEach>		
-				</tbody>			
-		</table>	
-	</div>	
-	<div class="board-footer">
-		<div class="board-right">
-			<button type="button" class="btn-success" id="writeBtn">
-				<div class="writeBtn">
-
-						<a href="bwrite.do?tNo=${ tNo }">글쓰기</a>
 					
-				<br>
-				</div>
-			</button>
+						<td> ${ b.bNo } <!-- EL문으로 변경 ${ B_NO } --></td>
+						<!-- 밑에 문장은 JSTL url태그로 실행 -->
+						<c:url var="bdetail" value="bdetail.do">
+							<c:param name="bNo" value="${ b.bNo }" />
+							<c:param name="tNo" value="${ tNo }" />
+							<c:param name="page" value="${ nowpage }" />
+						</c:url>
+						<td align="center"> <a href="${ bdetail }">${ b.bTitle }</a></td><!-- EL문으로 변경 B_TITLE --> 
+						<td align="center"> ${ b.bName } <!-- EL문으로 변경 B_NAME --></td>
+						<td align="center"> ${ b.bcDate } <!-- EL문으로 변경 B_CDATE  --></td>
+						<td align="center">
+						
+						<c:if test="${ !empty b.bOriginFileName }">
+						${ b.bOriginFileName }
+						</c:if>
+						<c:if test="${ empty b.bOriginFileName }">
+						&nbsp;
+						</c:if>
+						</td>
+					</tr>
+					</c:forEach>		
+					</tbody>			
+			</table>	
+		</div>	
+	
+		<div class="board-footer">
+			<div class="board-right">
+				<button type="button" class="btn-success" id="writeBtn">
+					<div class="writeBtn">	
+							<a href="bwrite.do?tNo=${ tNo }">글쓰기</a>						
+					<br>
+					</div>
+				</button>
+			</div>
+			<br>
+		
+			<c:import url="/WEB-INF/views/common/pagingView.jsp" />
 		</div>
-		<br>
-<c:import url="/WEB-INF/views/common/pagingView.jsp" />
 	</div>
-</div>
 
 
-  <div id="footer">
-    <c:import url="/WEB-INF/views/common/teamfooter.jsp" />
-  </div>
+ <div id="footer">
+   <c:import url="/WEB-INF/views/common/teamfooter.jsp" />
+ </div>
 
 </div>
 

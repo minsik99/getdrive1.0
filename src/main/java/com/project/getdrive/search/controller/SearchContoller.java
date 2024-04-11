@@ -77,6 +77,8 @@ public class SearchContoller {
 			
 			mv.setViewName("search/searchList");
 		} else {
+			mv.addObject("keyword", keyword);
+			mv.addObject("listCount", listCount);			
 			mv.addObject("message", "검색결과가 존재하지 않습니다.");			
 			mv.setViewName("search/searchList");
 		}

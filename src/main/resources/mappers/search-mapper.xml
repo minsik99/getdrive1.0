@@ -12,7 +12,6 @@
 		<result property="s_date" column="S_DATE" />
 		<result property="s_cruid" column="S_CRUID" />
 		<result property="s_id" column="S_ID" />
-		<result property="s_ctid" column="S_CTID" />
 		<result property="s_tid" column="S_TID" />
 	</resultMap>
 		
@@ -29,7 +28,7 @@
 	<select id="selectSearch" parameterType="CommonSch" resultMap="resultList">
 		select *
 		from (select rownum rnum, S_NO, S_MENU, S_TITLE, S_CONTENT, 
-		          S_DATE, S_CRUID, S_ID, S_CTID, S_TID
+		          S_DATE, S_CRUID, S_ID, S_TID
 		     from (select * from TB_SEARCH
 		           where ( S_TITLE like '%' || #{ keyword } || '%' ) 
 					or ( S_CONTENT like '%' || #{ keyword } || '%' )
@@ -40,17 +39,17 @@
  		</if>			 
 	</select>
 	
-	<select id="selectAlarmList" parameterType="_int" resultMap="resultList">
+	<select id="selectAlarmList" parameterType="AlarmSch" resultMap="resultList">
 		select *
 		from (select rownum rnum, S_NO, S_MENU, S_TITLE, S_CONTENT, 
-		          S_DATE, S_CRUID, S_ID, S_CTID, S_TID
+		          S_DATE, S_CRUID, S_ID, S_TID
 		     from (select *
 			from TB_SEARCH 
 			WHERE TRUNC(S_DATE) = TRUNC(SYSDATE) 
-			    and  s_tid = '5' 
-			    and s_no not in (
+  
+			    and s_no in (
 			        select AC_AID from tb_alarm_check
-						<if test="tNo != null and tNo != ''">
+						<if test="mNo != null and mNo != ''">
 							where ac_uid =  #{ mNo } and ac_tid =  #{ tNo }
 				 		</if>				         
 			    )

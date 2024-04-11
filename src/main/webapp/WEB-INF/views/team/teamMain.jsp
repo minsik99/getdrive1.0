@@ -133,24 +133,20 @@ function createTeam(){
 				<tr>
 					<td align="center">
 						<p>${ tlist.tName }</p> &nbsp;
-						<!-- 팀장용 팀 관리 페이지 -->
+						
+						
+						<!-- 팀장이라면 팀 관리 버튼이 노출 -->
 						<c:url var="tadmin" value="tadmin.do">
 							<c:param name="tNo" value="${ tlist.tNo }" />
 						</c:url>
-						<!-- 팀장용 팀 정보 페이지 -->
-						<c:url var="tinfo" value="tinfo.do">
-							<c:param name="tNo" value="${ tlist.tNo }" />
-						</c:url>
-						<!-- 팀원용 팀 정보 페이지 -->
-						<c:url var="tuinfo" value="tuinfo.do">
-							<c:param name="tNo" value="${ tlist.tNo }" />
-						</c:url>
-						<!-- 팀장이라면 팀 관리 버튼이 노출 -->
 						<c:if test="${ tlist.tuLeader eq 'Y' }">
 							<button id="tadmin" onclick="javascript:location.href='${ tadmin }';">팀 관리</button> &nbsp;			
 						</c:if>
 						
 						<!-- 팀원이라면 팀 정보 버튼이 노출 -->
+						<c:url var="tuinfo" value="tuinfo.do">
+							<c:param name="tNo" value="${ tlist.tNo }" />
+						</c:url>
 						<c:if test="${ tlist.tuLeader eq 'N' && tlist.tuInvited eq 'Y' }">
 							<button onclick="javascript:location.href='${ tuinfo }';">팀 정보</button> &nbsp;			
 						</c:if>	
