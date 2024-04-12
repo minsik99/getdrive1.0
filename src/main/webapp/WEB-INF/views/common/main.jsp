@@ -7,8 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <title>getdrive 초기화면</title>
-<script type="text/javascript" src="https://code.jquery.com/jquery-3.7.0.js"></script>
-
+<script type="text/javascript" src="/getdrive/resources/js/jquery-3.7.0.min.js"></script>
 <style type="text/css">
 #full {
 	width: 100%;
